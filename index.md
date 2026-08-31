@@ -8,17 +8,17 @@
 
 ## 1. Visão Geral do Workspace
 
-O workspace **Liquid** é governado estritamente pela metodologia **SCPE v0.3.0**. O repositório centraliza toda a especificação de produto viva na raiz e nas pastas de features, enquanto a implementação técnica reside em `apps/liquid/`:
+O workspace **Liquid** é governado estritamente pela metodologia **SCPE v0.3.0**. O repositório centraliza toda a especificação de produto viva na raiz e nas pastas de features, enquanto a implementação técnica reside em `apps/ade/`:
 
 ```text
-/home/mraraujo/product_design/liquid/
+/home/mraraujo/product_design/liquid_ade/
 ├── 📜 product_vision.md          # Visão do Produto, Manifesto & Pilares Arquiteturais
 ├── 🗺️ roadmap.md                 # Planejamento dos 6 Cortes Verticais
 ├── 📖 glossary.md                # Linguagem Ubíqua e Máquina de Estados
 ├── 🧭 index.md                   # Este Guia Mestre
 │
 ├── 📦 apps/
-│   └── liquid/                   # Monorepo Rust (Axum/Tokio) + React (Astryx SPA)
+│   └── ade/                      # Monorepo Rust (Axum/Tokio) + React (Astryx SPA)
 │       ├── app_manifest.md       # Manifesto técnico do aplicativo
 │       ├── Cargo.toml            # Maestro do Backend
 │       ├── build.rs              # Script que embute a UI no binário

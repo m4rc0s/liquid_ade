@@ -128,12 +128,12 @@ Start the frontend and backend with hot reload:
 
 ```bash
 # Terminal 1: Run the React UI (ade_ui)
-cd apps/liquid/ui
+cd apps/ade/ui
 bun install
 bun run dev
 
 # Terminal 2: Run the Rust Core (ade_core)
-cd apps/liquid
+cd apps/ade
 cargo run
 ```
 Open [http://localhost:3000](http://localhost:3000) in your browser.
@@ -142,7 +142,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 Build a standalone binary with the frontend fully embedded:
 
 ```bash
-cd apps/liquid
+cd apps/ade
 cargo build --release
 ```
 The resulting executable in `./target/release/liquid-ade` is a single binary with zero external runtime dependencies.
@@ -170,7 +170,7 @@ Liquid ADE is engineered through 6 progressive vertical slices:
 - **[roadmap.md](roadmap.md)** — Detailed Timeline and Vertical Slices Matrix.
 - **[glossary.md](glossary.md)** — Ubiquitous Language & SCPE State Machine (`Draft → Ready → WIP → Done`).
 - **[index.md](index.md)** — Workspace Master Index & Agent Navigation Entrypoint.
-- **[UI/UX Guidelines](apps/liquid/ui/UI_UX_GUIDELINES.md)** — Astryx Design System Principles and Accessibility Heuristics.
+- **[UI/UX Guidelines](apps/ade/ui/UI_UX_GUIDELINES.md)** — Astryx Design System Principles and Accessibility Heuristics.
 
 ---
 

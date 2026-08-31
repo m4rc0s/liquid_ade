@@ -9,7 +9,7 @@
 A aplicação **Liquid ADE** é construída como um monorepo enxuto de alta performance, projetado para ser distribuído como um **binário único auto-contido**, sem necessidade de runtime Node.js/Bun em produção:
 
 ```text
-apps/liquid/
+apps/ade/
 ├── Cargo.toml          # Maestro Rust (Axum, Tokio, rust-embed)
 ├── build.rs            # Script de compilação que faz o build da UI e a embute no binário
 ├── app_manifest.md     # Manifesto do aplicativo conforme SCPE v0.3.0
