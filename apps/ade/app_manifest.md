@@ -4,13 +4,13 @@
 - **app_type:** single-binary-agentic-ide
 - **tech_stack:** Rust, Axum, Tokio, React 19, Vite, TypeScript, Astryx Design System (`@astryxdesign/core`), Zustand, LiteLLM, Podman
 - **design_patterns:** Single Binary Embedding (`rust-embed`), Agent Client Protocol (ACP) JSON-RPC 2.0 Server, Static SPA Architecture (Zero SSR), Rootless Container Sandboxing (Podman)
-- **app_description:** Motor autônomo e ADE do Liquid. Escrito em Rust para performance e segurança. O frontend em React (Astryx SPA) é servido pelo Axum na Web/SaaS e embutido no binário ou janela nativa (Tauri Desktop).
+- **app_description:** Autonomous engine and Agentic Development Environment (ADE) for Liquid. Written in Rust for performance and security. The React frontend (Astryx SPA) is served by Axum for Web/SaaS and embedded into the standalone binary or native desktop window (Tauri).
 - **entrypoint:** src/main.rs (Rust Server) / ui/src/main.tsx (React Client)
 - **dependencies_scope:** 
-  - Comunica-se com o sistema de arquivos local (workspace/features) de forma estritamente isolada.
-  - Implementa um servidor ACP (Agent Client Protocol) e utiliza LiteLLM via chamadas HTTP para acessar modelos abertos/locais (Ollama, vLLM) ou nuvem (Claude, OpenAI, Gemini).
-  - Execução de tarefas de código downstream isoladas em contêineres efémeros via Podman (sem docker-compose).
-  - Zero dependência de Node.js/Bun em ambiente de produção.
+  - Communicates with the local filesystem (workspace/features) in a strictly isolated manner.
+  - Implements an ACP (Agent Client Protocol) server and utilizes LiteLLM via HTTP calls to access open/local models (Ollama, vLLM) or cloud providers (Claude, OpenAI, Gemini).
+  - Executes isolated downstream code tasks inside ephemeral containers via Podman (without docker-compose).
+  - Zero dependency on Node.js/Bun in production environments.
 
 ---
-> Nota: As diretrizes de negócio, roadmap, épicos e regras de domínio estão localizados na raiz do workspace, em `product_vision.md` e na estrutura da pasta `features/`. Este arquivo define o perímetro técnico da aplicação.
+> Note: Business guidelines, roadmap, epics, and domain rules are located at the root of the workspace in `product_vision.md` and the `features/` directory. This manifest defines the technical boundaries of the application.

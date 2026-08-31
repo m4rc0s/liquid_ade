@@ -1,13 +1,13 @@
-# 📌 Épico 02: Surgical Line Patcher & Echo Suppression
+# 📌 Epic 02: Surgical Line Patcher & Echo Suppression
 
-**Épico:** `EPIC-02` da Feature `FEAT-04`  
+**Epic:** `EPIC-02` of Feature `FEAT-04`  
 **Status:** `Draft` 📝  
 
 ---
 
-## 1. Objetivo & Escopo
-Motor de gravação cirúrgica linha-a-linha no disco com supressão de eco.
+## 1. Objective & Scope
+Surgical line-by-line disk-writing engine with echo suppression.
 
-## 2. Critérios de Aceite
-- [ ] Implementação de ponta a ponta validada por testes.
-- [ ] Zero impacto de performance no runtime do Liquid.
+## 2. Acceptance Criteria
+- [ ] End-to-end implementation validated by tests.
+- [ ] Zero performance impact on the Liquid runtime.

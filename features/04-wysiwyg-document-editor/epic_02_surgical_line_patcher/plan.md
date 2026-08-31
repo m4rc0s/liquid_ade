@@ -1,13 +1,13 @@
-# 📐 Plano Técnico — Surgical Line Patcher & Echo Suppression
+# 📐 Technical Plan — Surgical Line Patcher & Echo Suppression
 
-**Épico:** `EPIC-02` da Feature `FEAT-04`  
+**Epic:** `EPIC-02` of Feature `FEAT-04`  
 **Status:** `Draft` 📝  
 
 ---
 
-## 1. Arquitetura e Decisões Técnicas
-- Implementação estrita com Rust, React 19, Astryx e Zustand.
-- Respeito aos limites do Bounded Context da feature `FEAT-04`.
+## 1. Architecture & Technical Decisions
+- Strict implementation using Rust, React 19, Astryx, and Zustand.
+- Respects the Bounded Context boundaries of feature `FEAT-04`.
 
-## 2. Contratos & Interfaces
-Contratos orientados por tipos seguros e comunicação via JSON / ACP.
+## 2. Contracts & Interfaces
+Contracts governed by safe types and communication via JSON / ACP.

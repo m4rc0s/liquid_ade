@@ -1,14 +1,14 @@
-# 🗺️ Roadmap da Feature: Workspace Inspector & Spec Viewer
+# 🗺️ Feature Roadmap: Workspace Inspector & Spec Viewer
 
 **Feature ID:** `FEAT-01`  
-**Status Atual:** `Draft` 📝  
-**Progresso:** `[░░░░░░░░░░] 0% Concluído` (0/3 épicos)  
+**Current Status:** `Draft` 📝  
+**Progress:** `[░░░░░░░░░░] 0% Completed` (0/3 epics)  
 
 ---
 
-## 🚦 Sequência de Épicos
+## 🚦 Epic Sequence
 
-| Ordem | Épico | Status | Diretório |
+| Order | Epic | Status | Directory |
 | :---: | :--- | :---: | :--- |
 | **1** | **Runtime Shell & Astryx Layout** | `Draft` 📝 | [`epic_01_runtime_shell/`](./epic_01_runtime_shell/) |
 | **2** | **Workspace FS Scanner & Markdown Viewer** | `Draft` 📝 | [`epic_02_workspace_fs_reader/`](./epic_02_workspace_fs_reader/) |

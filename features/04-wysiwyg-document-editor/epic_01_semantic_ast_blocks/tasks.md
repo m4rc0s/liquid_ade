@@ -1,18 +1,18 @@
 # 📋 TASKS — Semantic AST Block Renderer
 
-**Épico:** `EPIC-01` da Feature `FEAT-04`  
+**Epic:** `EPIC-01` of Feature `FEAT-04`  
 **Status:** `Draft` 📝  
 
 ---
 
-## 📝 Checklist de Tarefas Atômicas
+## 📝 Atomic Tasks Checklist
 
-- [ ] **TASK-04.1.1**: Implementar parser de AST em TypeScript que extrai seções, tabelas e checklists.
-- [ ] **TASK-04.1.2**: Criar componentes visuais interativos para cada tipo de bloco com Astryx.
-- [ ] **TASK-04.1.3**: Adicionar bloco de fallback `RawBlock` garantindo zero perda de dados em trechos genéricos.
+- [ ] **TASK-04.1.1**: Implement TypeScript AST parser extracting sections, tables, and checklists.
+- [ ] **TASK-04.1.2**: Create interactive visual components for each block type using Astryx.
+- [ ] **TASK-04.1.3**: Add `RawBlock` fallback block ensuring zero data loss across generic sections.
 
 ---
 
 ## ✅ Definition of Done
-- [ ] Todas as tarefas concluídas e testadas.
-- [ ] Conformidade estrita com o SCPE v0.3.0.
+- [ ] All tasks completed and tested.
+- [ ] Strict compliance with SCPE v0.3.0.

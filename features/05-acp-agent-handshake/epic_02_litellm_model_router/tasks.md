@@ -1,18 +1,18 @@
 # 📋 TASKS — LiteLLM Flexible Router
 
-**Épico:** `EPIC-02` da Feature `FEAT-05`  
+**Epic:** `EPIC-02` of Feature `FEAT-05`  
 **Status:** `Draft` 📝  
 
 ---
 
-## 📝 Checklist de Tarefas Atômicas
+## 📝 Atomic Tasks Checklist
 
-- [ ] **TASK-05.2.1**: Implementar cliente HTTP em Rust conectando ao LiteLLM / APIs de LLM.
-- [ ] **TASK-05.2.2**: Criar modal de configurações na UI (Astryx) para salvar chaves e escolher modelos.
-- [ ] **TASK-05.2.3**: Implementar teste de ping de modelo com feedback visual de latência.
+- [ ] **TASK-05.2.1**: Implement HTTP client in Rust connecting to LiteLLM / LLM APIs.
+- [ ] **TASK-05.2.2**: Create settings modal in UI (Astryx) to save API keys and select models.
+- [ ] **TASK-05.2.3**: Implement model ping test with visual latency diagnostics.
 
 ---
 
 ## ✅ Definition of Done
-- [ ] Todas as tarefas concluídas e testadas.
-- [ ] Conformidade estrita com o SCPE v0.3.0.
+- [ ] All tasks completed and tested.
+- [ ] Strict compliance with SCPE v0.3.0.

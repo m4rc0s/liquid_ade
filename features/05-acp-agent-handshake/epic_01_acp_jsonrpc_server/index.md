@@ -1,13 +1,13 @@
-# 📌 Épico 01: ACP JSON-RPC Server
+# 📌 Epic 01: ACP JSON-RPC Server
 
-**Épico:** `EPIC-01` da Feature `FEAT-05`  
+**Epic:** `EPIC-01` of Feature `FEAT-05`  
 **Status:** `Draft` 📝  
 
 ---
 
-## 1. Objetivo & Escopo
-Implementação do protocolo ACP baseado em JSON-RPC 2.0 sobre WebSocket e stdio.
+## 1. Objective & Scope
+Implementation of the ACP protocol based on JSON-RPC 2.0 over WebSocket and stdio.
 
-## 2. Critérios de Aceite
-- [ ] Implementação de ponta a ponta validada por testes.
-- [ ] Zero impacto de performance no runtime do Liquid.
+## 2. Acceptance Criteria
+- [ ] End-to-end implementation validated by tests.
+- [ ] Zero performance impact on the Liquid runtime.

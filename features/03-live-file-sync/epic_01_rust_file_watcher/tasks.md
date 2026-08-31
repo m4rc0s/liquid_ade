@@ -1,18 +1,18 @@
 # 📋 TASKS — Async File Watcher Engine
 
-**Épico:** `EPIC-01` da Feature `FEAT-03`  
+**Epic:** `EPIC-01` of Feature `FEAT-03`  
 **Status:** `Draft` 📝  
 
 ---
 
-## 📝 Checklist de Tarefas Atômicas
+## 📝 Atomic Tasks Checklist
 
-- [ ] **TASK-03.1.1**: Configurar File Watcher assíncrono em Rust para escutar eventos de modificação em `.md`.
-- [ ] **TASK-03.1.2**: Implementar canal de broadcast interno para disparar eventos de arquivo alterado.
-- [ ] **TASK-03.1.3**: Filtrar arquivos temporários e diretórios ignorados (.git, target, dist).
+- [ ] **TASK-03.1.1**: Configure async File Watcher in Rust to listen for modification events on `.md` files.
+- [ ] **TASK-03.1.2**: Implement internal broadcast channel to trigger file change events.
+- [ ] **TASK-03.1.3**: Filter out temporary files and ignored directories (`.git`, `target`, `dist`).
 
 ---
 
 ## ✅ Definition of Done
-- [ ] Todas as tarefas concluídas e testadas.
-- [ ] Conformidade estrita com o SCPE v0.3.0.
+- [ ] All tasks completed and tested.
+- [ ] Strict compliance with SCPE v0.3.0.

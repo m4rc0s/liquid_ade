@@ -1,19 +1,19 @@
-# 📐 Plano Técnico — Epic 01: Notion-Style Semantic Blocks
+# 📐 Technical Plan — Epic 01: Notion-Style Semantic Blocks
 
-**Épico:** `EPIC-01` da Feature `FEAT-04`  
+**Epic:** `EPIC-01` of Feature `FEAT-04`  
 **Status:** `Draft` 📝  
 
 ---
 
-## 1. Esquema de Blocos de Interface (Estilo Linear / Notion)
+## 1. UI Block Schema (Linear / Notion Style)
 
 ```typescript
 export type BlockType = 
-  | 'header'          // Título e chips de metadados
-  | 'section'         // H1, H2, H3 com âncora
-  | 'criteria_list'   // Checklists de critérios de aceite e tarefas
-  | 'callout'         // Avisos e destaques visuais
-  | 'raw';            // Fallback para parágrafos e código
+  | 'header'          // Title and metadata chips
+  | 'section'         // H1, H2, H3 with anchor
+  | 'criteria_list'   // Acceptance criteria checklists and tasks
+  | 'callout'         // Warning and visual highlight blocks
+  | 'raw';            // Fallback for generic paragraphs and code
 
 export interface BaseBlock {
   id: string;
@@ -50,7 +50,7 @@ export interface CalloutBlock extends BaseBlock {
 
 ---
 
-## 2. Interações do Editor
-- **Menu Slash (`/`):** Digitar `/` em uma linha vazia abre menu suspenso de inserção rápida (Seção, Checklist de Critérios, Callout).
-- **Toggle de Checkbox:** Clique direto no checkbox atualiza `[ ]` ⇄ `[x]` com debounce e patch cirúrgico.
-- **Chips de Metadados:** Clique no chip de status abre menu de seleção rápida de estados do SCPE.
+## 2. Editor Interactions
+- **Slash Menu (`/`):** Typing `/` on an empty line opens a dropdown menu for quick insertion (Section, Criteria Checklist, Callout).
+- **Checkbox Toggle:** Clicking directly on a checkbox toggles `[ ]` ⇄ `[x]` with debouncing and surgical disk patching.
+- **Metadata Chips:** Clicking a status chip opens a quick-selection menu for SCPE states.

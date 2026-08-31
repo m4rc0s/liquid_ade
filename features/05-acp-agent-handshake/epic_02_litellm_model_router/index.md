@@ -1,13 +1,13 @@
-# 📌 Épico 02: LiteLLM Flexible Router
+# 📌 Epic 02: LiteLLM Flexible Router
 
-**Épico:** `EPIC-02` da Feature `FEAT-05`  
+**Epic:** `EPIC-02` of Feature `FEAT-05`  
 **Status:** `Draft` 📝  
 
 ---
 
-## 1. Objetivo & Escopo
-Gateway universal de modelos conectando o servidor ACP a Ollama ou APIs de nuvem.
+## 1. Objective & Scope
+Universal model gateway connecting the ACP server to Ollama or cloud APIs.
 
-## 2. Critérios de Aceite
-- [ ] Implementação de ponta a ponta validada por testes.
-- [ ] Zero impacto de performance no runtime do Liquid.
+## 2. Acceptance Criteria
+- [ ] End-to-end implementation validated by tests.
+- [ ] Zero performance impact on the Liquid runtime.

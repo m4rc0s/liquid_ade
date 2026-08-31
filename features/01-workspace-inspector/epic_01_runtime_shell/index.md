@@ -1,13 +1,13 @@
-# 📌 Épico 01: Runtime Shell & Astryx Layout
+# 📌 Epic 01: Runtime Shell & Astryx Layout
 
-**Épico:** `EPIC-01` da Feature `FEAT-01`  
+**Epic:** `EPIC-01` of Feature `FEAT-01`  
 **Status:** `Draft` 📝  
 
 ---
 
-## 1. Objetivo & Escopo
-Servidor Rust (Axum) servindo a SPA estática embutida com o layout de 3 colunas em Astryx.
+## 1. Objective & Scope
+Rust server (Axum) serving the embedded static SPA with the 3-column layout built with Astryx.
 
-## 2. Critérios de Aceite
-- [ ] Implementação de ponta a ponta validada por testes.
-- [ ] Zero impacto de performance no runtime do Liquid.
+## 2. Acceptance Criteria
+- [ ] End-to-end implementation validated by tests.
+- [ ] Zero performance impact on the Liquid runtime.

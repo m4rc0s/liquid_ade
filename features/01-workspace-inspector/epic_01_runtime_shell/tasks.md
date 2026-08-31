@@ -1,18 +1,18 @@
 # 📋 TASKS — Runtime Shell & Astryx Layout
 
-**Épico:** `EPIC-01` da Feature `FEAT-01`  
+**Epic:** `EPIC-01` of Feature `FEAT-01`  
 **Status:** `Draft` 📝  
 
 ---
 
-## 📝 Checklist de Tarefas Atômicas
+## 📝 Atomic Tasks Checklist
 
-- [ ] **TASK-01.1.1**: Definir componentes base do layout (Sidebar, Header, Canvas) com Astryx em `ui/`.
-- [ ] **TASK-01.1.2**: Configurar servidor Axum para servir rota estática com fallback para `index.html`.
-- [ ] **TASK-01.1.3**: Implementar endpoint `/api/health` e validar inicialização em <150ms.
+- [ ] **TASK-01.1.1**: Define base layout components (Sidebar, Header, Canvas) with Astryx under `ui/`.
+- [ ] **TASK-01.1.2**: Configure Axum server to serve static routes with fallback to `index.html`.
+- [ ] **TASK-01.1.3**: Implement `/api/health` endpoint and validate startup time in <150ms.
 
 ---
 
 ## ✅ Definition of Done
-- [ ] Todas as tarefas concluídas e testadas.
-- [ ] Conformidade estrita com o SCPE v0.3.0.
+- [ ] All tasks completed and tested.
+- [ ] Strict compliance with SCPE v0.3.0.

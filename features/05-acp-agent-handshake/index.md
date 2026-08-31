@@ -1,34 +1,34 @@
-# 📄 PRD Global — FEAT-05: ACP Protocol & LiteLLM Model Gateway
+# 📄 Global PRD — FEAT-05: ACP Protocol & LiteLLM Model Gateway
 
 **Feature ID:** `FEAT-05`  
-**Nome:** ACP Protocol & LiteLLM Model Gateway  
-**Projeto:** Liquid ADE  
-**Metodologia:** SCPE v0.3.0  
-**Status Global:** `Draft` 📝  
+**Name:** ACP Protocol & LiteLLM Model Gateway  
+**Project:** Liquid ADE  
+**Methodology:** SCPE v0.3.0  
+**Global Status:** `Draft` 📝  
 
 ---
 
-## 1. Visão Executiva & Jornada do Usuário
+## 1. Executive Vision & User Journey
 
-### 1.1. Jornada Vertical de Ponta a Ponta
-> "Como desenvolvedor, eu configuro meu modelo de IA favorito (Ollama local ou Claude/OpenAI em nuvem) nas configurações, e testo a conexão enviando comandos padronizados via Agent Client Protocol (ACP)."
+### 1.1. End-to-End Vertical Journey
+> "As a developer, I configure my preferred AI model (local Ollama or cloud Claude/OpenAI) in settings, and test connectivity by sending standardized commands via Agent Client Protocol (ACP)."
 
-### 1.2. Escopo do Bounded Context
-Esta feature representa uma **Fatia Vertical (Vertical Slice)** completa. Ela entrega valor direto para o usuário conectando a Interface (React + Astryx), o Motor (Rust Axum) e o Sistema de Arquivos / Execução.
-
----
-
-## 2. Invariantes & Regras Inegociáveis
-
-1. **Corte Vertical Estrito:** A feature só é considerada `Done` quando a jornada do usuário funcionar de ponta a ponta.
-2. **SSOT no Sistema de Arquivos:** Todo estado é refletido no disco; zero persistência oculta.
-3. **Aderência aos Pilares de UI/UX:** Componentes e feedback visual seguem `UI_UX_GUIDELINES.md`.
+### 1.2. Bounded Context Scope
+This feature represents a complete **Vertical Slice**. It delivers direct value to the user by connecting the Interface (React + Astryx), Engine (Rust Axum), and Filesystem / Execution.
 
 ---
 
-## 3. Arquitetura de Épicos
+## 2. Invariants & Non-Negotiable Rules
 
-| Épico | Nome | Descrição | Status |
+1. **Strict Vertical Slice:** The feature is only considered `Done` when the user journey functions end-to-end.
+2. **Filesystem SSOT:** All state is reflected on disk; zero hidden persistence.
+3. **Adherence to UI/UX Pillars:** Components and visual feedback follow `UI_UX_GUIDELINES.md`.
+
+---
+
+## 3. Epic Architecture
+
+| Epic | Name | Description | Status |
 | :--- | :--- | :--- | :---: |
-| **`EPIC-01`** | **ACP JSON-RPC Server** | Implementação do protocolo ACP baseado em JSON-RPC 2.0 sobre WebSocket e stdio. | `Draft` 📝 |
-| **`EPIC-02`** | **LiteLLM Flexible Router** | Gateway universal de modelos conectando o servidor ACP a Ollama ou APIs de nuvem. | `Draft` 📝 |
+| **`EPIC-01`** | **ACP JSON-RPC Server** | Implementation of ACP protocol based on JSON-RPC 2.0 over WebSocket and stdio. | `Draft` 📝 |
+| **`EPIC-02`** | **LiteLLM Flexible Router** | Universal model gateway connecting the ACP server to Ollama or cloud APIs. | `Draft` 📝 |

@@ -1,136 +1,135 @@
-# 🌊 Liquid: Manifesto & Visão de Produto
+# 🌊 Liquid: Manifesto & Product Vision
 
-**Versão da Metodologia:** SCPE v0.3.0 (Spec-Compiled Product Engineering)  
-**Status do Documento:** Ativo / Fonte Única da Verdade (SSOT)  
-**Última Atualização:** 2026-08-31  
-
----
-
-## 1. Visão Executiva & Proposta de Valor
-
-O **Liquid** é uma plataforma e ambiente de engenharia de produto autônoma orientada a agentes (ADE — *Agentic Development Environment*), projetada para unificar concepção de negócios, arquitetura técnica e geração de software em uma única experiência contínua e determinística.
-
-Eliminando o fosso histórico entre os requisitos de negócio e o código-fonte, o Liquid adota o paradigma **Spec-Driven Development (SDD)** sob a metodologia **SCPE v0.3.0** (*Spec-Compiled Product Engineering*), onde:
-
-> **"A Especificação é o Contrato Soberano. O Documento é a Interface (Document-as-UI). Os Agentes Executam com Precisão Matemática. O Código é Apenas a Consequência."**
-
-### 1.1. O Problema: A Ilusão do "Vibe Coding" e o Abismo da Desconexão
-Com o advento dos Modelos de Linguagem (LLMs), a indústria de software mergulhou no *vibe coding* — uma geração desgovernada e não estruturada de código que gera dívida técnica imediata, falta de arquitetura e alucinações de contexto. Os problemas fundamentais atuais são:
-- **Desconexão de Requisitos:** Requisitos residem em ferramentas isoladas (Jira, Notion, Confluence, Slack), enquanto o código evolui dissociado da intenção original de produto.
-- **Perda de Contexto e Alucinação de Agentes:** Agentes de IA operam sem limites rígidos de domínio (*Bounded Contexts*), tentando inferir a arquitetura a partir de bases de código inteiras.
-- **Falta de Governança e Rastreabilidade:** Não há garantia de que cada linha de código gerada por um agente atenda a um critério de aceitação formal e mensurável.
-- **Lock-in Proprietário e Perda de Privacidade:** Dependência de ecossistemas fechados na nuvem e envio indiscriminado de propriedade intelectual e código sensível para servidores de terceiros.
-
-### 1.2. A Solução Liquid: Spec-First, Local-First e Code as Consequence
-O Liquid reestrutura o ciclo de vida do software através de especificações vivas compiláveis em Markdown estruturado, com sincronização bidirecional em tempo real, orquestração de agentes via protocolos abertos e execução estritamente isolada.
-
-### 1.3. Metodologia Configurável (Pluggable SDD)
-O SCPE v0.3.0 é a metodologia nativa e o fallback padrão do Liquid, mas não é a única possível. Cada workspace pode declarar uma **fonte de metodologia** própria — um repositório, pasta ou documento em texto plano descrevendo como aquele time trabalha, desde um padrão robusto e multi-documento (como o próprio SCPE) até um conjuntinho simples de regras escrito por uma única pessoa. O Liquid resolve essa fonte em um **Perfil de Metodologia** e passa a usá-lo para validar estrutura, gerar (*scaffold*) novos arquivos de spec e orientar os agentes — sem travar nenhum time no formato nativo do Liquid. **A configuração é feita por uma tela dedicada, nunca por edição manual de arquivo**, já que quem define a metodologia de um time é frequentemente um perfil não-técnico (PO/PM/Designer) sem terminal ou editor de código. Ver `FEAT-01 / EPIC-03` e `FEAT-02 / EPIC-02`.
+**Methodology Version:** SCPE v0.3.0 (Spec-Compiled Product Engineering)  
+**Document Status:** Active / Single Source of Truth (SSOT)  
+**Last Updated:** 2026-08-31  
 
 ---
 
-## 2. Personas, Workflows & A Fronteira do Código
+## 1. Executive Vision & Value Proposition
 
-O Liquid foi concebido para unir desenvolvedores e profissionais de produto sobre a **mesma fonte da verdade (arquivos Markdown no Git)**, com uma clara separação de responsabilidades em relação ao código-fonte:
+**Liquid** is an agent-oriented autonomous product engineering platform and environment (ADE — *Agentic Development Environment*), designed to unify business conception, technical architecture, and software generation into a single continuous, deterministic experience.
+
+Bridging the historical divide between business requirements and source code, Liquid embraces the **Spec-Driven Development (SDD)** paradigm under the **SCPE v0.3.0** (*Spec-Compiled Product Engineering*) methodology, where:
+
+> **"The Specification is the Sovereign Contract. The Document is the Interface (Document-as-UI). The Agents Execute with Mathematical Precision. The Code is Just the Consequence."**
+
+### 1.1. The Problem: The Illusion of "Vibe Coding" and the Disconnection Chasm
+With the advent of Large Language Models (LLMs), the software industry has plunged into *vibe coding* — unguided, unstructured code generation that introduces immediate technical debt, architectural vacuum, and context hallucinations. Today's fundamental issues are:
+- **Requirements Disconnect:** Requirements live in fragmented silos (Jira, Notion, Confluence, Slack), while code evolves detached from the original product intent.
+- **Context Loss and Agent Hallucination:** AI agents operate without rigid domain boundaries (*Bounded Contexts*), attempting to infer architecture across massive, noisy codebases.
+- **Lack of Governance and Traceability:** No guarantees exist that generated code aligns with formal, measurable acceptance criteria.
+- **Proprietary Lock-in and Privacy Loss:** Heavy dependency on closed cloud ecosystems and indiscriminate transmission of intellectual property and proprietary code to third-party servers.
+
+### 1.2. The Liquid Solution: Spec-First, Local-First, and Code as Consequence
+Liquid restructures the software development lifecycle through living specifications compiled in structured Markdown, featuring bidirectional sub-50ms live sync, open protocol agent orchestration, and strictly sandboxed execution.
+
+### 1.3. Pluggable SDD (Configurable Methodology)
+SCPE v0.3.0 is Liquid's native methodology and default fallback, but it is not the only option. Each workspace can declare its own **methodology source** — a repository, folder, or plain text document describing how that team works, ranging from a robust multi-document standard (such as SCPE itself) to a simple set of guidelines authored by a single person. Liquid resolves this source into a **Methodology Profile** used to validate structure, scaffold new spec files, and guide agents — without locking any team into Liquid's native format. **Configuration is handled via a dedicated UI screen, never requiring manual file edits**, since the person defining a team's methodology is often a non-technical stakeholder (PO/PM/Designer) without terminal or code editor access. See `FEAT-01 / EPIC-03` and `FEAT-02 / EPIC-02`.
+
+---
+
+## 2. Personas, Workflows & The Code Frontier
+
+Liquid was built to unite developers and product practitioners over the **same source of truth (Markdown files in Git)**, maintaining a clear separation of concerns regarding source code:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                          FONTE ÚNICA DA VERDADE                             │
-│                 Arquivos Markdown no Git (.md / SCPE v0.3.0)                │
+│                          SINGLE SOURCE OF TRUTH                             │
+│                 Markdown Files in Git (.md / SCPE v0.3.0)                   │
 └──────────────────────────────────────┬──────────────────────────────────────┘
                                        │
          ┌─────────────────────────────┴─────────────────────────────┐
          ▼                                                           ▼
 ┌──────────────────────────────────────┐            ┌──────────────────────────────────────┐
-│       PERFIL TÉCNICO (CLI-FIRST)     │            │    PERFIL DE PRODUTO (UI-FIRST)      │
-│     (Engenheiro / Tech Lead)         │            │   (Product Owner / PM / Designer)    │
+│      TECHNICAL PERSONA (CLI-FIRST)   │            │       PRODUCT PERSONA (UI-FIRST)     │
+│        (Engineer / Tech Lead)        │            │   (Product Owner / PM / Designer)    │
 │                                      │            │                                      │
-│ • Cria e edita specs via terminal,   │            │ • Escreve e refina especificações no │
-│   CLI ou editor (Neovim / VS Code).  │            │   editor visual WYSIWYG (Notion/     │
-│ • Usa a UI como Studio de Controle:  │            │   Linear style).                     │
-│   acompanha status, roadmap e o      │            │ • Acompanha o Liquid Board (Kanban)  │
-│   Liquid Board de tarefas.           │            │   e aprova o Readiness Gate.         │
-│ • Usa a UI pontualmente para edições │            │ • Visualiza o progresso das entregas │
-│   rápidas quando conveniente.        │            │   sem precisar abrir terminal.       │
+│ • Creates and edits specs via CLI,   │            │ • Writes and refines specs in the    │
+│   terminal, or editor (Neovim/VSCode)│            │   visual WYSIWYG editor (Notion /    │
+│ • Uses the UI as a Control Studio:   │            │   Linear style).                     │
+│   monitors status, roadmap, and the  │            │ • Follows the Liquid Board (Kanban)  │
+│   Liquid Board.                      │            │   and approves the Readiness Gate.   │
+│ • Uses the UI for quick spot edits   │            │ • Tracks delivery progress without   │
+│   when convenient.                   │            │   needing to open a terminal.        │
 └──────────────────┬───────────────────┘            └──────────────────┬───────────────────┘
                    │                                                   │
                    └───────────────────────────┬───────────────────────┘
                                                ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                 A FRONTEIRA DO CÓDIGO (Pasta `apps/`)                       │
+│                      THE CODE FRONTIER (`apps/` folder)                     │
 │                                                                             │
-│ • O Liquid ADE NÃO tenta ser um editor de código genérico (como o VS Code). │
-│ • O código gerado pelos agentes reside fisicamente em `apps/<app_name>/`.   │
-│ • Qualquer pessoa (Dev ou PM) que deseje inspecionar ou editar o código     │
-│   fonte manualmente abre a pasta `apps/` no seu editor favorito             │
-│   (Neovim, VS Code, Cursor, WebStorm).                                      │
+│ • Liquid ADE DOES NOT attempt to be a generic code editor (like VS Code).   │
+│ • Agent-generated code resides physically under `apps/<app_name>/`.         │
+│ • Anyone (Dev or PM) wishing to inspect or edit source code manually opens  │
+│   the `apps/` folder in their favorite editor (Neovim, VS Code, Cursor).    │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-* **Foco no que importa:** O Liquid foca em ser a melhor ferramenta do mundo para **Especificação, Governança, Rastreabilidade e Orquestração de Agentes**.
-* **Zero Lock-in de Editor:** Não forçamos ninguém a usar um editor de código embutido no browser. A pasta `apps/` é código limpo e padrão no disco.
+* **Focus on What Matters:** Liquid focuses on being the world's best tool for **Specification, Governance, Traceability, and Agent Orchestration**.
+* **Zero Editor Lock-in:** We never force anyone into a browser-based code editor. The `apps/` folder contains clean, standard code on disk.
 
 ---
 
-## 3. A Arquitetura Unificada: Artefato Único & Modelo SPA (Figma/Linear Style)
+## 3. Unified Architecture: Single Artifact & SPA Model (Figma/Linear Style)
 
-O Liquid adota o padrão de **Artefato Único (12-Factor App)** e **SPA Estática Pura (sem SSR)**. A aplicação opera com a máxima fluidez tanto como um **SaaS na Web** quanto como um **App Desktop Nativo (Tauri 2.0)** sem necessidade de abrir navegador:
+Liquid adopts the **Single Artifact (12-Factor App)** and **Pure Static SPA (Zero SSR)** model. The application operates with maximum fluidity both as a **Cloud SaaS** and as a **Native Desktop App (Tauri 2.0)** without opening a browser:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                           LIQUID ADE INTERFACE                              │
-│       React 19 + TypeScript + Astryx Design System + Editor WYSIWYG         │
-│          (Single Page Application Pura / Estática — Zero SSR)               │
+│                             LIQUID ADE INTERFACE                            │
+│         React 19 + TypeScript + Astryx Design System + WYSIWYG Editor       │
+│               (Pure / Static Single Page Application — Zero SSR)            │
 └──────────────────────────────────────┬──────────────────────────────────────┘
-                                       │ (Mesma SPA / Mesmos Componentes)
+                                       │ (Same SPA / Same Components)
          ┌─────────────────────────────┴─────────────────────────────┐
          ▼                                                           ▼
 ┌──────────────────────────────────────┐            ┌──────────────────────────────────────┐
-│        DISTRIBUIÇÃO DESKTOP          │            │          DISTRIBUIÇÃO WEB            │
-│         (Tauri 2.0 Wrapper)          │            │       (Servidor Axum em Rust)        │
+│        DESKTOP DISTRIBUTION          │            │           WEB DISTRIBUTION           │
+│         (Tauri 2.0 Wrapper)          │            │       (Axum Server in Rust)          │
 │                                      │            │                                      │
-│ • Janela Nativa sem abrir navegador  │            │ • Servido localmente ou na Nuvem     │
-│ • Execução 100% Offline e Segura     │            │ • Cloud SaaS (Multi-tenant) via ENV  │
-│ • WebView nativa de alto desempenho  │            │ • Roda em qualquer browser moderno   │
+│ • Native window without browser UI   │            │ • Served locally or in the cloud     │
+│ • 100% Offline and Secure execution  │            │ • Multi-tenant Cloud SaaS via ENV    │
+│ • High-performance native WebView    │            │ • Runs in any modern web browser     │
 └──────────────────┬───────────────────┘            └──────────────────┬───────────────────┘
                    │                                                   │
                    └───────────────────────────┬───────────────────────┘
                                                ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                             CORE ENGINE (RUST)                              │
-│       Servidor Axum + Protocolo ACP (JSON-RPC 2.0) + File Watcher           │
+│                              CORE ENGINE (RUST)                             │
+│         Axum Server + ACP Protocol (JSON-RPC 2.0) + File Watcher            │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                       LITELLM UNIVERSAL MODEL ROUTING                       │
-│     (Suporte transparente a Ollama, Llama.cpp, Claude, GPT-4o, Gemini)      │
+│     (Transparent support for Ollama, Llama.cpp, Claude, GPT-4o, Gemini)     │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                EXECUÇÃO & SANDBOXING ISOLADO COM PODMAN                     │
-│        (Isolamento rootless de tarefas downstream — sem docker-compose)     │
+│                ISOLATED EXECUTION & SANDBOXING WITH PODMAN                  │
+│        (Rootless downstream task isolation — without docker-compose)        │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 4. Os 7 Pilares Arquiteturais Inegociáveis
+## 4. The 7 Non-Negotiable Architectural Pillars
 
-1. **Engine Core em Rust (Axum / Tokio):**
-   - Núcleo de alta performance, com consumo de memória mínimo (<50MB RSS em repouso) e inicialização ultrarrápida (<100ms).
-   - Atua como servidor web, despachante ACP e orquestrador de arquivos.
+1. **Rust Core Engine (Axum / Tokio):**
+   - High-performance core with minimal memory footprint (<50MB RSS at idle) and ultra-fast startup (<100ms).
+   - Serves as the web server, ACP dispatcher, and filesystem orchestrator.
 
-2. **Frontend Reativo em SPA Estática (Sem SSR):**
-   - Construído com React 19, TypeScript, Vite, Astryx Design System (`@astryxdesign/core`) e Zustand.
-   - **Zero SSR (Sem Node.js em produção):** Adota o modelo de ferramentas modernas (Linear/Figma/VS Code Web), gerando assets estáticos leves que rodam nativamente no browser e dentro do Tauri sem overhead de servidores intermediários.
+2. **Reactive Static SPA Frontend (Zero SSR):**
+   - Built with React 19, TypeScript, Vite, Astryx Design System (`@astryxdesign/core`), and Zustand.
+   - **Zero SSR (No Node.js in production):** Adopts the pattern of modern engineering tools (Linear/Figma/VS Code Web), generating lightweight static assets that run natively in the browser and within Tauri without intermediate server overhead.
 
-3. **Protocolo Aberto via Agent Client Protocol (ACP):**
-   - Toda comunicação entre a interface (Client) e os Agentes/Engine é governada por JSON-RPC 2.0 sobre `stdio` ou `WebSocket`.
+3. **Open Protocol via Agent Client Protocol (ACP):**
+   - All communication between the interface (Client) and Agents/Engine is governed by JSON-RPC 2.0 over `stdio` or `WebSocket`.
 
-4. **Roteamento Agnóstico via LiteLLM:**
-   - Alternância fluida e configurável entre inferência local privada (Ollama, Llama.cpp) ou provedores em nuvem (Claude 3.5 Sonnet, GPT-4o, Gemini Pro) em qualquer modo de execução.
+4. **Model-Agnostic Routing via LiteLLM:**
+   - Seamless, configurable switching between local private inference (Ollama, Llama.cpp) and cloud providers (Claude 3.5 Sonnet, GPT-4o, Gemini Pro) across all execution modes.
 
-5. **Sandboxing Seguro com Podman (Rootless & Daemonless):**
-   - Agentes de IA executam compilações e testes de código dentro de contêineres efémeros gerenciados via **Podman**, eliminando daemons com privilégios de root e descartando `docker-compose`.
+5. **Secure Rootless Sandboxing with Podman:**
+   - AI agents compile code and run tests inside ephemeral containers managed via **Podman**, eliminating root daemons and discarding `docker-compose`.
 
-6. **Orquestração de Tarefas com Just (`Justfile`):**
-   - Automação de desenvolvimento e compilação centralizada em um `Justfile` minimalista e determinístico.
+6. **Task Automation with Just (`Justfile`):**
+   - Centralized, deterministic development and build workflows (`just dev`, `just build`, `just test`) for both humans and agents.
 
-7. **Editor WYSIWYG (Document-as-UI):**
-   - Especificações em Markdown tratadas como componentes visuais vivos no estilo Notion/Linear com sincronização bidirecional em tempo real e supressão de eco.
+7. **WYSIWYG Document Editor (Document-as-UI):**
+   - Markdown specs treated as living visual components in Notion/Linear style, featuring real-time bidirectional sync and echo suppression.

@@ -1,37 +1,37 @@
-# 📄 PRD Global — FEAT-02: Spec Status, Drift & Liquid Board (Kanban)
+# 📄 Global PRD — FEAT-02: Spec Status, Drift & Liquid Board (Kanban)
 
 **Feature ID:** `FEAT-02`  
-**Nome:** Spec Status, Drift & Liquid Board (Kanban View)  
-**Projeto:** Liquid ADE  
-**Metodologia:** SCPE v0.3.0  
-**Status Global:** `Draft` 📝  
+**Name:** Spec Status, Drift & Liquid Board (Kanban View)  
+**Project:** Liquid ADE  
+**Methodology:** SCPE v0.3.0  
+**Global Status:** `Draft` 📝  
 
 ---
 
-## 1. Visão Executiva & Jornada do Usuário
+## 1. Executive Vision & User Journey
 
-### 1.1. Jornadas Verticais de Ponta a Ponta
-> *"Como Product Owner e Tech Lead, eu alterno entre o modo Documento e o modo **Liquid Board (Kanban)**. No Kanban, vejo colunas representando os estados do SCPE (`Draft`, `Ready`, `WIP`, `Done`, `Blocked`, `Stale`) com cards para cada épico/tarefa. Ao arrastar um card de `Draft` para `Ready`, o Liquid atualiza o `quick_status.md` no disco em tempo real."*
+### 1.1. End-to-End Vertical Journeys
+> *"As a Product Owner and Tech Lead, I switch between Document mode and **Liquid Board (Kanban)** mode. In Kanban, I see columns representing SCPE states (`Draft`, `Ready`, `WIP`, `Done`, `Blocked`, `Stale`) with cards for each epic/task. When I drag a card from `Draft` to `Ready`, Liquid updates the corresponding `quick_status.md` on disk in real time."*
 
-### 1.2. Escopo do Bounded Context
-Esta feature entrega a visão holística do projeto através de:
-1. **Badges de Estado:** Indicadores táteis na árvore lateral.
-2. **Liquid Board (Kanban Interativo):** Visualização e transição de estados via cards e colunas do SCPE v0.3.0.
-3. **Spec Drift Inspector:** Alerta visual e banner de inconsistência para épicos `Stale`.
-
----
-
-## 2. Invariantes & Regras Inegociáveis
-
-1. **Kanban Orientado a Arquivos (Zero Banco Oculto):** Cada coluna do Kanban reflete a máquina de estados do SCPE (`Draft`, `Ready`, `WIP`, `Done`, `Blocked`, `Stale`). Mover um card altera diretamente o arquivo `quick_status.md` correspondente no disco.
-2. **Componentização Astryx:** Os cards de tarefas e épicos utilizam os componentes de card e badges do Astryx Design System.
-3. **Corte Vertical Estrito:** A feature só é considerada `Done` quando a visualização e a transição via drag-and-drop / clique funcionarem de ponta a ponta.
+### 1.2. Bounded Context Scope
+This feature delivers a holistic project overview through:
+1. **State Badges:** Tactile indicators in the sidebar tree.
+2. **Liquid Board (Interactive Kanban):** Visualization and state transitions via SCPE v0.3.0 cards and columns.
+3. **Spec Drift Inspector:** Visual alert and inconsistency banner for `Stale` epics.
 
 ---
 
-## 3. Arquitetura de Épicos
+## 2. Invariants & Non-Negotiable Rules
 
-| Épico | Nome | Descrição | Status |
+1. **File-Driven Kanban (Zero Hidden Database):** Each Kanban column reflects the SCPE state machine (`Draft`, `Ready`, `WIP`, `Done`, `Blocked`, `Stale`). Moving a card directly alters the corresponding `quick_status.md` file on disk.
+2. **Astryx Componentization:** Task and epic cards use card and badge components from the Astryx Design System.
+3. **Strict Vertical Slice:** The feature is only considered `Done` when visualization and drag-and-drop / click transitions work end-to-end.
+
+---
+
+## 3. Epic Architecture
+
+| Epic | Name | Description | Status |
 | :--- | :--- | :--- | :---: |
-| **`EPIC-01`** | **Status Matrix & Liquid Board (Kanban)** | Leitura de estados e painel visual em colunas Kanban com Cards interativos do Astryx. | `Draft` 📝 |
-| **`EPIC-02`** | **Spec Drift Validator & State Transitions** | Motor de transição de estados no disco e detecção de inconsistências pós-entrega (`Stale`). | `Draft` 📝 |
+| **`EPIC-01`** | **Status Matrix & Liquid Board (Kanban)** | State reading and visual dashboard in Kanban columns with interactive Astryx Cards. | `Draft` 📝 |
+| **`EPIC-02`** | **Spec Drift Validator & State Transitions** | State transition engine on disk and post-completion inconsistency detection (`Stale`). | `Draft` 📝 |

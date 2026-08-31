@@ -1,104 +1,104 @@
-# 📖 Glossário de Domínio e Linguagem Ubíqua
+# 📖 Domain Glossary & Ubiquitous Language
 
-**Metodologia:** SCPE v0.3.0 (Spec-Compiled Product Engineering)  
-**Status:** Canônico e Obrigatório / Fonte Única da Verdade  
-**Última Atualização:** 2026-08-31  
+**Methodology:** SCPE v0.3.0 (Spec-Compiled Product Engineering)  
+**Status:** Canonical & Mandatory / Single Source of Truth (SSOT)  
+**Last Updated:** 2026-08-31  
 
-Este glossário define a **Linguagem Ubíqua** do ecossistema **Liquid**. Todos os documentos de especificação, manifestos, modelos de dados e agentes autônomos devem utilizar estritamente os termos aqui definidos para eliminar ambiguidades conceituais e alucinações de contexto.
+This glossary establishes the **Ubiquitous Language** for the **Liquid** ecosystem. All specification documents, manifests, data models, and autonomous agents must strictly use the terms defined here to eliminate conceptual ambiguity and context hallucinations.
 
 ---
 
-## 1. Conceitos Fundamentais do SCPE v0.3.0
+## 1. Core Concepts of SCPE v0.3.0
 
 ### SCPE (Spec-Compiled Product Engineering)
-Metodologia de engenharia de software onde especificações em linguagem natural e modelos conceituais estruturados servem como o código-fonte primário compilável. Em SCPE, o código executável é um subproduto determinístico gerado, validado e mantido por agentes de inteligência artificial a partir de documentos vivos.
+A software engineering methodology where natural language specifications and structured conceptual models serve as the primary compilable source code. In SCPE, executable code is a deterministic byproduct generated, validated, and maintained by AI agents from living documents.
 
 ### SDD (Spec-Driven Development)
-Processo de desenvolvimento centrado na escrita e refinamento de especificações rigorosas antes de qualquer geração de código. Rejeita o *vibe coding* desordenado e foca na intenção pura de negócio e nas fronteiras de domínio.
+A development process centered on writing and refining rigorous specifications before generating any code. It rejects unstructured *vibe coding* and focuses on pure business intent and domain boundaries.
 
-### Metodologia Configurável (Pluggable Methodology)
-Capacidade do Liquid de operar sob um padrão de Spec-Driven Development diferente do SCPE v0.3.0 nativo. O workspace aponta para uma **fonte de metodologia** externa em texto plano (um repositório, uma pasta ou um documento único) — que pode ser tão estruturada quanto o próprio SCPE ou tão simples quanto um conjuntinho informal de regras escrito por uma única pessoa. A configuração é feita por uma tela dedicada na UI, nunca exigindo edição manual de arquivo, pois quem define a metodologia de um time é frequentemente um perfil não-técnico (PO/PM/Designer). Na ausência de configuração, o SCPE v0.3.0 é usado como padrão (fallback).
+### Pluggable Methodology (Configurable SDD)
+The ability of Liquid to operate under a Spec-Driven Development pattern other than native SCPE v0.3.0. The workspace points to an external plain-text **methodology source** (a repository, folder, or single document) — which can be as structured as SCPE itself or as simple as an informal set of guidelines written by one person. Configuration is performed via a dedicated UI screen without requiring manual file edits, accommodating non-technical stakeholders (PO/PM/Designer). In the absence of custom configuration, SCPE v0.3.0 is used as the default fallback.
 
-### Perfil de Metodologia (Methodology Profile)
-Representação interpretada pelo Liquid a partir de uma fonte de metodologia configurada: estrutura esperada de pastas/arquivos, convenções de nomenclatura e, quando existir, máquina de estados. É consumido pelos agentes para validar estrutura (Spec Drift) e para gerar (scaffold) novos arquivos de spec conforme o padrão daquele workspace, em vez do formato nativo do Liquid.
+### Methodology Profile
+The interpreted representation derived by Liquid from a configured methodology source: expected folder/file structure, naming conventions, and state machines (when present). Consumed by agents to validate structure (Spec Drift) and scaffold new spec files following that workspace's standards instead of Liquid's native format.
 
-### Code as Consequence (Código como Consequência)
-Princípio arquitetural no qual o código-fonte físico (localizado na pasta `apps/`) nunca é escrito diretamente por humanos em modo cascata, mas sim compilado e materializado como consequência direta de uma especificação formal aprovada.
+### Code as Consequence
+An architectural principle stating that physical source code (located under `apps/`) is never written directly in a top-down waterfall manner, but compiled and materialized as the direct consequence of an approved formal specification.
 
-### SSOT (Single Source of Truth / Fonte Única da Verdade)
-Garantia arquitetural de que o estado real do projeto reside estritamente nos arquivos de texto em disco versionados no Git (`.md`, `.yaml`, `.rs`, etc.). A interface do usuário (UI) não possui banco de dados proprietário oculto; ela é uma projeção reativa em tempo real do sistema de arquivos.
+### SSOT (Single Source of Truth)
+The architectural guarantee that the true state of the project resides strictly in text files on disk versioned in Git (`.md`, `.yaml`, `.rs`, etc.). The User Interface (UI) maintains no hidden proprietary database; it is a real-time reactive projection of the filesystem.
 
-### Upstream (A Onda Subindo)
-Fase do ciclo de desenvolvimento voltada à elicitação, validação de regras de negócio, arquitetura conceitual e escrita de especificações. É liderada por humanos (Engenheiros de Negócios, Product Managers, Tech Leads) com auxílio de agentes de análise.
+### Upstream (The Rising Wave)
+The phase of the development lifecycle focused on elicitation, business rule validation, conceptual architecture, and specification authoring. Led by human stakeholders (Business Engineers, Product Managers, Tech Leads) assisted by analysis agents.
 
-### Downstream (A Onda Quebrando)
-Fase do ciclo de desenvolvimento iniciada após uma feature atingir o estado **Ready**. Envolve a distribuição automatizada de tarefas para agentes de IA que implementam código em sandboxes isolados via Podman, escrevem testes unitários (TDD) e atualizam o estado das tarefas no repositório.
+### Downstream (The Breaking Wave)
+The phase of the development lifecycle triggered after a feature reaches the **Ready** state. Encompasses automated task distribution to AI agents that implement code in isolated Podman sandboxes, write unit tests (TDD), and update task states in the repository.
 
 ---
 
-## 2. Protocolos, Runtime & Ferramentas
+## 2. Protocols, Runtime & Tooling
 
 ### ACP (Agent Client Protocol)
-Protocolo padronizado de comunicação cliente-servidor baseado em JSON-RPC 2.0 (transmitido via `stdio` ou `WebSocket`). Define contratos estritos para que o Liquid ADE descubra, envie contexto, ordene execuções, receba streaming de respostas e monitore o ciclo de vida de agentes de IA locais ou remotos de forma totalmente desacoplada.
+A standardized client-server protocol based on JSON-RPC 2.0 (transmitted via `stdio` or `WebSocket`). Defines strict contracts for Liquid ADE to discover, transmit context, order executions, receive streaming responses, and monitor the lifecycle of local or remote AI agents in a decoupled manner.
 
-### SPA Estática Pura (Zero SSR)
-Decisão arquitetural do frontend do Liquid ADE: uma aplicação em React 19 + TypeScript compilada pelo Vite que gera apenas ativos estáticos (HTML/CSS/JS). Rejeita SSR para eliminar dependências de servidores Node.js em produção e permitir execução idêntica no navegador (Web/SaaS) e em janela nativa (Tauri Desktop).
+### Pure Static SPA (Zero SSR)
+The architectural decision for Liquid ADE's frontend: a React 19 + TypeScript application bundled with Vite producing only static assets (HTML/CSS/JS). Rejects SSR to eliminate Node.js runtime dependencies in production and ensure identical execution in browsers (Web/SaaS) and native desktop windows (Tauri).
 
-### Podman Sandboxing (Execução Isolada Rootless)
-Mecanismo de segurança em que tarefas de código geradas por agentes (instalação de pacotes, compilação, execução de testes e scripts) rodam em contêineres efémeros gerenciados via **Podman** sem daemons de root. Garante isolamento completo do ambiente hospedeiro do usuário sem a complexidade de `docker-compose`.
+### Podman Sandboxing (Rootless Isolated Execution)
+A security mechanism where code tasks generated by agents (package installation, compilation, test and script execution) run in ephemeral containers managed via **Podman** without root daemons. Ensures complete isolation of the host environment without `docker-compose` complexity.
 
 ### Just (Task Runner)
-Ferramenta de automação e orquestração de comandos do repositório (`Justfile`), garantindo comandos determinísticos e unificados (`just dev`, `just build`, `just test`) para humanos e agentes.
+Command automation and task orchestration tool (`Justfile`), providing unified and deterministic commands (`just dev`, `just build`, `just test`) for both humans and agents.
 
 ### Model-Agnostic Routing (LiteLLM)
-Camada de abstração e despacho que permite ao Liquid alternar de forma transparente entre inferência 100% local/privada (Ollama, Llama.cpp, vLLM) e provedores em nuvem (Anthropic Claude, OpenAI, Google Gemini), sem alterar a lógica de negócios da plataforma.
+An abstraction and dispatch layer allowing Liquid to switch transparently between 100% local/private inference (Ollama, Llama.cpp, vLLM) and cloud providers (Anthropic Claude, OpenAI, Google Gemini) without changing platform business logic.
 
 ---
 
-## 3. Máquina de Estados e Ciclo de Vida (State Machine SCPE v0.3.0)
+## 3. State Machine & Lifecycle (SCPE v0.3.0)
 
-Toda feature, fase e tarefa no ecossistema Liquid obedece a uma máquina de estados finita estrita:
+Every feature, phase, and task in the Liquid ecosystem follows a strict finite state machine:
 
 ```
-┌─────────┐       Validação       ┌─────────┐     Disparo ACP      ┌─────────┐
-│  DRAFT  │ ────────────────────▶ │  READY  │ ───────────────────▶ │   WIP   │
-└─────────┘     (Tech Lead / PM)  └─────────┘    (Agente Inicia)   └─────────┘
-     ▲                                 │                                │
-     │                                 │ Resolução                      │ Conclusão + Testes
-     │                                 ▼                                ▼
-     │                            ┌─────────┐                      ┌─────────┐
-     └─────────────────────────── │ BLOCKED │                      │  DONE   │
-          Retorno p/ Upstream     └─────────┘                      └─────────┘
-                                                                        │
-                                   Edição do plan.md pós-entrega         │
-                                  ──────────────────────────────────────┘
-                                  ▼
-                             ┌─────────┐
-                             │  STALE  │  (Força revalidação no Readiness Gate)
-                             └─────────┘
+┌─────────┐       Validation       ┌─────────┐     ACP Trigger      ┌─────────┐
+│  DRAFT  │ ─────────────────────▶ │  READY  │ ───────────────────▶ │   WIP   │
+└─────────┘     (Tech Lead / PM)   └─────────┘    (Agent Starts)    └─────────┘
+     ▲                                  │                                │
+     │                                  │ Resolution                     │ Completion + Tests
+     │                                  ▼                                ▼
+     │                             ┌─────────┐                      ┌─────────┐
+     └──────────────────────────── │ BLOCKED │                      │  DONE   │
+           Return to Upstream      └─────────┘                      └─────────┘
+                                                                         │
+                                    Post-delivery plan.md edit           │
+                                   ──────────────────────────────────────┘
+                                   ▼
+                              ┌─────────┐
+                              │  STALE  │  (Forces revalidation at Readiness Gate)
+                              └─────────┘
 ```
 
-| Estado | Significado Semântico | Gatilho de Transição |
+| State | Semantic Meaning | Transition Trigger |
 | :--- | :--- | :--- |
-| **`DRAFT`** | Especificação em ideação/construção no Upstream. | Criação de uma nova feature ou épico. |
-| **`READY`** | Especificação aprovada no *Readiness Gate*; pronta para downstream. | Validação do modelo conceitual e critérios pelo Tech Lead / PM. |
-| **`WIP`** (*Work In Progress*) | Em execução ativa por um agente autônomo. | Agente inicia a primeira tarefa sequencial de `tasks.md` via ACP. |
-| **`DONE`** | Implementação concluída com 100% dos testes unitários e critérios aprovados. | Agente Revisor executa suíte de testes em sandbox e aprova a entrega. |
-| **`BLOCKED`** | Execução interrompida por erro técnico, dependência ausente ou ambiguidade. | Agente ou desenvolvedor detecta bloqueio intransponível. |
-| **`STALE`** | Especificação alterada pós-entrega, exigindo revalidação técnica de drift. | Qualquer commit no `plan.md` de um épico previamente `Done`. |
+| **`DRAFT`** | Specification under ideation/construction in Upstream. | Creation of a new feature or epic. |
+| **`READY`** | Specification approved at the *Readiness Gate*; ready for downstream execution. | Conceptual model and criteria validation by Tech Lead / PM. |
+| **`WIP`** (*Work In Progress*) | Under active execution by an autonomous agent. | Agent begins first sequential task from `tasks.md` via ACP. |
+| **`DONE`** | Implementation complete with 100% unit tests and criteria passing. | Quality Reviewer agent executes test suite in sandbox and approves. |
+| **`BLOCKED`** | Execution halted by technical error, missing dependency, or ambiguity. | Agent or developer detects an impassable blocker. |
+| **`STALE`** | Specification modified post-delivery, requiring technical drift revalidation. | Any commit to `plan.md` of a previously `Done` epic. |
 
 ---
 
-## 4. Document-as-UI & Editor WYSIWYG
+## 4. Document-as-UI & WYSIWYG Editor
 
 ### Document-as-UI
-Paradigma no qual arquivos Markdown estruturados não são apenas renderizados tipograficamente, mas sim interpretados como uma árvore de componentes de interface ricos (chips de metadados, badges interativos, tabelas de domínio, checklists clicáveis e blocos BDD).
+A paradigm where structured Markdown files are not merely rendered typographically, but interpreted as a tree of rich interface components (metadata chips, interactive badges, domain tables, clickable checklists, and BDD blocks).
 
-### AST Block Model (Árvore Sintática Abstrata de Blocos)
-Modelo de dados em árvore sintática que divide uma especificação em blocos semânticos tipados (`HeaderNode`, `MetaChipsNode`, `RequirementTableNode`, `BddScenarioNode`, `CriteriaListNode`, `TaskItemNode`). Cada nó possui renderização visual específica através do **Astryx Design System** e capacidade de edição bidirecional direta na tela.
+### AST Block Model (Abstract Syntax Tree Block Model)
+A syntax tree data model dividing a specification into typed semantic blocks (`HeaderNode`, `MetaChipsNode`, `RequirementTableNode`, `BddScenarioNode`, `CriteriaListNode`, `TaskItemNode`). Each node provides specific visual rendering via the **Astryx Design System** and direct two-way on-screen editing.
 
-### Two-Way Sync (Sincronização Bidirecional com Supressão de Eco)
-Motor que sincroniza alterações entre a interface gráfica e o sistema de arquivos local:
-1. **Edição na UI:** Altera cirurgicamente as linhas correspondentes no disco sem afetar formatação ou comentários adjacentes.
-2. **Edição no Disco (VS Code / Neovim / Git):** O File Watcher detecta a mudança e atualiza a UI reativamente em <50ms.
-3. **Echo Suppression (Supressão de Eco):** Mecanismo que ignora eventos de arquivo gerados pela própria UI, evitando loops infinitos de re-renderização e gravação.
+### Two-Way Sync (Bidirectional Sync with Echo Suppression)
+The synchronization engine bridging changes between the graphical interface and the local filesystem:
+1. **UI Edit:** Surgically modifies corresponding lines on disk without disturbing adjacent formatting or comments.
+2. **Disk Edit (VS Code / Neovim / Git):** The File Watcher detects changes and updates the UI reactively in <50ms.
+3. **Echo Suppression:** Mechanism ignoring filesystem events generated by the UI itself, preventing infinite re-render loops and race conditions.

@@ -1,49 +1,49 @@
-# 🌊 Liquid ADE: Guia Mestre do Workspace
+# 🌊 Liquid ADE: Workspace Master Guide
 
-**Metodologia:** SCPE v0.3.0 (Spec-Compiled Product Engineering)  
-**Status do Workspace:** Ativo / Fonte Canônica da Verdade (SSOT)  
-**Última Atualização:** 2026-08-31  
+**Methodology:** SCPE v0.3.0 (Spec-Compiled Product Engineering)  
+**Workspace Status:** Active / Canonical Single Source of Truth (SSOT)  
+**Last Updated:** 2026-08-31  
 
 ---
 
-## 1. Visão Geral do Workspace
+## 1. Workspace Overview
 
-O workspace **Liquid** é governado estritamente pela metodologia **SCPE v0.3.0**. O repositório centraliza toda a especificação de produto viva na raiz e nas pastas de features, enquanto a implementação técnica reside em `apps/ade/`:
+The **Liquid** workspace is strictly governed by the **SCPE v0.3.0** methodology. The repository centralizes all living product specifications at the root and within feature folders, while the technical implementation resides under `apps/ade/`:
 
 ```text
 /home/mraraujo/product_design/liquid_ade/
-├── 📜 product_vision.md          # Visão do Produto, Manifesto & Pilares Arquiteturais
-├── 🗺️ roadmap.md                 # Planejamento dos 6 Cortes Verticais
-├── 📖 glossary.md                # Linguagem Ubíqua e Máquina de Estados
-├── 🧭 index.md                   # Este Guia Mestre
+├── 📜 product_vision.md          # Product Vision, Manifesto & Architectural Pillars
+├── 🗺️ roadmap.md                 # Planning for the 6 Vertical Slices
+├── 📖 glossary.md                # Ubiquitous Language and State Machine
+├── 🧭 index.md                   # This Master Guide
 │
 ├── 📦 apps/
 │   └── ade/                      # Monorepo Rust (Axum/Tokio) + React (Astryx SPA)
-│       ├── app_manifest.md       # Manifesto técnico do aplicativo
-│       ├── Cargo.toml            # Maestro do Backend
-│       ├── build.rs              # Script que embute a UI no binário
+│       ├── app_manifest.md       # Application technical manifest
+│       ├── Cargo.toml            # Backend orchestrator
+│       ├── build.rs              # Build script embedding the UI into the binary
 │       └── ui/
-│           ├── UI_UX_GUIDELINES.md # Constituição com os 7 Pilares de UI e 8 Heurísticas
+│           ├── UI_UX_GUIDELINES.md # Constitution with 7 UI Pillars and 8 Heuristics
 │           └── package.json      # React 19 + Astryx Design System
 │
-├── 📂 features/                  # Os 6 Cortes Verticais de Negócio
-│   ├── 01-workspace-inspector/   # Visualizador de projetos e leitura de Markdown
-│   ├── 02-spec-status-and-drift/ # Badges táteis e detecção de Spec Drift
-│   ├── 03-live-file-sync/        # Sincronização em tempo real (<50ms) via Watcher
-│   ├── 04-wysiwyg-document-editor/ # Editor WYSIWYG de blocos com patch cirúrgico
-│   ├── 05-acp-agent-handshake/   # Protocolo ACP e roteamento LiteLLM
-│   └── 06-podman-sandbox-execution/ # Execução de agentes em container Podman
+├── 📂 features/                  # The 6 Business Vertical Slices
+│   ├── 01-workspace-inspector/   # Project viewer and Markdown reader
+│   ├── 02-spec-status-and-drift/ # Tactile badges and Spec Drift detection
+│   ├── 03-live-file-sync/        # Real-time synchronization (<50ms) via Watcher
+│   ├── 04-wysiwyg-document-editor/ # WYSIWYG block editor with surgical line patcher
+│   ├── 05-acp-agent-handshake/   # ACP Protocol and LiteLLM routing
+│   └── 06-podman-sandbox-execution/ # Agent execution in Podman container
 │
 └── 🏛️ archive/
-    └── v0.5-prototype-legacy/    # Protótipo antigo preservado como histórico
+    └── v0.5-prototype-legacy/    # Legacy prototype preserved as history
 ```
 
 ---
 
-## 2. Matriz dos Cortes Verticais (`features/`)
+## 2. Vertical Slices Matrix (`features/`)
 
-Cada pasta dentro de `features/` é um **Bounded Context autocontido** estruturado com:
-- `index.md` (PRD da feature e jornada do usuário de ponta a ponta).
-- `feat_roadmap.md` (Acompanhamento dos épicos internos).
-- `quick_status.md` (Estado formal: `Draft`, `Ready`, `WIP`, `Done`, `Blocked`, `Stale`).
-- Subpastas `epic_01_*/` e `epic_02_*/` contendo seus respectivos `index.md`, `plan.md`, `tasks.md` e `quick_status.md`.
+Each folder inside `features/` is a **self-contained Bounded Context** structured with:
+- `index.md` (Feature PRD and end-to-end user journey).
+- `feat_roadmap.md` (Tracking internal epics).
+- `quick_status.md` (Formal state: `Draft`, `Ready`, `WIP`, `Done`, `Blocked`, `Stale`).
+- Subfolders `epic_01_*/` and `epic_02_*/` containing their respective `index.md`, `plan.md`, `tasks.md`, and `quick_status.md`.

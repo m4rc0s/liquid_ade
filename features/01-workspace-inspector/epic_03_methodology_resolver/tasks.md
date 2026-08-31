@@ -1,22 +1,22 @@
 # 📋 TASKS — Methodology Config Resolver & Adapter
 
-**Épico:** `EPIC-03` da Feature `FEAT-01`  
+**Epic:** `EPIC-03` of Feature `FEAT-01`  
 **Status:** `Draft` 📝
 
 ---
 
-## 📝 Checklist de Tarefas Atômicas
+## 📝 Atomic Tasks Checklist
 
-- [ ] **TASK-01.3.1**: Definir o campo `methodology.source` na configuração de workspace/projeto (path local ou URL de repositório Git).
-- [ ] **TASK-01.3.2**: Implementar resolvedor em Rust que localiza/clona a fonte apontada e lê seu conteúdo como texto.
-- [ ] **TASK-01.3.3**: Implementar interpretação via agente de IA que extrai um Perfil de Metodologia (estrutura de pastas/arquivos esperada, convenções, máquina de estados quando existir) a partir de fontes tanto formais quanto informais.
-- [ ] **TASK-01.3.4**: Aplicar fallback automático para o SCPE v0.3.0 nativo quando nenhuma fonte for configurada ou a resolução falhar.
-- [ ] **TASK-01.3.5**: Expor endpoint `/api/workspace/methodology` (GET/PUT) com a fonte, status e Perfil de Metodologia resolvido.
-- [ ] **TASK-01.3.6**: Construir a **tela de Configuração de Metodologia em Astryx** (campo de path/URL, botão de detecção, preview do Perfil resolvido e opção de reverter ao SCPE nativo) acessível sem terminal ou editor de código, para uso por perfis não-técnicos (PO/PM/Designer).
-- [ ] **TASK-01.3.7**: Utilizar o Perfil de Metodologia resolvido para gerar (*scaffold*) novos arquivos de spec conforme os templates/estrutura da fonte configurada.
+- [ ] **TASK-01.3.1**: Define `methodology.source` field in workspace/project configuration (local path or Git repository URL).
+- [ ] **TASK-01.3.2**: Implement resolver in Rust that locates/clones the specified source and reads its content as text.
+- [ ] **TASK-01.3.3**: Implement AI agent interpretation extracting a Methodology Profile (expected folder/file structure, conventions, state machine when present) from both formal and informal sources.
+- [ ] **TASK-01.3.4**: Apply automatic fallback to native SCPE v0.3.0 when no source is configured or resolution fails.
+- [ ] **TASK-01.3.5**: Expose `/api/workspace/methodology` (GET/PUT) endpoint with source, status, and resolved Methodology Profile.
+- [ ] **TASK-01.3.6**: Build the **Methodology Configuration Screen in Astryx** (path/URL input, detect button, resolved profile preview, and revert to native SCPE option) accessible without a terminal or code editor, for use by non-technical personas (PO/PM/Designer).
+- [ ] **TASK-01.3.7**: Use the resolved Methodology Profile to generate (*scaffold*) new spec files matching the configured source structure and templates.
 
 ---
 
 ## ✅ Definition of Done
-- [ ] Todas as tarefas concluídas e testadas.
-- [ ] Conformidade estrita com o SCPE v0.3.0.
+- [ ] All tasks completed and tested.
+- [ ] Strict compliance with SCPE v0.3.0.

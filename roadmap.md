@@ -1,102 +1,102 @@
 # 🗺️ Liquid: Macro Roadmap & Release Strategy
 
-**Metodologia:** SCPE v0.3.0 (Spec-Compiled Product Engineering)  
-**Status Global:** Ativo / Fonte Canônica de Evolução Temporal  
-**Última Atualização:** 2026-08-31  
-**Mantido por:** Product Architecture & Engineering Council  
+**Methodology:** SCPE v0.3.0 (Spec-Compiled Product Engineering)  
+**Global Status:** Active / Canonical Source of Temporal Evolution  
+**Last Updated:** 2026-08-31  
+**Maintained by:** Product Architecture & Engineering Council  
 
 ---
 
-## 1. Visão Temporal & Estratégia de Releases em 6 Fases Granulares
+## 1. Timeline Vision & Release Strategy across 6 Granular Phases
 
-O desenvolvimento do **Liquid** é fatiado em **6 Fases Progressivas e Incrementais**. Cada fase entrega um marco de produto funcional, testável e com escopo pequeno e hiper-focado:
+Development of **Liquid** is structured into **6 Progressive and Incremental Phases**. Each phase delivers a functional, testable product milestone with a concise, hyper-focused scope:
 
 ```
 2026 Q3                                  2026 Q4                                  2027 Q1
   │                                        │                                        │
-  ├─ Fase 1: v0.1.0 (The Reader) ──────────┼─ Fase 3: v0.3.0 (The Synchronizer) ────┼─ Fase 5: v0.5.0 (The Protocol) ────▶
+  ├─ Phase 1: v0.1.0 (The Reader) ─────────┼─ Phase 3: v0.3.0 (The Synchronizer) ───┼─ Phase 5: v0.5.0 (The Protocol) ────▶
   │  FEAT-01: Workspace Inspector          │  FEAT-03: Live File Sync               │  FEAT-05: ACP & LiteLLM Gateway
   │                                        │                                        │
-  ├─ Fase 2: v0.2.0 (The Auditor) ─────────┼─ Fase 4: v0.4.0 (The Studio) ──────────┼─ Fase 6: v0.6.0 (The Engine) ──────▶
+  ├─ Phase 2: v0.2.0 (The Auditor) ────────┼─ Phase 4: v0.4.0 (The Studio) ─────────┼─ Phase 6: v0.6.0 (The Engine) ──────▶
   │  FEAT-02: Spec Status & Drift          │  FEAT-04: WYSIWYG Document Editor      │  FEAT-06: Podman Sandbox Runner
 ```
 
 ---
 
-## 2. Detalhamento das 6 Fases de Evolução
+## 2. Detailed Breakdown of the 6 Evolution Phases
 
-### 🔹 Fase 1: v0.1.0 — The Reader (O Visualizador de Governança)
-* **Objetivo:** Ter uma ferramenta funcional no Dia 1 que escaneia e exibe qualquer workspace SCPE de forma elegante.
+### 🔹 Phase 1: v0.1.0 — The Reader (Governance & Spec Viewer)
+* **Goal:** A functional Day-1 tool that scans and displays any SCPE workspace with elegance.
 * **Feature:** **`FEAT-01: Workspace Inspector`**
-* **Jornada do Usuário:** O usuário abre o app no navegador (`localhost:3000`), vê a árvore de governança na barra lateral e lê os documentos Markdown renderizados no canvas com tipografia Astryx.
-* **Entregáveis:**
-  - Servidor Axum em Rust servindo a SPA estática embutida.
-  - Scanner de arquivos lendo `product_vision.md`, `roadmap.md` e pastas `features/`.
+* **User Journey:** The user opens the app in the browser (`localhost:3000`), views the governance tree in the sidebar, and reads Markdown specs rendered on the canvas with Astryx typography.
+* **Deliverables:**
+  - Axum web server in Rust serving the embedded static SPA.
+  - Filesystem scanner reading `product_vision.md`, `roadmap.md`, and `features/` directories.
 
 ---
 
-### 🔹 Fase 2: v0.2.0 — The Auditor (O Painel de Estados & Integridade)
-* **Objetivo:** Adicionar rastreabilidade visual e auditoria do ciclo de vida de produto.
+### 🔹 Phase 2: v0.2.0 — The Auditor (State Management & Spec Drift)
+* **Goal:** Add visual traceability and product lifecycle auditing.
 * **Feature:** **`FEAT-02: Spec Status & Drift`**
-* **Jornada do Usuário:** O usuário visualiza badges táteis (`Draft`, `Ready`, `WIP`, `Done`) ao lado de cada épico e recebe alertas visuais automáticos de *Spec Drift* se o `plan.md` sofrer modificações pós-entrega.
-* **Entregáveis:**
-  - Leitor de `quick_status.md` em toda a árvore do projeto.
-  - Componente de Badges semânticos com Astryx (Verde, Âmbar, Vermelho, Neutro).
-  - Algoritmo de validação de drift e banner de inconsistência.
+* **User Journey:** The user views tactile badges (`Draft`, `Ready`, `WIP`, `Done`) next to each epic and receives automatic visual *Spec Drift* alerts if `plan.md` is modified post-completion.
+* **Deliverables:**
+  - `quick_status.md` reader across the entire project tree.
+  - Semantic status badge components with Astryx (Green, Amber, Red, Neutral).
+  - Drift validation algorithm and inconsistency banner.
 
 ---
 
-### 🔹 Fase 3: v0.3.0 — The Synchronizer (A Sincronização em Tempo Real)
-* **Objetivo:** Conectar a interface do Liquid ao fluxo de trabalho tradicional no VS Code/Neovim.
+### 🔹 Phase 3: v0.3.0 — The Synchronizer (Real-Time File Sync)
+* **Goal:** Connect the Liquid UI seamlessly to traditional VS Code/Neovim workflows.
 * **Feature:** **`FEAT-03: Live File Sync`**
-* **Jornada do Usuário:** O usuário edita o arquivo Markdown no seu editor favorito e a tela do Liquid ADE atualiza instantaneamente (<50ms) sem recarregar e sem perder a posição de leitura.
-* **Entregáveis:**
-  - File Watcher assíncrono em Rust (`notify`) monitorando arquivos `.md`.
-  - Canal WebSocket (`/ws/workspace`) transmitindo deltas para a store Zustand.
-  - Micro-indicador visual de status de sincronização.
+* **User Journey:** The user edits a Markdown file in their favorite editor and Liquid ADE updates instantly (<50ms) without reloading or losing scroll position.
+* **Deliverables:**
+  - Async File Watcher in Rust (`notify`) monitoring `.md` files.
+  - WebSocket channel (`/ws/workspace`) streaming deltas to the Zustand store.
+  - Real-time synchronization micro-indicator.
 
 ---
 
-### 🔹 Fase 4: v0.4.0 — The Studio (O Editor WYSIWYG Document-as-UI)
-* **Objetivo:** Transformar o Markdown em uma interface visual rica e editável com gravação cirúrgica no disco.
+### 🔹 Phase 4: v0.4.0 — The Studio (WYSIWYG Document-as-UI Editor)
+* **Goal:** Transform Markdown into a rich, editable visual interface with surgical disk patching.
 * **Feature:** **`FEAT-04: WYSIWYG Document Editor`**
-* **Jornada do Usuário:** O usuário clica em checklists de critérios de aceite, chips de metadados ou tabelas DDD na tela, edita visualmente e o Liquid grava apenas as linhas modificadas no arquivo em disco (com supressão de eco).
-* **Entregáveis:**
-  - Parser de AST semântico decompondo o Markdown em blocos de interface ricos.
-  - Motor de gravação cirúrgica linha-a-linha no disco (Surgical Line Patcher).
-  - Algoritmo de Supressão de Eco (*Echo Suppression*) e suporte a atalhos (`Cmd+Z`, `/`).
+* **User Journey:** The user clicks acceptance criteria checklists, metadata chips, or domain tables on screen, edits visually, and Liquid writes only modified lines back to disk (with echo suppression).
+* **Deliverables:**
+  - Semantic AST parser decomposing Markdown into rich UI blocks.
+  - Surgical line-by-line disk patching engine (Surgical Line Patcher).
+  - Echo suppression algorithm and keyboard shortcuts (`Cmd+Z`, `/`).
 
 ---
 
-### 🔹 Fase 5: v0.5.0 — The Protocol (A Conexão com Agentes e Modelos)
-* **Objetivo:** Habilitar a comunicação padronizada com agentes de IA e múltiplos modelos de linguagem.
+### 🔹 Phase 5: v0.5.0 — The Protocol (Agent Handshake & Model Gateway)
+* **Goal:** Enable standardized communication with AI agents and multiple language models.
 * **Feature:** **`FEAT-05: ACP & LiteLLM Gateway`**
-* **Jornada do Usuário:** O usuário configura seu provedor de IA (Ollama local ou Claude/OpenAI em nuvem) e testa o handshake de agentes via Agent Client Protocol (ACP).
-* **Entregáveis:**
-  - Servidor JSON-RPC 2.0 ACP sobre WebSocket e stdio.
-  - Gateway universal de modelos via LiteLLM com teste de ping e latência.
-  - Modal de configurações de IA construído com Astryx.
+* **User Journey:** The user configures their AI provider (local Ollama or cloud Claude/OpenAI) and verifies agent connectivity via Agent Client Protocol (ACP).
+* **Deliverables:**
+  - JSON-RPC 2.0 ACP server over WebSocket and stdio.
+  - Universal model gateway via LiteLLM with ping and latency diagnostics.
+  - AI settings modal built with Astryx.
 
 ---
 
-### 🔹 Fase 6: v0.6.0 — The Engine (A Fábrica Autônoma com Podman)
-* **Objetivo:** Fechar o ciclo do SCPE compilando especificações aprovadas em código testado automaticamente.
+### 🔹 Phase 6: v0.6.0 — The Engine (Autonomous Podman Sandbox Factory)
+* **Goal:** Close the SCPE loop by compiling approved specifications into automatically tested code.
 * **Feature:** **`FEAT-06: Podman Sandbox Runner`**
-* **Jornada do Usuário:** Ao promover uma feature para `Ready`, o Liquid aciona um agente autônomo que sobe um container Podman isolado, executa tarefas de `tasks.md` em TDD, gera código em `apps/` e altera o estado para `Done`.
-* **Entregáveis:**
-  - Executor de contêineres efémeros e isolados com Podman rootless (sem docker-compose).
-  - Pipeline de execução TDD com agente revisor de qualidade.
-  - Streaming de logs de execução e terminal ao vivo para a interface.
+* **User Journey:** Upon promoting a feature to `Ready`, Liquid triggers an autonomous agent that spins up an isolated Podman container, executes tasks in `tasks.md` via TDD, generates code in `apps/`, and advances the state to `Done`.
+* **Deliverables:**
+  - Ephemeral, rootless Podman container runner (without docker-compose).
+  - TDD execution pipeline with automated Quality Reviewer agent.
+  - Live log and terminal streaming to the UI.
 
 ---
 
-## 3. Matriz de Rastreabilidade
+## 3. Traceability Matrix
 
-| Versão | Fase | Nome | Feature Alvo | Status |
+| Version | Phase | Name | Target Feature | Status |
 | :---: | :---: | :--- | :--- | :---: |
-| **`v0.1.0`** | **Fase 1** | **The Reader** | `01-workspace-inspector` | `Draft` 📝 |
-| **`v0.2.0`** | **Fase 2** | **The Auditor** | `02-spec-status-and-drift` | `Draft` 📝 |
-| **`v0.3.0`** | **Fase 3** | **The Synchronizer** | `03-live-file-sync` | `Draft` 📝 |
-| **`v0.4.0`** | **Fase 4** | **The Studio** | `04-wysiwyg-document-editor` | `Draft` 📝 |
-| **`v0.5.0`** | **Fase 5** | **The Protocol** | `05-acp-agent-handshake` | `Draft` 📝 |
-| **`v0.6.0`** | **Fase 6** | **The Engine** | `06-podman-sandbox-execution` | `Draft` 📝 |
+| **`v0.1.0`** | **Phase 1** | **The Reader** | `01-workspace-inspector` | `Draft` 📝 |
+| **`v0.2.0`** | **Phase 2** | **The Auditor** | `02-spec-status-and-drift` | `Draft` 📝 |
+| **`v0.3.0`** | **Phase 3** | **The Synchronizer** | `03-live-file-sync` | `Draft` 📝 |
+| **`v0.4.0`** | **Phase 4** | **The Studio** | `04-wysiwyg-document-editor` | `Draft` 📝 |
+| **`v0.5.0`** | **Phase 5** | **The Protocol** | `05-acp-agent-handshake` | `Draft` 📝 |
+| **`v0.6.0`** | **Phase 6** | **The Engine** | `06-podman-sandbox-execution` | `Draft` 📝 |

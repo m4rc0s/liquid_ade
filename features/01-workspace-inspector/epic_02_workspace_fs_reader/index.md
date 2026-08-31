@@ -1,13 +1,13 @@
-# 📌 Épico 02: Workspace FS Scanner & Markdown Viewer
+# 📌 Epic 02: Workspace FS Scanner & Markdown Viewer
 
-**Épico:** `EPIC-02` da Feature `FEAT-01`  
+**Epic:** `EPIC-02` of Feature `FEAT-01`  
 **Status:** `Draft` 📝  
 
 ---
 
-## 1. Objetivo & Escopo
-Scanner em Rust que lê a árvore de diretórios do workspace e endpoint `/api/workspace/tree` consumido pela UI.
+## 1. Objective & Scope
+Rust scanner that reads the workspace directory tree and `/api/workspace/tree` endpoint consumed by the UI.
 
-## 2. Critérios de Aceite
-- [ ] Implementação de ponta a ponta validada por testes.
-- [ ] Zero impacto de performance no runtime do Liquid.
+## 2. Acceptance Criteria
+- [ ] End-to-end implementation validated by tests.
+- [ ] Zero performance impact on the Liquid runtime.

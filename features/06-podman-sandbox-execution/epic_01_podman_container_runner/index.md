@@ -1,13 +1,13 @@
-# 📌 Épico 01: Podman Rootless Container Runner
+# 📌 Epic 01: Podman Rootless Container Runner
 
-**Épico:** `EPIC-01` da Feature `FEAT-06`  
+**Epic:** `EPIC-01` of Feature `FEAT-06`  
 **Status:** `Draft` 📝  
 
 ---
 
-## 1. Objetivo & Escopo
-Orquestrador de contêineres efémeros e isolados gerenciados via Podman.
+## 1. Objective & Scope
+Orchestrator for ephemeral and isolated containers managed via Podman.
 
-## 2. Critérios de Aceite
-- [ ] Implementação de ponta a ponta validada por testes.
-- [ ] Zero impacto de performance no runtime do Liquid.
+## 2. Acceptance Criteria
+- [ ] End-to-end implementation validated by tests.
+- [ ] Zero performance impact on the Liquid runtime.

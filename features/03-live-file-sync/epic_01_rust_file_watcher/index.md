@@ -1,13 +1,13 @@
-# 📌 Épico 01: Async File Watcher Engine
+# 📌 Epic 01: Async File Watcher Engine
 
-**Épico:** `EPIC-01` da Feature `FEAT-03`  
+**Epic:** `EPIC-01` of Feature `FEAT-03`  
 **Status:** `Draft` 📝  
 
 ---
 
-## 1. Objetivo & Escopo
-Módulo em Rust com `notify` monitorando alterações no sistema de arquivos da pasta `features/`.
+## 1. Objective & Scope
+Rust module utilizing `notify` to monitor filesystem changes across the `features/` directory.
 
-## 2. Critérios de Aceite
-- [ ] Implementação de ponta a ponta validada por testes.
-- [ ] Zero impacto de performance no runtime do Liquid.
+## 2. Acceptance Criteria
+- [ ] End-to-end implementation validated by tests.
+- [ ] Zero performance impact on the Liquid runtime.

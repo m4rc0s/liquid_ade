@@ -1,18 +1,18 @@
 # 📋 TASKS — Status Badge Matrix
 
-**Épico:** `EPIC-01` da Feature `FEAT-02`  
+**Epic:** `EPIC-01` of Feature `FEAT-02`  
 **Status:** `Draft` 📝  
 
 ---
 
-## 📝 Checklist de Tarefas Atômicas
+## 📝 Atomic Tasks Checklist
 
-- [ ] **TASK-02.1.1**: Adicionar leitura do arquivo `quick_status.md` de cada épico no scanner Rust.
-- [ ] **TASK-02.1.2**: Criar componente visual de Badge no Astryx com as cores semânticas (Verde, Âmbar, Vermelho, Neutro).
-- [ ] **TASK-02.1.3**: Exibir o status ao lado de cada feature na barra lateral da UI.
+- [ ] **TASK-02.1.1**: Add parsing of `quick_status.md` for each epic in the Rust scanner.
+- [ ] **TASK-02.1.2**: Create visual Badge component in Astryx with semantic colors (Green, Amber, Red, Neutral).
+- [ ] **TASK-02.1.3**: Display status badge alongside each feature in the UI sidebar.
 
 ---
 
 ## ✅ Definition of Done
-- [ ] Todas as tarefas concluídas e testadas.
-- [ ] Conformidade estrita com o SCPE v0.3.0.
+- [ ] All tasks completed and tested.
+- [ ] Strict compliance with SCPE v0.3.0.

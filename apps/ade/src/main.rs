@@ -8,15 +8,15 @@ struct Assets;
 
 #[tokio::main]
 async fn main() {
-    println!("Iniciando Motor ACP: Liquid ADE...");
+    println!("Starting ACP Engine: Liquid ADE...");
 
-    // Rotas da API / ACP Server + Rota Catch-all para o Frontend (React)
+    // API Routes / ACP Server + Catch-all route for Frontend (React)
     let app = Router::new()
-        .route("/api/health", get(|| async { "O Motor ACP (Rust) está online." }));
-        // TODO: Plugar o router de arquivos estáticos do rust_embed aqui
+        .route("/api/health", get(|| async { "ACP Engine (Rust) is online." }));
+        // TODO: Plug the rust_embed static file router here
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
-    println!("Frontend e Motor rodando em http://{}", addr);
+    println!("Frontend and Engine running at http://{}", addr);
 
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
     axum::serve(listener, app).await.unwrap();

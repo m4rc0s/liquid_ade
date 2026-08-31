@@ -1,13 +1,13 @@
-# 📌 Épico 01: Status Badge Matrix
+# 📌 Epic 01: Status Badge Matrix
 
-**Épico:** `EPIC-01` da Feature `FEAT-02`  
+**Epic:** `EPIC-01` of Feature `FEAT-02`  
 **Status:** `Draft` 📝  
 
 ---
 
-## 1. Objetivo & Escopo
-Leitura e renderização dos badges de estado do arquivo `quick_status.md` em cada nó da árvore.
+## 1. Objective & Scope
+Reading and rendering state badges from `quick_status.md` files at each node of the project tree.
 
-## 2. Critérios de Aceite
-- [ ] Implementação de ponta a ponta validada por testes.
-- [ ] Zero impacto de performance no runtime do Liquid.
+## 2. Acceptance Criteria
+- [ ] End-to-end implementation validated by tests.
+- [ ] Zero performance impact on the Liquid runtime.

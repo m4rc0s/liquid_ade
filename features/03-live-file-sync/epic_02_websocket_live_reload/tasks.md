@@ -1,18 +1,18 @@
 # 📋 TASKS — WebSocket Delta Streamer
 
-**Épico:** `EPIC-02` da Feature `FEAT-03`  
+**Epic:** `EPIC-02` of Feature `FEAT-03`  
 **Status:** `Draft` 📝  
 
 ---
 
-## 📝 Checklist de Tarefas Atômicas
+## 📝 Atomic Tasks Checklist
 
-- [ ] **TASK-03.2.1**: Implementar rota WebSocket `/ws/workspace` no Axum.
-- [ ] **TASK-03.2.2**: Conectar a UI via WebSocket e atualizar o documento em exibição na store Zustand em tempo real.
-- [ ] **TASK-03.2.3**: Adicionar micro-indicador visual de 'Sincronizado' na barra de status da UI.
+- [ ] **TASK-03.2.1**: Implement `/ws/workspace` WebSocket route in Axum.
+- [ ] **TASK-03.2.2**: Connect UI via WebSocket and update the active document in the Zustand store in real time.
+- [ ] **TASK-03.2.3**: Add visual 'Synced' micro-indicator in the UI status bar.
 
 ---
 
 ## ✅ Definition of Done
-- [ ] Todas as tarefas concluídas e testadas.
-- [ ] Conformidade estrita com o SCPE v0.3.0.
+- [ ] All tasks completed and tested.
+- [ ] Strict compliance with SCPE v0.3.0.

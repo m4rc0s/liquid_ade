@@ -1,40 +1,40 @@
-# 🎨 Diretrizes e Princípios Fundamentais de UI/UX (Estilo Linear & Notion)
+# 🎨 UI/UX Guidelines & Core Principles (Linear & Notion Style)
 
-Este documento estabelece os **Princípios Fundamentais de UI e as Heurísticas de UX** para as interfaces do **Liquid ADE**, com inspiração direta no padrão de design e interação do **Linear** e do **Notion**: minimalista, tipografia refinada, foco no documento, alta densidade de informação, atalhos de teclado e micro-interações táteis.
+This document establishes the **Core UI Principles and UX Heuristics** for the interfaces of **Liquid ADE**, directly inspired by the design and interaction patterns of **Linear** and **Notion**: minimalist aesthetics, refined typography, document-centric layouts, high information density, keyboard accelerators, and tactile micro-interactions.
 
-> **Biblioteca Base:** [Astryx Design System](https://github.com/m4rc0s/astryx) (`@astryxdesign/core` - React 19+)
-
----
-
-## 🏛️ PARTE 1: Os 7 Pilares de UI (Estilo Linear / Notion)
-
-1. **Tipografia (Linear-like):**
-   - Hierarquia limpa e escaneável: títulos refinados com peso marcante (`font-semibold`), corpo de texto leve com espaçamento generoso (`leading-relaxed`), e fonte Monospace estrita para metadados, identificadores e tags.
-2. **Cores & Superfícies (Dark Mode Sofisticado):**
-   - Camadas de cinzas escuros profundos e bordas ultra sutis (`1px solid rgba(255,255,255,0.06)`).
-   - Cores semânticas refinadas para status: `Done` (Verde esmeralda), `Ready` (Azul elétrico), `WIP` (Âmbar/Laranja), `Blocked` (Vermelho), `Draft` (Cinza neutro).
-3. **Componentização (Astryx):**
-   - Botões, menus de contexto, modais e badges estilizados com cantos suaves (6px a 8px) e transições imperceptíveis (100ms).
-4. **Layout & Densidade (Linear Style):**
-   - Grid modular de 4px/8px. Divisores sutis, sem bordas pesadas ou sombras artificiais. Respiro visual focado no texto da especificação.
-5. **Hierarquia Visual:**
-   - O documento ativo no canvas é a peça central da tela. Menus e barras laterais ficam discretos e colapsáveis.
-6. **Iconografia:**
-   - Ícones minimalistas e refinados (Lucide) com traço de 1.5px e escala coerente.
-7. **Feedback & Micro-Interações:**
-   - Estados visuais táteis em hover, foco com anel sutil e indicadores instantâneos de sincronização ("*Salvo*").
+> **Base Component Library:** [Astryx Design System](https://github.com/m4rc0s/astryx) (`@astryxdesign/core` - React 19+)
 
 ---
 
-## 🧭 PARTE 2: As 8 Diretrizes de UX (Interação Notion/Linear)
+## 🏛️ PART 1: The 7 UI Pillars (Linear / Notion Style)
 
-1. **Visibilidade do Status:** Indicadores em tempo real de conexão ACP e micro-indicador de salvamento no disco.
-2. **Correspondência com o Mundo Real:** Linguagem de produto clara ("*Épicos*", "*Tarefas*", "*Critérios de Aceite*").
-3. **Controle e Liberdade:** Suporte completo a **Undo/Redo (`Cmd+Z` / `Cmd+Shift+Z`)** no editor de texto.
-4. **Consistência:** Barra lateral de navegação SCPE à esquerda, Canvas central do documento e alternância para Liquid Board (Kanban).
-5. **Prevenção de Erros:** Validações sutis e bloqueio de transições inválidas de estado.
-6. **Redução da Carga Cognitiva:** Interface zen e focada na leitura e escrita sem poluição visual.
-7. **Estética Minimalista:** Eliminação de elementos decorativos; foco absoluto no conteúdo da especificação.
-8. **Aceleradores (Power Users - Padrão Linear/Notion):**
-   - **`Cmd+K` (Command Palette):** Navegação rápida entre features, busca de épicos e comandos de ação.
-   - **Menu Slash (`/`):** Inserção rápida de blocos de texto, checklists de critérios e seções dentro do editor.
+1. **Typography (Linear-like):**
+   - Clean, highly scannable hierarchy: prominent headlines with distinct weight (`font-semibold`), breathable body text with comfortable line-height (`leading-relaxed`), and strict Monospace font for metadata, identifiers, and tags.
+2. **Colors & Surfaces (Sophisticated Dark Mode):**
+   - Deep, layered dark grays with ultra-subtle borders (`1px solid rgba(255,255,255,0.06)`).
+   - Refined semantic status colors: `Done` (Emerald green), `Ready` (Electric blue), `WIP` (Amber/Orange), `Blocked` (Crimson red), `Draft` (Neutral gray).
+3. **Component Craft (Astryx):**
+   - Buttons, context menus, modals, and badges styled with smooth corner radii (6px to 8px) and instantaneous transitions (100ms).
+4. **Layout & Density (Linear Style):**
+   - 4px/8px modular grid. Subtle dividers without heavy borders or artificial drop-shadows. Visual breathing room centered around the specification document.
+5. **Visual Hierarchy:**
+   - The active document on the canvas is the primary focal point. Menus and sidebars remain unobtrusive and collapsible.
+6. **Iconography:**
+   - Minimalist, crisp icons (Lucide) with a uniform 1.5px stroke width and consistent sizing.
+7. **Feedback & Micro-Interactions:**
+   - Tactile hover states, subtle focus rings, and instantaneous synchronization micro-indicators ("*Saved*").
+
+---
+
+## 🧭 PART 2: The 8 UX Heuristics (Notion/Linear Interaction)
+
+1. **Visibility of System Status:** Real-time ACP connection indicators and disk-save status indicators.
+2. **Match Between System and Real World:** Clear, familiar product terminology ("*Epics*", "*Tasks*", "*Acceptance Criteria*").
+3. **User Control & Freedom:** Complete **Undo/Redo (`Cmd+Z` / `Cmd+Shift+Z`)** support in the specification editor.
+4. **Consistency:** SCPE navigation sidebar on the left, central document canvas, and seamless toggle to the Liquid Board (Kanban).
+5. **Error Prevention:** Gentle input validations and prevention of illegal state transitions.
+6. **Cognitive Load Reduction:** Zen-like interface optimized for reading and writing without visual clutter.
+7. **Minimalist Aesthetic:** Elimination of decorative noise; absolute focus on specification content.
+8. **Accelerators (Power Users - Linear/Notion Standards):**
+   - **`Cmd+K` (Command Palette):** Rapid feature navigation, epic search, and action commands.
+   - **Slash Menu (`/`):** Fast insertion of text blocks, criteria checklists, and spec sections within the editor.

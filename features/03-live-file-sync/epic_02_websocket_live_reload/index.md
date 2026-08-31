@@ -1,13 +1,13 @@
-# 📌 Épico 02: WebSocket Delta Streamer
+# 📌 Epic 02: WebSocket Delta Streamer
 
-**Épico:** `EPIC-02` da Feature `FEAT-03`  
+**Epic:** `EPIC-02` of Feature `FEAT-03`  
 **Status:** `Draft` 📝  
 
 ---
 
-## 1. Objetivo & Escopo
-Canal WebSocket que envia o conteúdo atualizado para a store Zustand na UI.
+## 1. Objective & Scope
+WebSocket channel streaming updated content to the Zustand store in the UI.
 
-## 2. Critérios de Aceite
-- [ ] Implementação de ponta a ponta validada por testes.
-- [ ] Zero impacto de performance no runtime do Liquid.
+## 2. Acceptance Criteria
+- [ ] End-to-end implementation validated by tests.
+- [ ] Zero performance impact on the Liquid runtime.
