@@ -47,7 +47,7 @@ O Liquid foi concebido para unir desenvolvedores e profissionais de produto sobr
 │                                      │            │                                      │
 │ • Cria e edita specs via terminal,   │            │ • Escreve e refina especificações no │
 │   CLI ou editor (Neovim / VS Code).  │            │   editor visual WYSIWYG (Notion/     │
-│ • Usa a UI como Cockpit de Controle: │            │   Linear style).                     │
+│ • Usa a UI como Studio de Controle:  │            │   Linear style).                     │
 │   acompanha status, roadmap e o      │            │ • Acompanha o Liquid Board (Kanban)  │
 │   Liquid Board de tarefas.           │            │   e aprova o Readiness Gate.         │
 │ • Usa a UI pontualmente para edições │            │ • Visualiza o progresso das entregas │

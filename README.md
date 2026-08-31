@@ -28,7 +28,7 @@
 
 Modern AI-assisted development often slips into **"vibe coding"** — unstructured, contextless code generation that creates immediate architectural debt, hallucinated dependencies, and disconnect from product requirements.
 
-**Liquid ADE** solves this by establishing **Markdown files in Git as the Single Source of Truth (SSOT)**. It provides a visual, real-time cockpit for Product Managers and Tech Leads to specify, audit, and orchestrate autonomous AI agents inside isolated, rootless sandboxes.
+**Liquid ADE** solves this by establishing **Markdown files in Git as the Single Source of Truth (SSOT)**. It provides a visual, real-time studio for Product Managers and Tech Leads to specify, audit, and orchestrate autonomous AI agents inside isolated, rootless sandboxes.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -43,7 +43,7 @@ Modern AI-assisted development often slips into **"vibe coding"** — unstructur
 │      Engineers & Tech Leads          │            │       PMs, POs & Designers           │
 │                                      │            │                                      │
 │ • Write specs in Neovim / VS Code    │            │ • Interactive WYSIWYG block editor   │
-│ • Live sub-50ms sync with UI cockpit │            │ • Tactile state badges & drift alert │
+│ • Live sub-50ms sync with UI studio  │            │ • Tactile state badges & drift alert │
 │ • Review diffs & TDD test passes     │            │ • Approve Readiness Gate             │
 └──────────────────┬───────────────────┘            └──────────────────┬───────────────────┘
                    │                                                   │

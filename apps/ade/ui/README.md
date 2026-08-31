@@ -2,7 +2,7 @@
 
 <div align="center">
 
-### *The High-Density, Document-as-UI Cockpit for Autonomous Engineering*
+### *The High-Density, Document-as-UI Studio for Autonomous Engineering*
 **React 19 • TypeScript • Vite • Astryx Design System • Zustand**
 
 </div>
@@ -11,7 +11,7 @@
 
 ## 📖 Visão Geral
 
-O **`ade_ui`** é o cockpit visual de alta performance do **Liquid ADE**. Inspirado nos padrões de interação e design refinado de ferramentas como **Linear** e **Notion**, ele transforma especificações Markdown vivas em um editor WYSIWYG estruturado em blocos semânticos com feedback tátil e sincronização em tempo real.
+O **`ade_ui`** é o studio visual de alta performance do **Liquid ADE**. Inspirado nos padrões de interação e design refinado de ferramentas como **Linear** e **Notion**, ele transforma especificações Markdown vivas em um editor WYSIWYG estruturado em blocos semânticos com feedback tátil e sincronização em tempo real.
 
 O frontend foi desenhado para ser compilado e embutido diretamente no binário único de alta performance do backend em Rust (`ade_core`) através de `rust-embed`, sem depender de Node.js/Bun em ambiente de produção.
 
