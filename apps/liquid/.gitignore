@@ -1,0 +1,15 @@
+# Build and dependency outputs
+target/
+ui/dist/
+ui/node_modules/
+
+# Environment and local configs
+.env
+.env.local
+*.log
+
+# Editor & OS
+.DS_Store
+.vscode/
+.idea/
+.liquid/

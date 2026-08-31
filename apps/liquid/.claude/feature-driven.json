@@ -1,0 +1,51 @@
+{
+  "project_name": "Liquid",
+  "stack": "Tauri 2.0 (Rust) + React 18 + Vite + Tailwind CSS + Radix UI + Lucide Icons | Parsing: gray-matter + unified/remark | Runtime dev: Bun",
+  "features_dir": "docs/features",
+  "feature_id_prefix": "FEAT-",
+  "code_layout": {
+    "roots": [
+      "src/app",
+      "src-tauri/src"
+    ],
+    "core_dir": "core",
+    "features_dir": "features"
+  },
+  "commands": {
+    "test": "bun test",
+    "lint": "bunx tsc --noEmit",
+    "build": "bun run ide:build"
+  },
+  "rules": [
+    "**Spec-First**: nenhum código é escrito antes do PRD/PLAN/TASKS da fase estarem preenchidos.",
+    "**Code as Consequence**: a estrutura do código espelha a especificação; divergência é bug de spec, não de código.",
+    "**O disco é a SSOT**: a UI nunca mantém estado de negócio próprio — tudo deriva do parse dos arquivos `.liquid/`; toda escrita vai para o `.md` e volta pelo watcher.",
+    "**Package-by-Feature**: cada fatia vertical (`scanner`, `parser`, `board`, `spec-reader`, `watcher`) é autossuficiente; só o genuinamente transversal vai para `core/`.",
+    "**Leitura tolerante**: arquivo malformado degrada com aviso na UI, nunca derruba o parse do projeto inteiro.",
+    "**Commits separados por natureza**: `docs:` para especificação, `feat:`/`fix:`/`test:` para código."
+  ],
+  "phases": [
+    {
+      "slug": "feature-roadmap-model",
+      "title": "Modelo e Scanner do ROADMAP da Feature",
+      "scope": "Scanner de features prioriza ROADMAP.md como entrada primária da feature, parser reconhece tabelas de acompanhamento de fases e extrai metadados.",
+      "depends_on": []
+    },
+    {
+      "slug": "feature-roadmap-view",
+      "title": "Visualização do Roadmap na Página Principal",
+      "scope": "Abertura do ROADMAP.md na página principal ao selecionar a feature, ícone dedicado na árvore da Sidebar e renderização aprimorada de progresso e status.",
+      "depends_on": [
+        1
+      ]
+    },
+    {
+      "slug": "feature-roadmap-navigation",
+      "title": "Navegação e Interação entre Fases",
+      "scope": "Navegação por links internos no SpecReader para fases e documentos, tolerância a ausência de ROADMAP.md e suíte de testes completa.",
+      "depends_on": [
+        2
+      ]
+    }
+  ]
+}
