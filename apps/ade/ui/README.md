@@ -9,113 +9,115 @@
 
 ---
 
-## 📖 Visão Geral
+## 📖 Overview
 
-O **`ade_ui`** é o studio visual de alta performance do **Liquid ADE**. Inspirado nos padrões de interação e design refinado de ferramentas como **Linear** e **Notion**, ele transforma especificações Markdown vivas em um editor WYSIWYG estruturado em blocos semânticos com feedback tátil e sincronização em tempo real.
+**`ade_ui`** is the high-performance visual studio for **Liquid ADE**. Inspired by the tactile interaction patterns and refined craft of tools like **Linear** and **Notion**, it transforms living Markdown specifications into a structured WYSIWYG block editor with tactile feedback and sub-50ms bidirectional synchronization.
 
-O frontend foi desenhado para ser compilado e embutido diretamente no binário único de alta performance do backend em Rust (`ade_core`) através de `rust-embed`, sem depender de Node.js/Bun em ambiente de produção.
-
----
-
-## 🎨 Astryx Design System & Filosofia de UI/UX
-
-A interface é regida pela constituição descrita em [UI/UX Guidelines](UI_UX_GUIDELINES.md):
-
-### 🏛️ Os 7 Pilares de UI
-1. **Tipografia Linear-like:** Hierarquia escaneável com peso marcante (`font-semibold`), corpo leve com espaçamento generoso e fonte Monospace para metadados e tags SCPE.
-2. **Cores & Dark Mode Sofisticado:** Camadas de cinza profundo e bordas ultra sutis (`1px solid rgba(255, 255, 255, 0.06)`). Badges semânticas para estados SCPE (`Draft`, `Ready`, `WIP`, `Done`, `Blocked`).
-3. **Componentização Astryx:** Componentes táteis com cantos suaves (6px a 8px) e transições imperceptíveis (100ms).
-4. **Layout & Densidade Linear:** Grid modular de 4px/8px com respiro focado no texto da especificação.
-5. **Hierarquia Visual:** O documento no canvas central é o protagonista; menus e sidebars são discretos e colapsáveis.
-6. **Iconografia:** Ícones minimalistas (Lucide) com traço fino de 1.5px.
-7. **Feedback Tátil:** Micro-indicadores em tempo real para sincronização de disco e conexão ACP.
-
-### 🧭 Aceleradores & Heurísticas de UX
-* **`Cmd+K` / `Ctrl+K` (Command Palette):** Navegação instantânea entre features, busca de épicos e ações rápidas.
-* **Menu Slash (`/`):** Inserção rápida de blocos de critérios de aceite, tarefas e seções no editor.
-* **Undo / Redo Completo (`Cmd+Z` / `Cmd+Shift+Z`):** Controle total de histórico local de edição.
+The frontend is designed to be compiled and embedded directly into the standalone Rust backend (`ade_core`) binary via `rust-embed`, requiring zero Node.js/Bun runtime in production environments.
 
 ---
 
-## 🛠️ Stack Tecnológica
+## 🎨 Astryx Design System & UI/UX Philosophy
 
-| Camada | Tecnologia | Propósito |
+The interface is governed by the principles defined in [UI/UX Guidelines](UI_UX_GUIDELINES.md):
+
+### 🏛️ The 7 UI Pillars
+1. **Linear-like Typography:** Highly scannable hierarchy with distinct weights (`font-semibold`), breathable body text, and Monospace styling for metadata and [SCPE](https://github.com/m4rc0s/scpe) tags.
+2. **Sophisticated Dark Mode & Palette:** Deep gray layers with ultra-subtle borders (`1px solid rgba(255, 255, 255, 0.06)`). Semantic status badges for [SCPE](https://github.com/m4rc0s/scpe) states (`Draft`, `Ready`, `WIP`, `Done`, `Blocked`).
+3. **Astryx Component Craft:** Tactile components with smooth corner radii (6px to 8px) and snappy transitions (100ms).
+4. **Linear Density & Grid:** Modular 4px/8px layout grid with clear breathing room focused on the specification document.
+5. **Visual Hierarchy:** The document canvas is the central protagonist; menus and sidebars remain subtle and collapsible.
+6. **Iconography:** Minimalist icons (Lucide) with a crisp 1.5px stroke width.
+7. **Tactile Feedback:** Real-time micro-indicators for disk synchronization and ACP connection status.
+
+### 🧭 UX Accelerators & Heuristics
+* **`Cmd+K` / `Ctrl+K` (Command Palette):** Instant navigation between features, epic search, and quick actions.
+* **Slash Menu (`/`):** Quick insertion of acceptance criteria, task blocks, and spec sections into the editor.
+* **Full Undo / Redo (`Cmd+Z` / `Cmd+Shift+Z`):** Comprehensive local history management during editing sessions.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology | Purpose |
 | :--- | :--- | :--- |
-| **Framework** | [React 19](https://react.dev/) | Renderização reativa e concorrente de alta performance |
-| **Linguagem** | [TypeScript 5+](https://www.typescriptlang.org/) | Tipagem estrita ponta a ponta |
-| **Bundler / HMR** | [Vite 6+](https://vite.dev/) | Build ultrarrápido com Hot Module Replacement |
-| **Design System** | [Astryx Design System](https://github.com/m4rc0s/astryx) / Tailwind CSS | Componentes de alta densidade e estilização utilitária |
-| **Estado Global** | [Zustand](https://zustand-demo.pmnd.rs/) | Gerenciamento de estado leve e desacoplado |
-| **Protocolo** | ACP (Agent Client Protocol) / JSON-RPC 2.0 | Comunicação em tempo real via WebSocket com o `ade_core` |
-| **Linter** | [Oxlint](https://oxc.rs/) | Linter estático em Rust de velocidade extrema |
+| **Framework** | [React 19](https://react.dev/) | High-performance reactive and concurrent rendering |
+| **Language** | [TypeScript 5+](https://www.typescriptlang.org/) | Strict end-to-end type safety |
+| **Bundler / HMR** | [Vite 6+](https://vite.dev/) | Ultra-fast builds with Hot Module Replacement |
+| **Design System** | [Astryx Design System](https://github.com/m4rc0s/astryx) / Tailwind CSS | High-density component library and utility styling |
+| **Global State** | [Zustand](https://zustand-demo.pmnd.rs/) | Lightweight, decoupled global state management |
+| **Protocol** | ACP (Agent Client Protocol) / JSON-RPC 2.0 | Real-time WebSocket communication with `ade_core` |
+| **Linter** | [Oxlint](https://oxc.rs/) | Blazing-fast Rust-based static linter |
 
 ---
 
-## 📂 Estrutura de Diretórios
+## 📂 Directory Structure
 
 ```text
 ui/
-├── public/                # Favicons, SVGs e assets públicos
+├── public/                # Favicons, SVGs and static public assets
 ├── src/
-│   ├── assets/            # Imagens e ilustrações da aplicação
-│   ├── components/        # Componentes reutilizáveis (Astryx & shadcn/ui customizados)
-│   ├── features/          # Fatias verticais de funcionalidade (Package-by-Feature)
-│   │   ├── workspace/     # Leitor do sistema de arquivos e indexador de specs
-│   │   ├── editor/        # Editor WYSIWYG Document-as-UI e AST blocks
-│   │   ├── status-matrix/ # Auditor da máquina de estados e detecção de drift
-│   │   └── protocol/      # Painel de controle ACP e orquestrador de agentes
-│   ├── services/          # Clientes WebSocket / ACP e API REST
-│   ├── stores/            # Stores globais Zustand (workspace, editor, acp)
-│   ├── App.tsx            # Shell principal da interface
-│   ├── main.tsx           # Entrypoint do React 19
-│   └── index.css          # Design tokens e variáveis de tema
-├── package.json           # Dependências e scripts
-├── tsconfig.json          # Configuração do compilador TypeScript
-└── vite.config.ts         # Configurações do Vite
+│   ├── assets/            # Application imagery and illustrations
+│   ├── components/        # Reusable UI components (Astryx & customized shadcn/ui)
+│   ├── features/          # Vertical slices (Package-by-Feature)
+│   │   ├── workspace/     # Filesystem reader and spec indexer
+│   │   ├── editor/        # WYSIWYG Document-as-UI editor and AST blocks
+│   │   ├── status-matrix/ # State machine auditor and drift detector
+│   │   └── protocol/      # ACP control panel and agent orchestrator
+│   ├── services/          # WebSocket / ACP client and REST API helpers
+│   ├── stores/            # Global Zustand stores (workspace, editor, acp)
+│   ├── App.tsx            # Main application shell
+│   ├── main.tsx           # React 19 entrypoint
+│   └── index.css          # Design tokens and theme CSS variables
+├── package.json           # Dependencies and NPM scripts
+├── tsconfig.json          # TypeScript compiler configuration
+└── vite.config.ts         # Vite build configuration
 ```
 
 ---
 
-## 🚀 Scripts Disponíveis
+## 🚀 Available Scripts
 
-Utilize o [Bun](https://bun.sh/) para gerenciar dependências e executar tarefas:
+Use [Bun](https://bun.sh/) to manage dependencies and run tasks:
 
-### Desenvolvimento
+### Development
 ```bash
-# Iniciar o servidor local de desenvolvimento com Hot Reload
+# Start local development server with Hot Reload
 bun run dev
 ```
-Abre a interface em [http://localhost:5173](http://localhost:5173).
+Opens the interface at [http://localhost:5173](http://localhost:5173).
 
-### Análise Estática & Lint
+### Static Analysis & Linting
 ```bash
-# Executar verificação estática com Oxlint
+# Run static analysis with Oxlint
 bun run lint
 ```
 
-### Testes
+### Testing
 ```bash
-# Executar a suíte de testes unitários e de integração
+# Run unit and integration test suites
 bun test
 ```
 
-### Compilação para Produção
+### Production Build
 ```bash
-# Validação de tipos (tsc) e compilação do bundle estático em `dist/`
+# Typecheck (tsc) and compile static production bundle into `dist/`
 bun run build
 ```
-*Nota: O script de compilação em Rust (`build.rs` do `apps/ade`) executa este comando automaticamente para embutir a UI dentro do binário final do Liquid ADE.*
+*Note: The Rust build script (`build.rs` in `apps/ade`) executes this command automatically when compiling the release binary.*
 
-### Pré-visualização do Bundle
+### Bundle Preview
 ```bash
-# Visualizar o build estático gerado em `dist/`
+# Preview the generated static build from `dist/`
 bun run preview
 ```
 
 ---
 
-## 📚 Documentação Relacionada
+## 📚 Related Documentation
 
-* [UI/UX Guidelines (Princípios de Design)](UI_UX_GUIDELINES.md)
-* [Manifesto Técnico da Aplicação](../app_manifest.md)
-* [README Geral do Liquid ADE](../../../README.md)
+* [🎨 UI/UX Guidelines (Design Principles)](UI_UX_GUIDELINES.md)
+* [📖 Backend / Host Application README (`apps/ade`)](../README.md)
+* [📋 Technical Application Manifest](../app_manifest.md)
+* [🌐 Root Product & Workspace README](../../../README.md)
+* [📐 SCPE Official Methodology Repository](https://github.com/m4rc0s/scpe)

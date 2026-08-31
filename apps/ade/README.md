@@ -1,21 +1,23 @@
 # 🌊 Liquid ADE (Agentic Development Environment)
 
-**Single-Binary ADE para Desenvolvimento Orientado a Especificações (SCPE v0.3.0) com Inteligência Artificial**
+**Single-Binary ADE for [Spec-Compiled Product Engineering (SCPE)](https://github.com/m4rc0s/scpe) with Autonomous AI Agents**
 
 ---
 
-## 🏛️ Arquitetura da Aplicação
+## 🏛️ Application Architecture
 
-A aplicação **Liquid ADE** é construída como um monorepo enxuto de alta performance, projetado para ser distribuído como um **binário único auto-contido**, sem necessidade de runtime Node.js/Bun em produção:
+The **Liquid ADE** application is built as a lean, high-performance monorepo designed to be distributed as a **self-contained single binary**, with zero runtime dependencies on Node.js or Bun in production:
 
 ```text
 apps/ade/
-├── Cargo.toml          # Maestro Rust (Axum, Tokio, rust-embed)
-├── build.rs            # Script de compilação que faz o build da UI e a embute no binário
-├── app_manifest.md     # Manifesto do aplicativo conforme SCPE v0.3.0
-├── src/                # ade_core: Servidor ACP (Agent Client Protocol), LiteLLM Gateway e Router
+├── Cargo.toml          # Rust Workspace Master (Axum, Tokio, rust-embed)
+├── build.rs            # Build script that compiles the UI and embeds it into the binary
+├── app_manifest.md     # Application manifest following SCPE specifications
+├── src/                # ade_core: ACP Server (Agent Client Protocol), LiteLLM Gateway & Router
 │   └── main.rs
-└── ui/                 # ade_ui: Frontend React SPA (Vite, TypeScript, Tailwind, shadcn/ui, Zustand)
+└── ui/                 # ade_ui: Frontend React SPA (Vite, TypeScript, Tailwind, Zustand)
+    ├── README.md       # 🔗 Frontend Studio Documentation
+    ├── UI_UX_GUIDELINES.md # Astryx Design System Guidelines
     ├── package.json
     ├── vite.config.ts
     └── src/
@@ -23,33 +25,43 @@ apps/ade/
 
 ---
 
-## 🧩 Componentes
+## 🧩 Components
 
 1. **`ade_core` (Rust / Axum / Tokio):**
-   - Servidor HTTP e WebSocket implementando o protocolo **ACP (Agent Client Protocol)** via JSON-RPC 2.0.
-   - Orquestração de modelos de IA via **LiteLLM** (suporte transparente a Ollama, Llama.cpp, Claude, OpenAI, Gemini).
-   - Servidor estático dos arquivos da `ade_ui` a partir da memória RAM via `rust-embed`.
+   - HTTP and WebSocket server implementing the **ACP (Agent Client Protocol)** via JSON-RPC 2.0.
+   - LLM model orchestration via **LiteLLM** (seamless connectivity to Ollama, Llama.cpp, Claude, OpenAI, Gemini).
+   - Embedded static file server for `ade_ui` served directly from RAM using `rust-embed`.
 
-2. **`ade_ui` (React / Vite / Tailwind):**
-   - Painel visual de engenharia de produto (ADE).
-   - **Document-as-UI / Editor WYSIWYG:** Renderização e edição de especificações Markdown em blocos visuais ricos com sincronização bidirecional em tempo real.
-   - Navegador de workspace SCPE e auditor de máquina de estados (`Draft → Ready → WIP → Done → Stale`).
+2. **[`ade_ui`](ui/README.md) (React / Vite / Tailwind / Astryx):**
+   - High-density Product Engineering visual studio. See [detailed UI documentation](ui/README.md).
+   - **Document-as-UI / WYSIWYG Editor:** Real-time rendering and editing of Markdown specifications as rich visual blocks with bidirectional live sync.
+   - [SCPE](https://github.com/m4rc0s/scpe) workspace explorer and state machine auditor (`Draft → Ready → WIP → Done → Stale`).
 
 ---
 
-## 🚀 Como Rodar
+## 🚀 Getting Started
 
-### Modo Desenvolvimento
+### Development Mode
 ```bash
-# Rodar o frontend React (ade_ui) isolado com Hot Reload
+# Run the React frontend (ade_ui) with Hot Reload
 cd ui && bun run dev
 
-# Rodar o core em Rust (ade_core)
+# Run the Rust core backend (ade_core)
 cargo run
 ```
 
-### Compilação do Binário Único (Release)
+### Building the Single Release Binary
 ```bash
-# Compila a UI e embute automaticamente dentro do executável Rust
+# Automatically builds the UI and embeds it inside the final Rust binary
 cargo build --release
 ```
+
+---
+
+## 📚 Related Documentation
+
+- [📖 Frontend README (`ade_ui`)](ui/README.md)
+- [🎨 UI/UX Guidelines (Astryx)](ui/UI_UX_GUIDELINES.md)
+- [📋 Application Technical Manifest](app_manifest.md)
+- [🌐 Root Product & Workspace README](../../README.md)
+- [📐 SCPE Official Methodology Repository](https://github.com/m4rc0s/scpe)
