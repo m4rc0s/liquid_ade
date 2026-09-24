@@ -38,15 +38,13 @@ dev:
 branch-start name:
     git checkout -b feat/{{name}}
 
-# Squash-merge a completed feature branch into main with title and curated body, then delete branch
-branch-merge name title body="":
+# Push active feature branch to remote origin
+branch-push name:
+    git push -u origin feat/{{name}}
+
+# Synchronize local main with remote origin after PR merge
+sync:
     git checkout main
-    git merge --squash feat/{{name}}
-    @if [ -n "{{body}}" ]; then \
-        git commit -m "{{title}}" -m "{{body}}"; \
-    else \
-        git commit -m "{{title}}"; \
-    fi
-    git branch -D feat/{{name}}
+    git pull origin main
 
 

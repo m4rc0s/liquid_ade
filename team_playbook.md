@@ -26,31 +26,43 @@ Waves run concurrently across features.
 
 - `docs:` for specification changes, `feat:`/`fix:`/`test:`/`refactor:` for code. Never mix both in one commit.
 
-## Branching & Linear History Strategy (Squash Merge)
+## Branching, PR Workflow & Linear History Strategy (Option B)
 
-The project maintains a **100% linear, bifurcation-free history on `main`** using the Squash Merge strategy:
-1. **Branch Creation:** Never commit directly to `main` during feature or epic implementation. Always branch from `main`:
+The project maintains a **100% linear, bifurcation-free history on `main`** governed by a GitHub Pull Request and remote Squash Merge workflow:
+
+1. **Branch Creation:**
+   Never develop directly on `main`. Always branch from the latest `main`:
    ```bash
+   git checkout main && git pull origin main
    just branch-start <epic-slug>
    # or: git checkout -b feat/<epic-slug>
    ```
-2. **Implementation & Iterative Commits:**
+
+2. **Implementation, Testing & Verification:**
    - Implement tasks cited in `tasks.md`.
    - Commit iteratively on the feature branch.
-   - Run `just check` (SCPE validate, formatting, clippy, oxlint, and tsc) to ensure zero errors.
-3. **Squash Merge into main (Linear History with Curated Commit Description):**
-   - Integrate into `main` as a single canonical commit per epic.
-   - **Curated Commit Description Requirement:** The commit body must explicitly list the most important commits and changes (key features, architectural/spec updates, and test suites), filtering out trivial or WIP noise:
-   ```bash
-   git checkout main
-   git merge --squash feat/<epic-slug>
-   git commit -m "feat(<epic-slug>): <canonical english summary>" -m "Key changes:
-   - feat(<scope>): <key feature implementation>
-   - docs(<scope>): <spec or architecture update>
-   - test(<scope>): <verification tests for epic#S#>"
-   git branch -D feat/<epic-slug>
-   ```
-   - **Result:** `main` remains a perfectly straight line where every commit is rich in context, self-documenting, and free of noisy temporary commits.
+   - Run `just check` and `just test` (SCPE validate, formatting, clippy, oxlint, tsc, and cargo test) to ensure zero errors and zero warnings.
+
+3. **Push Branch & Open Pull Request:**
+   - Push the branch to remote:
+     ```bash
+     git push -u origin feat/<epic-slug>
+     ```
+   - Open a Pull Request using `gh pr create` or the GitHub UI targeting `main`:
+     - **Title:** `<type>(<scope>): <concise description in English>`
+     - **Body:** Must include a curated summary of key changes, architectural impacts, and BDD verification scenarios (`<epic>#S#`).
+
+4. **Human Review & Remote Squash Merge:**
+   - The Tech Lead reviews the PR on GitHub.
+   - Merge is executed on GitHub using **Squash and Merge** (or `gh pr merge --squash`), keeping the curated commit description and ensuring `main` remains a clean, linear sequence of milestone commits.
+
+5. **Local Synchronization & Cleanup:**
+   - After the remote merge, synchronize the local repository:
+     ```bash
+     git checkout main
+     git pull origin main
+     git branch -d feat/<epic-slug>
+     ```
 
 ## Releases & Changelog Management
 
