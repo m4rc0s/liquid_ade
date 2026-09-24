@@ -1,5 +1,5 @@
 # Tasks: Runtime Shell & Astryx Layout
 
-- [ ] TASK-01: Implement Axum server with rust-embed SPA fallback and /api/health (S1, S2, R1, R2)
-- [ ] TASK-02: Implement React 19 Astryx shell layout component (S2, R1)
-- [ ] TASK-03: Implement embedded SQLite database initialization and schema migration in Rust (S3, R3)
+- [x] TASK-01: Implement Axum server with rust-embed SPA fallback and /api/health (S1, S2, R1, R2)
+- [x] TASK-02: Implement React 19 Astryx shell layout component (S2, R1)
+- [x] TASK-03: Implement embedded SQLite database initialization and schema migration in Rust (S3, R3)

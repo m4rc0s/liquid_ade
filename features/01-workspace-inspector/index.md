@@ -19,5 +19,5 @@
 
 ## Epics
 
-- [epic_01_runtime_shell](epics/epic_01_runtime_shell/index.md) — Draft
+- [epic_01_runtime_shell](epics/epic_01_runtime_shell/index.md) — Done
 - [epic_02_workspace_fs_scanner](epics/epic_02_workspace_fs_scanner/index.md) — Draft
