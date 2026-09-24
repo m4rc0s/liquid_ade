@@ -38,10 +38,15 @@ dev:
 branch-start name:
     git checkout -b feat/{{name}}
 
-# Squash-merge a completed feature branch into main for a 100% linear history and delete branch
-branch-merge name message:
+# Squash-merge a completed feature branch into main with title and curated body, then delete branch
+branch-merge name title body="":
     git checkout main
     git merge --squash feat/{{name}}
-    git commit -m "{{message}}"
+    @if [ -n "{{body}}" ]; then \
+        git commit -m "{{title}}" -m "{{body}}"; \
+    else \
+        git commit -m "{{title}}"; \
+    fi
     git branch -D feat/{{name}}
+
 

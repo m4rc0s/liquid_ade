@@ -38,17 +38,19 @@ The project maintains a **100% linear, bifurcation-free history on `main`** usin
    - Implement tasks cited in `tasks.md`.
    - Commit iteratively on the feature branch.
    - Run `just check` (SCPE validate, formatting, clippy, oxlint, and tsc) to ensure zero errors.
-3. **Squash Merge into main (Linear History):**
-   - Integrate into `main` as a single, canonical, clean commit per epic:
+3. **Squash Merge into main (Linear History with Curated Commit Description):**
+   - Integrate into `main` as a single canonical commit per epic.
+   - **Curated Commit Description Requirement:** The commit body must explicitly list the most important commits and changes (key features, architectural/spec updates, and test suites), filtering out trivial or WIP noise:
    ```bash
-   just branch-merge <epic-slug> "feat(<epic-slug>): <canonical english description>"
-   # or manually:
    git checkout main
    git merge --squash feat/<epic-slug>
-   git commit -m "feat(<epic-slug>): <canonical english description>"
+   git commit -m "feat(<epic-slug>): <canonical english summary>" -m "Key changes:
+   - feat(<scope>): <key feature implementation>
+   - docs(<scope>): <spec or architecture update>
+   - test(<scope>): <verification tests for epic#S#>"
    git branch -D feat/<epic-slug>
    ```
-   - **Result:** `main` remains a perfectly straight, pristine line where every single commit represents one full, verified epic.
+   - **Result:** `main` remains a perfectly straight line where every commit is rich in context, self-documenting, and free of noisy temporary commits.
 
 ## Releases & Changelog Management
 
