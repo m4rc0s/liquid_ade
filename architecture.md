@@ -39,6 +39,7 @@ Liquid ADE is a local-first, spec-compiled product engineering environment. It b
 - **`liquid-ade` (`apps/ade`)**:
   - **Type:** Single-binary host application.
   - **Backend Core:** Rust with Tokio async runtime and Axum HTTP/WebSocket server. Manages filesystem operations, safe path traversal checks, file watching (notify-rs), ACP JSON-RPC 2.0 communication, and sandbox process spawning.
+  - **Embedded SQLite Engine (`rusqlite` bundled):** Local-first database (`~/.liquid/liquid.db`) maintaining the Project Registry (known workspaces, last opened), IDE/LLM configuration settings, and Execution Checkpoints (`last_task_id`, restore points, error telemetry).
   - **Frontend SPA:** Pure Static Single Page Application built with React 19, TypeScript, Astryx Design System (`@astryxdesign/core`), and Zustand. Embedded directly into the Rust binary using `rust-embed` (Zero SSR, Zero Node.js runtime dependency in production).
 - **Agent Mesh (ACP Protocol Server)**:
   - Dispatches tasks to local or cloud LLMs via LiteLLM abstraction.
@@ -104,4 +105,10 @@ Liquid ADE is a local-first, spec-compiled product engineering environment. It b
   - Context: Non-technical and product stakeholders need visual lifecycle tracking and immediate execution of individual tasks without using a terminal.
   - Decision: Implement a Jira-style Liquid Board (Kanban projection of the SCPE state machine) with a 1-click execution action on every task item, streaming agent progress and updating disk state (`- [x]`) automatically.
   - Rejected: Passive read-only checklists requiring manual CLI commands.
+- **2026-09-23 — ADR-007: Embedded SQLite for Project Registry and Execution Checkpoints**:
+  - Context: Liquid ADE must manage multiple local projects (create new, open existing, switch workspaces), persist LLM provider settings, and record durable agent execution checkpoints (`last_task_id`, restore points) so agents can resume cleanly after interruptions without hallucinating or losing context.
+  - Decision: Embed SQLite via `rusqlite` (bundled feature) stored locally at `~/.liquid/liquid.db`.
+  - Boundaries & Invariants: SQLite is strictly an IDE metadata and execution recovery engine; plain Markdown files in Git remain the sovereign Single Source of Truth (SSOT) for all product specifications, architectural decisions, and tasks.
+  - Rejected: Ephemeral in-memory state (lost on restart), flat JSON config files (corruption hazards and no transactional rollback), and external DBMS (breaks zero-setup single-binary portability).
+
 

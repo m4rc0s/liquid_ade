@@ -9,6 +9,7 @@ against this file.
   - Language: Rust 2021 edition
   - HTTP / WebSocket Framework: Axum 0.8
   - Async Runtime: Tokio
+  - Embedded Database: SQLite via `rusqlite` (`features = ["bundled"]`) for Project Registry, IDE settings, and Agent Checkpoints
   - Asset Embedding: `rust-embed`
   - Serialization: Serde, `serde_json`
   - Filesystem Monitoring: `notify`
@@ -28,6 +29,9 @@ against this file.
 
 ## Engineering Standards
 
+- **Storage Separation of Concerns:**
+  - *Living Specifications & Code (Git SSOT):* Plain markdown files (`product_vision.md`, `architecture.md`, `features/`) versioned in Git are the sovereign product contract.
+  - *IDE Metadata & Checkpoints (SQLite):* Local SQLite database (`~/.liquid/liquid.db`) stores known project paths, user preferences/API keys, and agent execution restore points (`last_task_id`, session resumption tokens).
 - **Upstream & Spec Primacy:** Focus on visual product definition, SCPE canonical file generation, Jira-style board tracking, and interactive task execution; downstream code compilation is secondary.
 - **Package-by-Feature / Vertical Slicing:** Code is organized by domain feature rather than technical layer.
 - **Fail-Fast & Strict Contracts:** Input parsing is criterious and defensive. Malformed or out-of-boundary payloads are rejected immediately with typed errors.

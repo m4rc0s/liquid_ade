@@ -143,3 +143,14 @@ This glossary establishes the **Ubiquitous Language** for the **Liquid** ecosyst
 - **definition:** A configurable multi-provider adapter layer enabling Liquid ADE to connect with different model providers (starting with Google Gemini REST API, extensible to OpenAI, Copilot, and local models) through simple API key and model selection settings in the interface.
 - **not_to_be_confused_with:** A hardcoded single-model integration.
 
+## Project Registry
+- **bounded_context:** Workspace Management & Storage
+- **definition:** The persistent catalog maintained in embedded SQLite (`liquid.db`) tracking all known product workspaces on the host machine, including project ID, name, absolute filesystem path, creation timestamp, and last-opened timestamp.
+- **not_to_be_confused_with:** A remote Git repository hosting service.
+
+## Execution Checkpoint
+- **bounded_context:** Agent Execution & Resilience
+- **definition:** A durable snapshot recorded in embedded SQLite capturing the state of an agent's task execution, including `last_task_id`, execution status (`running`, `completed`, `failed`, `paused`), context JSON, and error telemetry, enabling the agent to resume work accurately without context loss or hallucination.
+- **not_to_be_confused_with:** A Git commit or version control tag.
+
+
