@@ -39,6 +39,41 @@ against this file.
 - **Zero Production Node.js Dependency:** Production binary embeds compiled UI assets and runs without external Node.js runtime.
 - **Compiler Warnings Policy:** Non-critical compiler/linter warnings are permitted in production when explicitly justified, but zero errors are tolerated.
 
+## Code Quality, Linters & Formatters
+
+- **Rust (Backend):**
+  - **Linter:** `cargo clippy --workspace --all-targets -- -D warnings` (strict zero-tolerance for compiler warnings; exceptions must be explicitly annotated with `#[allow(...)]` and justified).
+  - **Formatter:** `cargo fmt --all -- --check` (enforces Rust standard 2021 style).
+- **TypeScript / React (Frontend):**
+  - **Linter:** `oxlint` (configured via `.oxlintrc.json`, high-performance Rust-based linter).
+  - **Type-Checker:** `tsc --noEmit` (strict mode enabled in `tsconfig.json`).
+  - **Rules:** Hook dependencies must be valid, zero undeclared anys, explicit return types on API contracts.
+- **SCPE Specifications:**
+  - **Validator:** `python3 .agents/skills/scpe/scripts/scpe.py validate --strict` (must pass with 0 errors and 0 warnings before any epic handoff).
+  - **Readiness Gate:** `python3 .agents/skills/scpe/scripts/scpe.py gate-check <feature>/<epic>` (must pass with 0 blocking issues before moving to Ready).
+
+## Versioning & Git Conventions
+
+- **Semantic Versioning (SemVer 2.0.0):** `MAJOR.MINOR.PATCH`
+  - `MAJOR`: Incompatible API breaking changes, protocol breaks, or paradigm shifts.
+  - `MINOR`: Backward-compatible new features (e.g. adding Gemini provider, Liquid Board, Task Runner).
+  - `PATCH`: Backward-compatible bug fixes, UI adjustments, and performance corrections.
+  - **Manifest Alignment:** `version` in `apps/ade/Cargo.toml` and `apps/ade/ui/package.json` must stay synchronized with active release milestones.
+- **Git Commit Messages (Conventional Commits):**
+  - **Language:** Commit messages **MUST ALWAYS be written in English**, regardless of user prompt language.
+  - **Format:** `<type>(<optional scope>): <description in english>`
+  - **Types:** `feat` (new feature), `fix` (bug fix), `docs` (spec/documentation change), `refactor` (code refactoring), `test` (adding/updating tests), `perf` (performance), `chore` (maintenance/tooling), `build` (Cargo/Vite dependencies).
+
+## Workspace Automation (Justfile)
+
+Unified task automation via `just` provides single-command determinism for both humans and agents:
+- `just check`: Runs full suite validation (`scpe.py validate --strict`, `cargo clippy`, `cargo fmt --check`, `oxlint`, and `tsc`).
+- `just lint`: Runs code linters (`cargo clippy` and `oxlint`).
+- `just fmt`: Formats all Rust and TypeScript source files.
+- `just test`: Runs automated test suite (`cargo test`).
+- `just dev`: Starts local development environment.
+- `just build`: Compiles production release binary with embedded static SPA.
+
 ## AI Guardrails
 
 - Humans decide, agents execute. No agent approves its own work or settles an open business question.
