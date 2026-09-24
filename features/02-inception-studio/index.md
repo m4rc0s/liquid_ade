@@ -1,0 +1,25 @@
+# Feature: Inception Studio & Idea Validation
+
+- **goal:** Enable conversational product inception, architectural formulation, visual project management via Liquid Board, and one-click task execution using multi-LLM routing (Google Gemini).
+- **users:** Product Managers, Senior Architects, Tech Leads, and Autonomous Agents
+- **bounded_context:** Inception & Visual Product Engineering
+- **business_value:** Allows users to define products conversationally, scaffold canonical SCPE documents, track progress on a Jira-style board, and execute tasks with 1 click.
+
+## Scope
+- Workspace scaffolding modal and project creation (`epic_01_project_scaffold_generator`).
+- Conversational co-pilot panel with Gemini REST streaming (`epic_02_conversational_copilot_panel`).
+- Product vision refinement and live document patching (`epic_03_product_vision_refiner`).
+- Design guidelines builder for UI/UX standards (`epic_04_design_guidelines_builder`).
+- Architecture guidelines and ADR generator (`epic_05_architecture_and_adr_engine`).
+- Interactive roadmap visualizer and conversational adjuster (`epic_06_interactive_roadmap_adjuster`).
+- Inception-to-Feature handoff and feature scaffolding (`epic_07_feature_planning_handoff`).
+- Jira-style Liquid Board and One-Click Interactive Task Runner (`epic_08_liquid_board_and_task_runner`).
+
+## Out of Scope
+- Code editing in browser (Liquid delegates code editing to developer's external IDE).
+- Live WebSocket file watching with echo suppression (Phase 3: Live File Sync).
+- Sandboxed code execution in Podman (Phase 7: Podman Sandbox Runner).
+
+## Epics
+
+- [epic_01_project_scaffold_generator](epics/epic_01_project_scaffold_generator/index.md) — Draft
