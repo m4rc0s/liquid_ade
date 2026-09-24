@@ -1,222 +1,226 @@
-<div align="center">
-
 # 🌊 Liquid ADE
-### *The Spec-First, Agentic Development Environment*
 
-**Transform living Markdown specifications into deterministic, production-ready software.**  
-*Bridging product intent and autonomous AI agents through rigorous [Spec-Compiled Product Engineering (SCPE)](https://github.com/m4rc0s/scpe).*
+> **The Spec-First, Agentic Development Environment (ADE).**  
+> Transform living Markdown specifications into deterministic software with mathematical precision.
 
-[![License](https://img.shields.io/badge/license-MIT%20%2F%20Apache--2.0-blue.svg?style=flat-square)](#-license)
-[![Rust](https://img.shields.io/badge/Rust-2024%2B%20%7C%20Axum-orange.svg?style=flat-square&logo=rust)](https://www.rust-lang.org/)
-[![React](https://img.shields.io/badge/Frontend-React%2019%20%7C%20Astryx-61dafb.svg?style=flat-square&logo=react)](https://react.dev/)
-[![Protocol](https://img.shields.io/badge/Protocol-ACP%20(JSON--RPC%202.0)-purple.svg?style=flat-square)](#-protocol-first-agent-client-protocol-acp)
-[![Methodology](https://img.shields.io/badge/Methodology-SCPE%20v0.3.0-emerald.svg?style=flat-square)](https://github.com/m4rc0s/scpe)
-[![Sandbox](https://img.shields.io/badge/Sandbox-Podman%20Rootless-892CA0.svg?style=flat-square&logo=podman)](https://podman.io/)
-
-[**Explore Features**](#-key-features) • [**Architecture**](#-architecture) • [**Repository Structure**](#-repository-structure) • [**Quick Start**](#-quick-start) • [**Documentation**](#-documentation-ecosystem)
-
-</div>
+[![License](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/status-Phase%202%20Inception-yellow.svg)](quick_status.md)
+[![Method](https://img.shields.io/badge/method-SCPE%20v0.3.0-emerald.svg)](https://github.com/m4rc0s/scpe)
+[![Rust](https://img.shields.io/badge/backend-Rust%202021%20%7C%20Axum-orange.svg?logo=rust)](https://www.rust-lang.org/)
+[![React](https://img.shields.io/badge/ui-React%2019%20%2B%20Astryx-61dafb.svg?logo=react)](https://react.dev/)
+[![Database](https://img.shields.io/badge/db-SQLite%20Embedded-003b57.svg?logo=sqlite)](https://www.sqlite.org/)
 
 ---
 
-## 💡 The Paradigm: Code as a Consequence
+## 🎯 The Problem
 
-> *"The Specification is the Sovereign Contract.  
-> The Document is the Interface (Document-as-UI).  
-> The Agents Execute with Mathematical Precision.  
-> The Code is Just the Consequence."*
+Modern AI-assisted software generation has plunged into **"vibe coding"** — unguided, unstructured prompts producing code detached from real product intent. Teams face:
 
-Modern AI-assisted development often slips into **"vibe coding"** — unstructured, contextless code generation that creates immediate architectural debt, hallucinated dependencies, and disconnect from product requirements.
+- **Requirements Disconnect:** Requirements scatter across Jira, Notion, Slack, and PR descriptions, while source code drifts aimlessly.
+- **Architectural Vacuum & Context Loss:** Autonomous agents operate without rigid domain boundaries (*Bounded Contexts*), hallucinating libraries, endpoints, and database models.
+- **Absence of Acceptance Verification:** Code lands in repositories without passing formal, measurable acceptance criteria.
+- **Bloated IDE Duplication:** Most AI developer tools attempt to clone full code editors inside the browser, creating sluggish web UIs that try to replace your trusted native environment.
 
-**Liquid ADE** solves this by establishing **Markdown files in Git as the Single Source of Truth (SSOT)**. It provides a visual, real-time studio for Product Managers and Tech Leads to specify, audit, and orchestrate autonomous AI agents inside isolated, rootless sandboxes.
+Today, architecture lives in memory, and software correctness is left to chance.
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                          SINGLE SOURCE OF TRUTH                             │
-│       Living Markdown Specs in Git (.md / SCPE Methodology)                 │
-└──────────────────────────────────────┬──────────────────────────────────────┘
-                                       │
-         ┌─────────────────────────────┴─────────────────────────────┐
-         ▼                                                           ▼
-┌──────────────────────────────────────┐            ┌──────────────────────────────────────┐
-│       TECHNICAL (CLI-FIRST)          │            │         PRODUCT (UI-FIRST)           │
-│      Engineers & Tech Leads          │            │       PMs, POs & Designers           │
-│                                      │            │                                      │
-│ • Write specs in Neovim / VS Code    │            │ • Interactive WYSIWYG block editor   │
-│ • Live sub-50ms sync with UI studio  │            │ • Tactile state badges & drift alert │
-│ • Review diffs & TDD test passes     │            │ • Approve Readiness Gate             │
-└──────────────────┬───────────────────┘            └──────────────────┬───────────────────┘
-                   │                                                   │
-                   └───────────────────────────┬───────────────────────┘
-                                               ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                        THE CODE FRONTIER (`apps/`)                          │
-│  Liquid ADE orchestrates agents; it doesn't lock you into a bloated IDE.    │
-│  Downstream code lives in standard clean directories for any code editor.   │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+## 💡 The Solution
 
----
+**Liquid ADE** embraces **Spec-Driven Development (SDD)** under the **SCPE v0.3.0** (*Spec-Compiled Product Engineering*) methodology:
 
-## ✨ Key Features
+> *"The Specification is the Sovereign Contract. The Document is the Interface (Document-as-UI). The Agents Execute with Mathematical Precision. The Code is Just the Consequence."*
 
-### ⚡ Single-Binary, Zero-SSR Architecture
-- **Ultra-Lean Rust Core:** Built with Axum and Tokio. Consumes **<50MB RSS** at idle with sub-millisecond local response times.
-- **Embedded SPA:** The React 19 UI is pre-compiled and served directly from RAM using `rust-embed` — no Node.js or Bun runtime required in production.
-- **Dual-Mode Delivery:** Runs seamlessly as a local/cloud web server or as a native desktop window via Tauri 2.0.
+- ✅ **Living Specs as Sovereign SSOT** — Structured Markdown files in Git (`.md`) are the inviolable Single Source of Truth.
+- ✅ **Dual-Ledger Session Architecture** — High-velocity transcript streaming alongside a durable SQLite operational state ledger (`~/.liquid/liquid.db`).
+- ✅ **Living Spec Canvas & 1-Click Task Runner** — Specification tasks (`tasks.md`) project as interactive action cards with 1-click execution triggers (`▶ Start task`).
+- ✅ **Zero-SSR Single Binary** — Ultra-fast Axum core embedding the static React 19 SPA (`rust-embed`) consuming **<50MB RAM** with sub-100ms startup.
+- ✅ **Clean Code Frontier (`apps/`)** — Zero browser editor lock-in. Agent-generated code resides cleanly on disk under `apps/` for your external editor (Neovim, VS Code, Cursor).
 
-### 📝 Document-as-UI (Interactive WYSIWYG)
-- **Living Specifications:** Turns raw Markdown into rich, interactive UI blocks (Linear/Notion style).
-- **Surgical Line Patcher:** Direct, line-by-line updates on disk without destructive full-file rewrites.
-- **Echo Suppression:** Eliminates cursor jumps and race conditions during simultaneous UI/editor changes.
+## 📊 What You Get
 
-### 🔄 Sub-50ms Live File Synchronization
-- **Bidirectional Hot Sync:** Edit markdown in your terminal or IDE, and the Liquid interface updates instantly via WebSocket deltas.
-- **Spec Drift Engine:** Real-time visual alerts when downstream implementations drift from approved specs.
+### For Technical Leaders & Senior Engineers
+- **Mathematical Precision:** Epics and tasks anchored to formal business rules (`R#`) and BDD acceptance scenarios (`S#`).
+- **Acceptance Verification Gate:** Automated testing enforces scenario validation before any task can be marked complete (`- [x]`).
+- **Pristine Linear Git History:** Pure bifurcation-free `main` branch with curated squash merges and English Conventional Commits.
+- **Strict Traversal Guards:** Secure filesystem reader protecting the host operating system from path escape attacks (`TRAVERSAL_DETECTED`).
 
-### 🤖 Protocol-First: Agent Client Protocol (ACP) & LiteLLM Gateway
-- **Open Standards:** Governed by JSON-RPC 2.0 over WebSocket and `stdio`.
-- **Agnostic LLM Routing:** Universal connectivity to local offline models (**Ollama**, **Llama.cpp**, **vLLM**) or cloud providers (**Claude 3.5 Sonnet**, **GPT-4o**, **Gemini Pro**) via LiteLLM.
+### For Product Managers, Designers & Stakeholders
+- **Visual Project Management:** Jira-style Liquid Board projecting real-time lifecycle states (`Draft` → `Ready` → `WIP` → `Done`).
+- **Conversational Inception Studio:** Dialogue with multi-LLM co-pilots (powered by Google Gemini) to synthesize product vision, guidelines, and architecture.
+- **Readiness Gate Governance:** Formal human sign-off required before an epic can transition from specification into execution.
+- **Zero Terminal Overhead:** Complete product inception, scoping, and governance without requiring command-line or code editor access.
 
-### 🛡️ Rootless Sandbox Execution (Podman)
-- **Safe Autonomous Coding:** Agents compile code, install dependencies, and run TDD test suites within ephemeral, rootless Podman containers.
-- **No Root Daemons:** Zero requirement for privileged Docker daemons or complex compose files.
+## 🏗️ Roadmap
 
-### 🧩 Pluggable SDD (Spec-Driven Development)
-- Ships with **[SCPE (Spec-Compiled Product Engineering)](https://github.com/m4rc0s/scpe)** out of the box, but allows any team to define their own specification profile via an intuitive visual configuration screen.
+| Phase | Milestone | Focus | Status |
+| :---: | :--- | :--- | :---: |
+| **Phase 1** | **v0.1.0 The Inspector** | Axum runtime shell, static React 19 SPA fallback, safe FS tree scanner & traversal guard | ✅ Done |
+| **Phase 2** | **v0.2.0 Inception Studio** | Project scaffolding, Gemini co-pilot streaming, living spec canvas, 1-click task runner | 🚀 In Progress |
+| **Phase 3** | **v0.3.0 The Synchronizer** | Async file watching (`notify`), bidirectional WebSocket live sync (<50ms), echo suppression | 📋 Backlog |
+| **Phase 4** | **v0.4.0 The Auditor** | Workspace status matrix, tactile Astryx state badges, and spec drift inspector | 📋 Backlog |
+| **Phase 5** | **v0.5.0 The Studio** | Rich WYSIWYG document editor with semantic AST block model and surgical line patcher | 📋 Backlog |
+| **Phase 6** | **v0.6.0 The Protocol** | Agent Client Protocol (ACP) via JSON-RPC 2.0 and LiteLLM universal multi-model gateway | 📋 Backlog |
+| **Phase 7** | **v0.7.0 The Engine** | Ephemeral rootless Podman sandbox factory for isolated downstream execution | 📋 Backlog |
 
----
+## 🛠️ Tech Stack
 
-## 🏛️ Architecture
+### Backend Engine
+- **Language:** Rust 2021+
+- **HTTP & Async Runtime:** Axum 0.7, Tokio 1.0, Tower
+- **Database:** Embedded SQLite via bundled `rusqlite` 0.32 (`~/.liquid/liquid.db`)
+- **Asset Embedding:** `rust-embed` (pre-compiled React SPA baked into the binary)
+- **Serialization:** Serde, Serde JSON
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                             LIQUID ADE INTERFACE                            │
-│         React 19 • TypeScript • Astryx Design System • Zustand SPA          │
-└──────────────────────────────────────┬──────────────────────────────────────┘
-                                       │ (JSON-RPC 2.0 / WebSocket)
-                                       ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                              ADE CORE (RUST)                                │
-│       Axum Web Server • ACP Dispatcher • notify Async File Watcher          │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                          LITELLM MODEL GATEWAY                              │
-│       Local (Ollama / Llama.cpp) ◄────────► Cloud (Claude / OpenAI / Gemini)│
-├─────────────────────────────────────────────────────────────────────────────┤
-│                     PODMAN ROOTLESS SANDBOX ENGINE                          │
-│          Ephemeral Container Execution • TDD Runner • Agent Scaffolding     │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+### Frontend Studio
+- **Framework:** React 19
+- **Language:** TypeScript 5.8+
+- **Build Tool:** Vite 8
+- **Design System:** Astryx Design System (`@astryxdesign/core`)
+- **State Management:** Zustand
+- **Tooling:** Bun, Oxlint, Prettier
 
----
-
-## 📂 Repository Structure
-
-The workspace follows a strict **Spec-First & Monorepo** layout. Product specifications, methodology standards, and feature definitions live as the sovereign Single Source of Truth (SSOT) at the repository root and `features/`, while technical applications and source code live under `apps/`:
-
-```text
-liquid_ade/
-├── 📜 product_vision.md          # Core Philosophy, Manifesto & Architectural Pillars
-├── 🗺️ roadmap.md                 # Product Roadmap & Vertical Slice Milestones
-├── 📖 glossary.md                # Ubiquitous Language & SCPE State Machine
-├── 🧭 index.md                   # Workspace Master Index & Agent Navigation
-│
-├── 📂 features/                  # Canonical Product Specifications (Vertical Slices)
-│   ├── 01-workspace-inspector/   # FEAT-01: Workspace & Governance Scanner
-│   ├── 02-spec-status-and-drift/ # FEAT-02: State Machine & Drift Detector
-│   ├── 03-live-file-sync/        # FEAT-03: Bidirectional Real-Time Sync (<50ms)
-│   ├── 04-wysiwyg-document-editor/ # FEAT-04: Document-as-UI Block Editor
-│   ├── 05-acp-agent-handshake/   # FEAT-05: Universal ACP & LiteLLM Gateway
-│   └── 06-podman-sandbox-execution/ # FEAT-06: Rootless Podman Sandbox Runner
-│
-└── 📦 apps/                      # Downstream Implementations & Source Code
-    └── ade/                      # Liquid ADE Application (Single-Binary Monorepo)
-        ├── 📄 README.md          # 🔗 Application & Backend Documentation
-        ├── 📄 app_manifest.md    # Application Topology & Architecture Manifest
-        ├── 🦀 Cargo.toml         # Rust Workspace & Dependency Configuration
-        ├── 🔨 build.rs           # Build script embedding the React SPA in the binary
-        ├── 📂 src/               # ade_core: Axum Server, ACP Protocol, LiteLLM
-        └── 📂 ui/                # ade_ui: Frontend React 19 Studio
-            ├── 📄 README.md      # 🔗 Frontend Studio Documentation
-            ├── 📄 UI_UX_GUIDELINES.md # Astryx UI/UX Design System Principles
-            ├── 📦 package.json   # Frontend Dependencies & Scripts
-            └── 📂 src/           # Components, Zustand Stores & Feature Slices
-```
-
-### 🔗 Source Code & Subsystem Documentation
-
-Each application module contains its own dedicated technical documentation:
-
-| Subsystem / Layer | Path | Description | Documentation |
-| :--- | :--- | :--- | :--- |
-| **Backend & App Host (`ade_core`)** | [`apps/ade/`](apps/ade) | Axum/Tokio web server, ACP JSON-RPC 2.0 protocol, LiteLLM gateway, Podman sandbox runner, and single-binary packaging. | [📖 Backend README](apps/ade/README.md) • [📋 App Manifest](apps/ade/app_manifest.md) |
-| **Frontend Studio (`ade_ui`)** | [`apps/ade/ui/`](apps/ade/ui) | React 19 SPA, Astryx Design System, block-based WYSIWYG specification editor, state machine badges, and live sync deltas. | [📖 Frontend README](apps/ade/ui/README.md) • [🎨 UI/UX Guidelines](apps/ade/ui/UI_UX_GUIDELINES.md) |
-| **Feature Specifications** | [`features/`](features) | Detailed PRDs, epic definitions, tasks, and state tracking for all core features. | [🧭 Master Index](index.md) • [🗺️ Product Roadmap](roadmap.md) |
-
----
+### Methodology & Automation
+- **Methodology:** SCPE v0.3.0 (*Spec-Compiled Product Engineering*)
+- **Task Runner:** Just (`Justfile`)
+- **Git Strategy:** Option B (PR-based review & linear Squash Merge on GitHub)
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- [Rust](https://www.rust-lang.org/tools/install) (1.80+) & `cargo`
-- [Bun](https://bun.sh/) (for frontend development)
-- [Podman](https://podman.io/) (optional, for agent sandboxed execution)
+- [Rust & Cargo](https://www.rust-lang.org/tools/install) (v1.80+)
+- [Bun](https://bun.sh/) (for frontend asset building)
+- [Just](https://github.com/casey/just) (command runner)
+- Git & GitHub CLI (`gh`)
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/your-org/liquid-ade.git
-cd liquid-ade
-```
-
-### 2. Run in Development Mode
-Start the frontend and backend with hot reload:
+### Setup
 
 ```bash
-# Terminal 1: Run the React UI (ade_ui)
-cd apps/ade/ui
-bun install
-bun run dev
+# Clone the repository
+git clone https://github.com/m4rc0s/liquid_ade.git
+cd liquid_ade
 
-# Terminal 2: Run the Rust Core (ade_core)
-cd apps/ade
-cargo run
+# Validate specifications, linters, and type checking
+just check
+
+# Run the test suite
+just test
+
+# Start the local development server (Axum + Embedded SPA)
+just dev
 ```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) in your browser to access the Liquid ADE interface.
 
-### 3. Build Self-Contained Release Binary
-Build a standalone binary with the frontend fully embedded:
+### Available Commands
 
 ```bash
-cd apps/ade
-cargo build --release
+# Validation & Code Quality
+just check               # Run strict SCPE validation, formatting checks, clippy, oxlint, and tsc
+just lint                # Run clippy (Rust) and oxlint (TypeScript)
+just fmt                 # Auto-format Rust (cargo fmt) and frontend (prettier)
+
+# Testing & Execution
+just test                # Run all backend unit and BDD integration tests
+just dev                 # Launch development server
+just build               # Compile standalone production release binary
+
+# Team Workflow (Option B)
+just branch-start <name> # Create feature branch from latest main
+just branch-push <name>  # Push feature branch to remote origin
+just sync                # Synchronize local main with origin after PR merge
 ```
-The resulting executable in `./target/release/liquid-ade` is a single binary with zero external runtime dependencies.
 
----
+## 🏗️ Project Structure
 
-## 📚 Documentation Ecosystem
+```text
+liquid_ade/
+├── 📜 product_vision.md          # Sovereign Manifesto, Architecture & Product Vision
+├── 🗺️ roadmap.md                 # Macro Roadmap & Incremental Evolution Horizons
+├── 📖 glossary.md                # Ubiquitous Domain Language (SCPE State Machine)
+├── 🏛️ architecture.md            # System Architecture & Technical Boundaries
+├── 🤝 technical_deal.md          # Technical Deal, Approved Stack & Linters
+├── 📋 team_playbook.md           # Team Playbook: Option B PR Workflow & Commits
+├── 🚦 quick_status.md            # Product-Wide Status Dashboard
+├── 🧭 index.md                   # Master Entrypoint for People & Autonomous Agents
+│
+├── 📂 features/                  # Vertical Slices (Living Specifications)
+│   ├── 01-workspace-inspector/   # Phase 1: Shell, Traversal Guard & Tree API (Done)
+│   └── 02-inception-studio/      # Phase 2: Scaffolding, Gemini Streaming & Board (Active)
+│
+├── 📦 apps/                      # Downstream Implementations (Code Frontier)
+│   └── ade/                      # Single-Binary Liquid ADE Application
+│       ├── 🦀 Cargo.toml         # Rust Workspace & Dependencies
+│       ├── 📂 src/               # Axum server, PathGuard, Scaffold engine & SQLite
+│       ├── 📂 tests/             # BDD Acceptance Tests (<epic>#S#)
+│       └── 📂 ui/                # React 19 Frontend Studio (Astryx Design System)
+│
+└── ⚙️ Justfile                   # Deterministic Automation SSOT
+```
 
-- **[product_vision.md](product_vision.md)** — Core Philosophy, Manifesto, and Architectural Pillars.
-- **[roadmap.md](roadmap.md)** — Product Roadmap, Timeline, and Vertical Slices Matrix.
-- **[glossary.md](glossary.md)** — Ubiquitous Language & [SCPE](https://github.com/m4rc0s/scpe) State Machine (`Draft → Ready → WIP → Done`).
-- **[index.md](index.md)** — Workspace Master Index & Agent Navigation Entrypoint.
-- **[Application Backend README](apps/ade/README.md)** — Backend architecture, ACP protocol, and single-binary packaging.
-- **[Application Frontend README](apps/ade/ui/README.md)** — Frontend architecture, Astryx design system, and UI components.
-- **[UI/UX Guidelines](apps/ade/ui/UI_UX_GUIDELINES.md)** — Astryx Design System Principles and Accessibility Heuristics.
+## 📖 Documentation
 
----
+**Core Steering Documents:**
+1. **[product_vision.md](product_vision.md)** — Macro vision, concept-to-production continuum, and architectural pillars
+2. **[roadmap.md](roadmap.md)** — Macro roadmap and horizontal phase transitions
+3. **[glossary.md](glossary.md)** — Ubiquitous domain language and terminology
+4. **[index.md](index.md)** — Master workspace index and navigation guide
+
+**Engineering & Architecture:**
+- **[architecture.md](architecture.md)** — Single-binary architecture, embedded SQLite, and system boundaries
+- **[technical_deal.md](technical_deal.md)** — Approved stack, linters, and quality standards
+- **[team_playbook.md](team_playbook.md)** — Option B PR-based review workflow, squash merge rules, and commit conventions
+- **[CHANGELOG.md](CHANGELOG.md)** — Semantic Versioning and milestone changelog
+
+**Status & Traceability:**
+- **[quick_status.md](quick_status.md)** — Active epic states, blockers, and confidence metrics
+- **[features/](features/)** — Feature and epic specifications, Given/When/Then scenarios, and task lists
 
 ## 🤝 Contributing
 
-We welcome contributions from developers, designers, and product practitioners!
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feat/my-new-feature`)
-3. Commit your changes following [Conventional Commits](https://www.conventionalcommits.org/) (`git commit -m 'feat(sync): add binary diff watcher'`)
-4. Push to the branch (`git push origin feat/my-new-feature`)
-5. Open a Pull Request
+This project is governed by **SCPE (Spec-Compiled Product Engineering)**: Markdown specs in Git are the Single Source of Truth.
 
----
+**Team Workflow (Option B):**
+1. Create a branch from `main`: `just branch-start <epic-slug>`
+2. Implement tasks in `tasks.md`, following test-driven verification (`<epic>#S<scenario>`)
+3. Verify quality: `just check && just test`
+4. Push branch and open a Pull Request: `just branch-push <epic-slug>`
+5. Tech Lead reviews and performs **Squash and Merge** on GitHub
+6. Synchronize locally: `just sync`
+
+Learn more: [SCPE Methodology on GitHub](https://github.com/m4rc0s/scpe)
+
+## 🧪 Testing
+
+```bash
+# Run all automated tests
+just test
+# or: cargo test
+
+# Run tests for a specific epic suite
+cargo test --test epic_01_runtime_shell_tests
+cargo test --test epic_02_workspace_fs_scanner_tests
+cargo test --test epic_01_project_scaffold_generator_tests
+```
+
+All integration tests are strictly organized by epic and acceptance scenario: `<epic_name>#S<scenario>` (e.g. `epic_01_project_scaffold_generator#S1`).
+
+## 📋 Status
+
+**Current State:** Phase 2 Inception Studio (Active Implementation)  
+**Completed Epics:**
+- `01-workspace-inspector/epic_01_runtime_shell` — `Done` ✅
+- `01-workspace-inspector/epic_02_workspace_fs_scanner` — `Done` ✅
+- `02-inception-studio/epic_01_project_scaffold_generator` — `Done` ✅
+
+**Active / Next Epic:**
+- `02-inception-studio/epic_02_conversational_copilot_panel` — `Draft` (Gate Checked) 📋
+
+**Blockers:** None
+
+See [quick_status.md](quick_status.md) and [features/02-inception-studio/quick_status.md](features/02-inception-studio/quick_status.md) for granular details.
 
 ## 📄 License
 
-Distributed under the **MIT** or **Apache-2.0** License.
+Dual-licensed under the **MIT** or **Apache 2.0** License.
+
+---
+
+**Built with ❤️ by the Liquid ADE team.**
