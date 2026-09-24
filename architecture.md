@@ -110,5 +110,10 @@ Liquid ADE is a local-first, spec-compiled product engineering environment. It b
   - Decision: Embed SQLite via `rusqlite` (bundled feature) stored locally at `~/.liquid/liquid.db`.
   - Boundaries & Invariants: SQLite is strictly an IDE metadata and execution recovery engine; plain Markdown files in Git remain the sovereign Single Source of Truth (SSOT) for all product specifications, architectural decisions, and tasks.
   - Rejected: Ephemeral in-memory state (lost on restart), flat JSON config files (corruption hazards and no transactional rollback), and external DBMS (breaks zero-setup single-binary portability).
+- **2026-09-23 — ADR-008: Dual-Ledger Architecture and Acceptance Verification Gate**:
+  - Context: Long-running task executions produce unbounded transcripts with noisy tool calls and diffs. Relying on transcript replay causes context window compaction loss and hallucinated progress. Additionally, an agent claiming a task is "done" must never be accepted blindly without automated verification of acceptance conditions.
+  - Decision: Decouple ephemeral streaming transcripts (rendered in the right drawer session UI) from a schema-bounded durable state ledger in embedded SQLite (recording goal, active phase, next intent, tried approaches, and execution checkpoints). Enforce an automated Acceptance Verification Gate before updating `tasks.md` to `- [x]`, evaluating that generated files exist, diagnostics pass, and test scenarios (`<epic>#S#`) succeed. Inject canonical Steering Documents (`product_vision.md`, `architecture.md`, `technical_deal.md`, and the active `plan.md`) into every task execution turn.
+  - Rejected: Relying solely on raw conversation history for resumption; allowing unverified worker claims to mark tasks completed.
+
 
 

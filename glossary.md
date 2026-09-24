@@ -153,4 +153,15 @@ This glossary establishes the **Ubiquitous Language** for the **Liquid** ecosyst
 - **definition:** A durable snapshot recorded in embedded SQLite capturing the state of an agent's task execution, including `last_task_id`, execution status (`running`, `completed`, `failed`, `paused`), context JSON, and error telemetry, enabling the agent to resume work accurately without context loss or hallucination.
 - **not_to_be_confused_with:** A Git commit or version control tag.
 
+## Dual-Ledger Session
+- **bounded_context:** Agent Execution & Resilience
+- **definition:** An architectural pattern separating the ephemeral conversation transcript (volatile UI streaming cards) from the durable schema-bounded state ledger (folded records of goal, active phase, next intent, tried approaches, and verification checkpoints stored in embedded SQLite). Ensures that long-running tasks survive context window compaction and restarts without hallucinating progress.
+- **not_to_be_confused_with:** Full transcript replay or simple chat history.
+
+## Steering Documents
+- **bounded_context:** Agent Orchestration & Context Injection
+- **definition:** The set of canonical upstream specifications (`product_vision.md`, `architecture.md`, `technical_deal.md`, and the active epic's `plan.md`) that are deterministically injected as context into the prompt of any agent task execution to guarantee architectural compliance and domain invariant adherence.
+- **not_to_be_confused_with:** Random codebase search or uncurated prompt context.
+
+
 
