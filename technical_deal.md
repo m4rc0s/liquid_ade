@@ -21,12 +21,14 @@ against this file.
   - Markdown / AST: Unified, Remark, Rehype
 - **Inference & Execution:**
   - Protocol: JSON-RPC 2.0 ACP (Agent Client Protocol)
-  - Model Gateway: LiteLLM (local Ollama/vLLM or Cloud Claude/OpenAI/Gemini)
+  - Model Gateway: Configurable Multi-LLM Gateway with Google Gemini REST API (`gemini-2.5-flash`, `gemini-2.5-pro`) as primary initial provider, pluggable for OpenAI GPT and Copilot.
+  - HTTP Streaming Client: `reqwest` with Server-Sent Events / chunk streaming.
   - Sandboxing: Podman (rootless, daemonless)
   - Task Runner: `just` (`Justfile`)
 
 ## Engineering Standards
 
+- **Upstream & Spec Primacy:** Focus on visual product definition, SCPE canonical file generation, Jira-style board tracking, and interactive task execution; downstream code compilation is secondary.
 - **Package-by-Feature / Vertical Slicing:** Code is organized by domain feature rather than technical layer.
 - **Fail-Fast & Strict Contracts:** Input parsing is criterious and defensive. Malformed or out-of-boundary payloads are rejected immediately with typed errors.
 - **Single Source of Truth (SSOT):** Plain-text files versioned in Git are canonical. The UI is a real-time projection of disk state.

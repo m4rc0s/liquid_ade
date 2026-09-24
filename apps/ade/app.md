@@ -6,7 +6,7 @@
 - **stack:** Rust, Axum, Tokio, React 19, Vite, TypeScript, Astryx Design System, Zustand, LiteLLM, Podman
 - **standards:** as agreed in technical_deal.md
 - **entrypoint:** src/main.rs (Rust) / ui/src/main.tsx (React)
-- **depends_on:** local filesystem, Podman runtime, LiteLLM gateway
+- **depends_on:** local filesystem, Google Gemini API / LiteLLM gateway, Podman runtime
 - **run:** cargo run
 - **test:** cargo test
 

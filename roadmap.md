@@ -42,16 +42,18 @@ Now (Active Implementation)                Next (Unlocks from Phase 1)          
 
 ### 🔹 Phase 2: v0.2.0 — The Inception Studio (Product Inception & Idea Validation)
 * **Horizon:** `Next` (Starts immediately from the completed Phase 1 foundation)
-* **Goal:** Enable product creators, senior architects, and autonomous co-pilots to brainstorm, validate product ideas, formulate design/architectural guidelines, adjust roadmaps, and scaffold canonical SCPE projects inside Liquid ADE.
+* **Goal:** Enable product creators, senior architects, and autonomous co-pilots to brainstorm, validate product ideas, formulate design/architectural guidelines, adjust roadmaps, manage features visually in a Jira-style board, and execute tasks in 1 click using configured LLMs (starting with Google Gemini).
 * **Feature Target:** `02-inception-studio` (Specification blueprint in `docs/specs/02-inception-studio/`)
 * **Epics (Pre-specified & Ready for Handoff):**
   1. `epic_01_project_scaffold_generator`: Modal UI & `/api/workspace/new` to scaffold canonical SCPE workspaces on disk.
-  2. `epic_02_conversational_copilot_panel`: Kimi-inspired dual-pane UI with streaming tokens and active document canvas binding.
+  2. `epic_02_conversational_copilot_panel`: Multi-LLM streaming chat (Google Gemini REST API as primary provider, pluggable for GPT/Copilot) with document canvas binding.
   3. `epic_03_product_vision_refiner`: Structured elicitation prompts and live disk patching for `product_vision.md`.
   4. `epic_04_design_guidelines_builder`: Guided formulator of `UI_UX_GUIDELINES.md` using Astryx design tokens.
   5. `epic_05_architecture_and_adr_engine`: Architectural interview and ADR generator updating `architecture.md` and `technical_deal.md`.
   6. `epic_06_interactive_roadmap_adjuster`: Now/Next/Later visual Kanban grid and conversational reordering for `roadmap.md`.
   7. `epic_07_feature_planning_handoff`: Inception completeness validator unlocking downstream Feature Studio mode.
+  8. `epic_08_liquid_board_and_task_runner`: Jira-style visual Kanban board (`Draft` → `Ready` → `WIP` → `Done`) and One-Click Interactive Task Runner (`[▶ Executar]`).
+
 
 ---
 

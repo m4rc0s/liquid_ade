@@ -96,3 +96,12 @@ Liquid ADE is a local-first, spec-compiled product engineering environment. It b
   - Context: Architectural boundaries must prevent corrupted state from entering downstream pipelines.
   - Decision: Reject tolerant parsing; enforce strict schemas and fail-fast validation across all API endpoints and spec parsers.
   - Rejected: Tolerant parsing for malformed input.
+- **2026-09-23 — ADR-005: Pluggable Multi-LLM Gateway with Google Gemini Initial Provider**:
+  - Context: Product builders require immediate, conversational AI co-pilots to define products and generate SCPE features, with user-configured API keys and models.
+  - Decision: Implement a pluggable Multi-LLM Gateway starting with native Google Gemini REST streaming API (`streamGenerateContent`), extensible to OpenAI GPT and Copilot.
+  - Rejected: Hardcoding a single proprietary model or requiring local Ollama setup for initial testing.
+- **2026-09-23 — ADR-006: One-Click Interactive Task Runner and Jira-Style Board**:
+  - Context: Non-technical and product stakeholders need visual lifecycle tracking and immediate execution of individual tasks without using a terminal.
+  - Decision: Implement a Jira-style Liquid Board (Kanban projection of the SCPE state machine) with a 1-click execution action on every task item, streaming agent progress and updating disk state (`- [x]`) automatically.
+  - Rejected: Passive read-only checklists requiring manual CLI commands.
+

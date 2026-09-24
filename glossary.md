@@ -127,3 +127,19 @@ This glossary establishes the **Ubiquitous Language** for the **Liquid** ecosyst
 - **bounded_context:** Lifecycle & Governance
 - **definition:** The formal transition milestone where product inception artifacts (`product_vision.md`, `UI_UX_GUIDELINES.md`, `architecture.md`, `roadmap.md`) are validated for completeness, unlocking downstream Feature Studio mode to plan individual features with domain specialist agents.
 - **not_to_be_confused_with:** Prematurely starting coding without validated foundational specifications.
+
+## Liquid Board
+- **bounded_context:** Visual Project Management
+- **definition:** A Jira-style visual management surface projecting the SCPE lifecycle into interactive Kanban columns (`Draft`, `Ready`, `WIP`, `Done`), displaying epic cards with completion progress, task checklists, and live reactive updates from the filesystem without manual page reloads.
+- **not_to_be_confused_with:** Proprietary cloud-hosted task tracking tools disconnected from Git text files.
+
+## One-Click Task Runner
+- **bounded_context:** Interactive Agent Execution
+- **definition:** An action trigger allowing a user to click a single button (`[▶ Executar]`) directly on any task in `tasks.md`, dispatching the task and its acceptance criteria (`S#`, `R#`) to the active LLM agent, streaming live execution progress, and automatically updating the task checkbox to `- [x]` on disk upon completion.
+- **not_to_be_confused_with:** Unmonitored background batch jobs or manual terminal copy-pasting.
+
+## Multi-LLM Gateway
+- **bounded_context:** AI Infrastructure & Configuration
+- **definition:** A configurable multi-provider adapter layer enabling Liquid ADE to connect with different model providers (starting with Google Gemini REST API, extensible to OpenAI, Copilot, and local models) through simple API key and model selection settings in the interface.
+- **not_to_be_confused_with:** A hardcoded single-model integration.
+
