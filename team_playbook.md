@@ -25,3 +25,35 @@ Waves run concurrently across features.
 ## Commits
 
 - `docs:` for specification changes, `feat:`/`fix:`/`test:`/`refactor:` for code. Never mix both in one commit.
+
+## Branching & Merge Strategy
+
+All code and feature changes must strictly follow a branch-and-merge workflow:
+1. **Branch Creation:** Never commit directly to `main` during feature or epic implementation. Always branch from `main`:
+   ```bash
+   just branch-start <epic-slug>
+   # or: git checkout -b feat/<epic-slug>
+   ```
+2. **Implementation & Verification:**
+   - Implement tasks cited in `tasks.md`.
+   - Commit atomically using Conventional Commits in English.
+   - Run `just check` (SCPE validate, formatting, clippy, oxlint, and tsc) to ensure zero errors.
+3. **Merge with --no-ff into main:**
+   - Merge back into `main` using an explicit non-fast-forward merge commit:
+   ```bash
+   just branch-merge <epic-slug>
+   # or:
+   git checkout main
+   git merge --no-ff feat/<epic-slug> -m "merge(feat): complete <epic-slug>"
+   git branch -d feat/<epic-slug>
+   ```
+
+## Releases & Changelog Management
+
+- **Changelog SSOT:** Maintained in [`CHANGELOG.md`](CHANGELOG.md) following Keep a Changelog and SemVer 2.0.0.
+- **Release Protocol:**
+  1. Move items from `## [Unreleased]` to `## [X.Y.Z] - YYYY-MM-DD`.
+  2. Synchronize `version = "X.Y.Z"` across `apps/ade/Cargo.toml` and `apps/ade/ui/package.json`.
+  3. Commit: `chore(release): bump version to vX.Y.Z`.
+  4. Tag: `git tag -a vX.Y.Z -m "Release vX.Y.Z - <Milestone Title>"`.
+

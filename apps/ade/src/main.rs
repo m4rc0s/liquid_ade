@@ -4,6 +4,7 @@ use std::net::SocketAddr;
 
 #[derive(RustEmbed)]
 #[folder = "ui/dist/"]
+#[allow(dead_code)]
 struct Assets;
 
 #[tokio::main]
@@ -11,9 +12,11 @@ async fn main() {
     println!("Starting ACP Engine: Liquid ADE...");
 
     // API Routes / ACP Server + Catch-all route for Frontend (React)
-    let app = Router::new()
-        .route("/api/health", get(|| async { "ACP Engine (Rust) is online." }));
-        // TODO: Plug the rust_embed static file router here
+    let app = Router::new().route(
+        "/api/health",
+        get(|| async { "ACP Engine (Rust) is online." }),
+    );
+    // TODO: Plug the rust_embed static file router here
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
     println!("Frontend and Engine running at http://{}", addr);
