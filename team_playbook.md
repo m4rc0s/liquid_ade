@@ -26,27 +26,29 @@ Waves run concurrently across features.
 
 - `docs:` for specification changes, `feat:`/`fix:`/`test:`/`refactor:` for code. Never mix both in one commit.
 
-## Branching & Merge Strategy
+## Branching & Linear History Strategy (Squash Merge)
 
-All code and feature changes must strictly follow a branch-and-merge workflow:
+The project maintains a **100% linear, bifurcation-free history on `main`** using the Squash Merge strategy:
 1. **Branch Creation:** Never commit directly to `main` during feature or epic implementation. Always branch from `main`:
    ```bash
    just branch-start <epic-slug>
    # or: git checkout -b feat/<epic-slug>
    ```
-2. **Implementation & Verification:**
+2. **Implementation & Iterative Commits:**
    - Implement tasks cited in `tasks.md`.
-   - Commit atomically using Conventional Commits in English.
+   - Commit iteratively on the feature branch.
    - Run `just check` (SCPE validate, formatting, clippy, oxlint, and tsc) to ensure zero errors.
-3. **Merge with --no-ff into main:**
-   - Merge back into `main` using an explicit non-fast-forward merge commit:
+3. **Squash Merge into main (Linear History):**
+   - Integrate into `main` as a single, canonical, clean commit per epic:
    ```bash
-   just branch-merge <epic-slug>
-   # or:
+   just branch-merge <epic-slug> "feat(<epic-slug>): <canonical english description>"
+   # or manually:
    git checkout main
-   git merge --no-ff feat/<epic-slug> -m "merge(feat): complete <epic-slug>"
-   git branch -d feat/<epic-slug>
+   git merge --squash feat/<epic-slug>
+   git commit -m "feat(<epic-slug>): <canonical english description>"
+   git branch -D feat/<epic-slug>
    ```
+   - **Result:** `main` remains a perfectly straight, pristine line where every single commit represents one full, verified epic.
 
 ## Releases & Changelog Management
 
