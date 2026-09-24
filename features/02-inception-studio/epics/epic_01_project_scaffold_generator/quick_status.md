@@ -1,6 +1,6 @@
 # Status: Project Scaffold Generator & New Workspace Flow
 
-- **state:** Draft
+- **state:** Done
 - **confidence:** high
 - **updated:** 2026-09-23
 
@@ -12,3 +12,6 @@ None.
 
 ## Log
 - 2026-09-23 — Initial creation in Draft state.
+- 2026-09-24 — Draft → Ready by mraraujo.
+- 2026-09-24 — Ready → WIP by architect.
+- 2026-09-24 — WIP → Done by mraraujo.

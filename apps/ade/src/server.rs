@@ -11,7 +11,6 @@ use axum::{
 use rusqlite::Connection;
 use rust_embed::RustEmbed;
 use serde::{Deserialize, Serialize};
-use std::fs;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex, RwLock};
 
@@ -249,31 +248,36 @@ pub async fn new_project_handler(
     Json(payload): Json<NewProjectRequest>,
 ) -> Result<(StatusCode, Json<ProjectRecord>), (StatusCode, Json<ErrorResponse>)> {
     let name = payload.name.trim();
-    if name.is_empty() {
+    if !crate::scaffold::is_valid_slug(name) {
         return Err((
             StatusCode::BAD_REQUEST,
             Json(ErrorResponse {
                 error: "INVALID_PROJECT_NAME".to_string(),
-                message: "Project name cannot be empty".to_string(),
+                message: format!("Invalid project slug '{name}'. Must match ^[a-z0-9][a-z0-9_-]*$"),
             }),
         ));
     }
 
     let target_path = Path::new(&payload.path);
-    if let Err(e) = fs::create_dir_all(target_path) {
+    if let Err(e) = crate::scaffold::scaffold_scpe_workspace(target_path, name) {
+        let status = if e.kind() == std::io::ErrorKind::AlreadyExists {
+            StatusCode::BAD_REQUEST
+        } else {
+            StatusCode::INTERNAL_SERVER_ERROR
+        };
+        let err_code = if e.kind() == std::io::ErrorKind::AlreadyExists {
+            "DIRECTORY_NOT_EMPTY"
+        } else {
+            "IO_ERROR"
+        };
         return Err((
-            StatusCode::INTERNAL_SERVER_ERROR,
+            status,
             Json(ErrorResponse {
-                error: "IO_ERROR".to_string(),
-                message: format!("Failed to create project directory: {e}"),
+                error: err_code.to_string(),
+                message: e.to_string(),
             }),
         ));
     }
-
-    // Scaffold canonical SCPE directories if not existing
-    let _ = fs::create_dir_all(target_path.join("apps"));
-    let _ = fs::create_dir_all(target_path.join("features"));
-    let _ = fs::create_dir_all(target_path.join("assets"));
 
     let canonical_path = match target_path.canonicalize() {
         Ok(c) => c,
@@ -352,6 +356,7 @@ pub fn create_router_with_state(state: AppState) -> Router {
         .route("/api/projects", get(list_projects_handler))
         .route("/api/projects/open", post(open_project_handler))
         .route("/api/projects/new", post(new_project_handler))
+        .route("/api/workspace/new", post(new_project_handler))
         .fallback(static_or_spa_handler)
         .with_state(state)
 }

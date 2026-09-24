@@ -22,4 +22,4 @@
 
 ## Epics
 
-- [epic_01_project_scaffold_generator](epics/epic_01_project_scaffold_generator/index.md) — Draft
+- [epic_01_project_scaffold_generator](epics/epic_01_project_scaffold_generator/index.md) — Done

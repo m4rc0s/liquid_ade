@@ -8,8 +8,63 @@ interface FeatureEpic {
 }
 
 function App() {
-  const [activeProject] = useState('liquid_ade');
+  const [activeProject, setActiveProject] = useState('liquid_ade');
   const [activeEpic] = useState<string>('epic_01_runtime_shell');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newProjectName, setNewProjectName] = useState('');
+  const [newProjectPath, setNewProjectPath] = useState('');
+  const [modalError, setModalError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const isSlugValid = (s: string) => /^[a-z0-9][a-z0-9_-]*$/.test(s);
+
+  const handleCreateProject = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setModalError(null);
+
+    const name = newProjectName.trim();
+    const path = newProjectPath.trim();
+
+    if (!name) {
+      setModalError('Project slug is required');
+      return;
+    }
+
+    if (!isSlugValid(name)) {
+      setModalError(
+        'Project slug must match ^[a-z0-9][a-z0-9_-]*$ (lowercase, digits, underscores, hyphens)'
+      );
+      return;
+    }
+
+    if (!path) {
+      setModalError('Project directory path is required');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const res = await fetch('/api/workspace/new', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, path }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setModalError(data.message || 'Failed to create workspace');
+      } else {
+        setActiveProject(data.name || name);
+        setIsModalOpen(false);
+        setNewProjectName('');
+        setNewProjectPath('');
+      }
+    } catch (err: unknown) {
+      setModalError(err instanceof Error ? err.message : 'Network error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const epics: FeatureEpic[] = [
     { id: 'epic_01_runtime_shell', title: 'Runtime Shell & Astryx Layout', state: 'WIP' },
@@ -30,6 +85,16 @@ function App() {
             <span className="astryx-status-dot"></span>
             <span>Project: {activeProject}</span>
           </div>
+          <button
+            type="button"
+            className="astryx-btn astryx-btn-secondary"
+            onClick={() => {
+              setIsModalOpen(true);
+              setModalError(null);
+            }}
+          >
+            + New Project
+          </button>
         </div>
 
         <div className="astryx-header-right">
@@ -223,6 +288,84 @@ function App() {
           <span>/ Slash Menu</span>
         </div>
       </footer>
+
+      {/* New Project Dialog Modal */}
+      {isModalOpen && (
+        <div className="astryx-modal-overlay">
+          <div className="astryx-modal" role="dialog" aria-modal="true">
+            <div className="astryx-modal-header">
+              <span className="astryx-modal-title">New SCPE Product Workspace</span>
+              <button
+                type="button"
+                className="astryx-modal-close"
+                onClick={() => setIsModalOpen(false)}
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateProject}>
+              <div className="astryx-modal-body">
+                {modalError && <div className="astryx-error-box">{modalError}</div>}
+
+                <div className="astryx-form-group">
+                  <label htmlFor="project-slug-input" className="astryx-label">
+                    Project Slug
+                  </label>
+                  <input
+                    id="project-slug-input"
+                    type="text"
+                    className="astryx-input"
+                    placeholder="e.g. mobile-banking"
+                    value={newProjectName}
+                    onChange={(e) => setNewProjectName(e.target.value)}
+                    required
+                  />
+                  <span className="astryx-input-hint">
+                    Canonical slug format: lowercase letters, numbers, hyphens, underscores.
+                  </span>
+                </div>
+
+                <div className="astryx-form-group">
+                  <label htmlFor="project-path-input" className="astryx-label">
+                    Target Directory Path
+                  </label>
+                  <input
+                    id="project-path-input"
+                    type="text"
+                    className="astryx-input"
+                    placeholder="e.g. /home/user/projects/mobile-banking"
+                    value={newProjectPath}
+                    onChange={(e) => setNewProjectPath(e.target.value)}
+                    required
+                  />
+                  <span className="astryx-input-hint">
+                    Destination path on local filesystem. Must be an empty or new folder.
+                  </span>
+                </div>
+              </div>
+
+              <div className="astryx-modal-footer">
+                <button
+                  type="button"
+                  className="astryx-btn astryx-btn-secondary"
+                  onClick={() => setIsModalOpen(false)}
+                  disabled={isSubmitting}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="astryx-btn astryx-btn-primary"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Creating...' : 'Create Workspace'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
