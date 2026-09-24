@@ -12,7 +12,7 @@
 
 ## Boundaries
 
-- Must not store state in proprietary or hidden external databases; the local filesystem is the SSOT.
+- Must not store state in proprietary or hidden external databases; plain Markdown files in Git are the sovereign SSOT for specifications, while embedded SQLite (~/.liquid/liquid.db) stores local project registry and execution checkpoints.
 - Must not execute agent tasks directly on the host system with root privileges; all execution must go through Podman sandboxes.
 - Must not introduce Node.js or SSR dependencies in the compiled production distribution.
 - Must not allow path traversal beyond the registered workspace directory root.

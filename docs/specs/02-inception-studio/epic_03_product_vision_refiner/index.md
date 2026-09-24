@@ -1,8 +1,8 @@
-# Epic: Project Scaffold Generator & New Workspace Flow
+# Epic: Product Vision Refiner & Guided Inception Flow
 
-- **feature:** 01-workspace-inspector
-- **slug:** epic_03_project_scaffold_generator
-- **title:** Project Scaffold Generator & New Workspace Flow
+- **feature:** 02-inception-studio
+- **slug:** epic_03_product_vision_refiner
+- **title:** Product Vision Refiner & Guided Inception Flow
 - **bounded_context:** Workspace Navigation & Inception
 
 ## Documents

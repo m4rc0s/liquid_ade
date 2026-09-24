@@ -1,8 +1,8 @@
-# Epic: Inception-to-Feature Handoff & Scaffolding
+# Epic: Design Guidelines Builder & UI/UX Standards Formulator
 
-- **feature:** 01-workspace-inspector
-- **slug:** epic_09_feature_planning_handoff
-- **title:** Inception-to-Feature Handoff & Scaffolding
+- **feature:** 02-inception-studio
+- **slug:** epic_04_design_guidelines_builder
+- **title:** Design Guidelines Builder & UI/UX Standards Formulator
 - **bounded_context:** Workspace Navigation & Inception
 
 ## Documents

@@ -1,8 +1,8 @@
-# Epic: Conversational Co-Pilot Panel & Streaming Client
+# Epic: Interactive Roadmap Visualizer & Conversational Adjuster
 
-- **feature:** 01-workspace-inspector
-- **slug:** epic_04_conversational_copilot_panel
-- **title:** Conversational Co-Pilot Panel & Streaming Client
+- **feature:** 02-inception-studio
+- **slug:** epic_06_interactive_roadmap_adjuster
+- **title:** Interactive Roadmap Visualizer & Conversational Adjuster
 - **bounded_context:** Workspace Navigation & Inception
 
 ## Documents

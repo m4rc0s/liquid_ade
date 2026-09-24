@@ -1,8 +1,8 @@
-# Epic: Design Guidelines Builder & UI/UX Standards Formulator
+# Epic: Architecture Guidelines & ADR Engine
 
-- **feature:** 01-workspace-inspector
-- **slug:** epic_06_design_guidelines_builder
-- **title:** Design Guidelines Builder & UI/UX Standards Formulator
+- **feature:** 02-inception-studio
+- **slug:** epic_05_architecture_and_adr_engine
+- **title:** Architecture Guidelines & ADR Engine
 - **bounded_context:** Workspace Navigation & Inception
 
 ## Documents
