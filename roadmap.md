@@ -113,8 +113,8 @@ Now (Active Implementation)                Next (Unlocks from Phase 1)          
 
 | Horizon | Phase | Feature Slug | Title | State |
 | :---: | :---: | :--- | :--- | :---: |
-| **Now** | **Phase 1** | `01-workspace-inspector` | Workspace Inspector & Runtime Shell | `Draft` 📝 |
-| **Next** | **Phase 2** | `02-inception-studio` | Inception Studio & Idea Validation | *Planned* 📋 |
+| **Done** | **Phase 1** | `01-workspace-inspector` | Workspace Inspector & Runtime Shell | `Done` ✅ |
+| **Now** | **Phase 2** | `02-inception-studio` | Inception Studio & Idea Validation | *Opening* 📋 |
 | **Later** | **Phase 3** | `03-live-file-sync` | Live File Sync & Echo Suppression | *Backlog* ⏳ |
 | **Later** | **Phase 4** | `04-spec-status-and-drift` | Spec Status, Drift & Liquid Board | *Backlog* ⏳ |
 | **Later** | **Phase 5** | `05-wysiwyg-document-editor`| WYSIWYG Document-as-UI Editor | *Backlog* ⏳ |
