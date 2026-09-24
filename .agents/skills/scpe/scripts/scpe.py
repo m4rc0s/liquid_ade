@@ -99,7 +99,11 @@ def workspace() -> Path:
 
 
 def read(p: Path) -> str:
-    return p.read_text(encoding="utf-8") if p.is_file() else ""
+    try:
+        return p.read_text(encoding="utf-8", errors="ignore") if p.is_file() else ""
+    except Exception:
+        return ""
+
 
 
 def render(template: Path, values: dict) -> str:
@@ -457,7 +461,10 @@ def cmd_validate(args) -> int:
                 if args.strict:
                     corpus = "\n".join(
                         read(p) for p in (ws / "apps").rglob("*")
-                        if p.is_file() and p.name not in {"app.md", "repo_pointer.md"} and p.stat().st_size < 2_000_000
+                        if p.is_file()
+                        and p.name not in {"app.md", "repo_pointer.md"}
+                        and not any(part in {"target", "node_modules", "dist", ".git"} for part in p.parts)
+                        and p.stat().st_size < 2_000_000
                     ) if (ws / "apps").is_dir() else ""
                     for s in examples:
                         if f"{ep.name}#{s}" not in corpus:

@@ -105,3 +105,101 @@ pub fn verify_tables_exist(conn: &Connection) -> Result<bool, rusqlite::Error> {
     let count: i64 = stmt.query_row([], |row| row.get(0))?;
     Ok(count == 3)
 }
+
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, Eq)]
+pub struct ProjectRecord {
+    pub id: String,
+    pub name: String,
+    pub path: String,
+    pub created_at: String,
+    pub last_opened_at: String,
+}
+
+/// Lists all registered projects ordered by most recently opened.
+pub fn list_projects(conn: &Connection) -> Result<Vec<ProjectRecord>, rusqlite::Error> {
+    let mut stmt = conn.prepare(
+        "SELECT id, name, path, created_at, last_opened_at FROM projects ORDER BY last_opened_at DESC",
+    )?;
+    let project_iter = stmt.query_map([], |row| {
+        Ok(ProjectRecord {
+            id: row.get(0)?,
+            name: row.get(1)?,
+            path: row.get(2)?,
+            created_at: row.get(3)?,
+            last_opened_at: row.get(4)?,
+        })
+    })?;
+
+    let mut projects = Vec::new();
+    for p in project_iter {
+        projects.push(p?);
+    }
+    Ok(projects)
+}
+
+/// Opens an existing project or registers a new project record, updating its `last_opened_at`.
+pub fn open_or_register_project(
+    conn: &Connection,
+    path: &str,
+    name_opt: Option<&str>,
+) -> Result<ProjectRecord, rusqlite::Error> {
+    let existing = conn.query_row(
+        "SELECT id, name, path, created_at, last_opened_at FROM projects WHERE path = ?1",
+        [path],
+        |row| {
+            Ok(ProjectRecord {
+                id: row.get(0)?,
+                name: row.get(1)?,
+                path: row.get(2)?,
+                created_at: row.get(3)?,
+                last_opened_at: row.get(4)?,
+            })
+        },
+    );
+
+    match existing {
+        Ok(mut record) => {
+            conn.execute(
+                "UPDATE projects SET last_opened_at = strftime('%Y-%m-%dT%H:%M:%SZ', 'now') WHERE id = ?1",
+                [&record.id],
+            )?;
+            let updated_last_opened: String = conn.query_row(
+                "SELECT last_opened_at FROM projects WHERE id = ?1",
+                [&record.id],
+                |row| row.get(0),
+            )?;
+            record.last_opened_at = updated_last_opened;
+            Ok(record)
+        }
+        Err(rusqlite::Error::QueryReturnedNoRows) => {
+            let id: String =
+                conn.query_row("SELECT lower(hex(randomblob(16)))", [], |row| row.get(0))?;
+            let derived_name = Path::new(path)
+                .file_name()
+                .and_then(|n| n.to_str())
+                .unwrap_or("project");
+            let name = name_opt.unwrap_or(derived_name);
+
+            conn.execute(
+                "INSERT INTO projects (id, name, path, created_at, last_opened_at) 
+                 VALUES (?1, ?2, ?3, strftime('%Y-%m-%dT%H:%M:%SZ', 'now'), strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))",
+                [&id, name, path],
+            )?;
+
+            let (created_at, last_opened_at): (String, String) = conn.query_row(
+                "SELECT created_at, last_opened_at FROM projects WHERE id = ?1",
+                [&id],
+                |row| Ok((row.get(0)?, row.get(1)?)),
+            )?;
+
+            Ok(ProjectRecord {
+                id,
+                name: name.to_string(),
+                path: path.to_string(),
+                created_at,
+                last_opened_at,
+            })
+        }
+        Err(e) => Err(e),
+    }
+}
