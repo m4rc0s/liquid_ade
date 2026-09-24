@@ -1,6 +1,6 @@
-# Status: Workspace Inspector & Inception Studio
+# Status: Workspace Inspector & Runtime Shell
 
-- **summary:** Feature opened on 2026-09-23; decomposed into 9 small, hyper-focused epics for full SCPE idea validation.
+- **summary:** Feature under active implementation in Upstream. Scoped to epic_01_runtime_shell and epic_02_workspace_fs_scanner.
 
 ## Blockers
 

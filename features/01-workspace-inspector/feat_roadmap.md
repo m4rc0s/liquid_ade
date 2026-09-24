@@ -1,5 +1,5 @@
-# Roadmap: Workspace Inspector & Inception Studio
+# Roadmap: Workspace Inspector & Runtime Shell
 
-- **Now:** epic_01_runtime_shell, epic_02_workspace_fs_scanner, epic_03_project_scaffold_generator
-- **Next:** epic_04_conversational_copilot_panel, epic_05_product_vision_refiner, epic_06_design_guidelines_builder, epic_07_architecture_and_adr_engine
-- **Later:** epic_08_interactive_roadmap_adjuster, epic_09_feature_planning_handoff
+- **Now:** epic_01_runtime_shell (Axum SPA fallback, Astryx 3-column layout shell, /api/health)
+- **Next:** epic_02_workspace_fs_scanner (Path traversal guard, /api/workspace/tree, /api/workspace/file)
+- **Later:** Upon epic_02 completion and feature Done, trigger Phase 2 handoff to open `02-inception-studio`
