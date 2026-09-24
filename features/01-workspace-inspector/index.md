@@ -1,35 +1,29 @@
-# 📄 Global PRD — FEAT-01: Workspace Inspector & Spec Viewer
+# Feature: Workspace Inspector & Inception Studio
 
-**Feature ID:** `FEAT-01`  
-**Name:** Workspace Inspector & Spec Viewer  
-**Project:** Liquid ADE  
-**Methodology:** SCPE v0.3.0  
-**Global Status:** `Draft` 📝  
+- **goal:** Enable local-first workspace inspection and interactive product inception via conversational co-pilot for idea validation under SCPE v0.3.0
+- **users:** Senior Architects, Product Engineers, Tech Leads, and Autonomous AI Agents
+- **bounded_context:** Workspace Navigation & Inception
+- **business_value:** Drastically cuts product ideation cycle time, ensuring projects start with canonical SCPE specifications before any code is generated
 
----
+## Scope
+- Scanning and verifying local workspace directory structures against SCPE standards.
+- Scaffolding new SCPE product workspaces with canonical root files and directories.
+- Kimi-inspired dual-pane conversational co-pilot for guided drafting and refinement of `product_vision.md`, `UI_UX_GUIDELINES.md`, and `architecture.md` (including ADRs).
+- Visual and conversational interactive roadmap planning.
+- Validated handoff from Inception to downstream Feature Studio.
 
-## 1. Executive Vision & User Journey
+## Out of Scope
+- Direct agent code compilation and test execution (handled by FEAT-06 Podman Sandboxing).
+- Two-way surgical AST block editing on arbitrary code files (handled by FEAT-04 WYSIWYG Editor).
 
-### 1.1. End-to-End Vertical Journey
-> "As a developer or PO, I open Liquid ADE, see the governance and feature hierarchy in the sidebar, and can click to read any specification rendered on the central canvas."
+## Epics
 
-### 1.2. Bounded Context Scope
-This feature represents a complete **Vertical Slice**. It delivers direct value to the user by connecting the Interface (React + Astryx), Engine (Rust Axum), and Filesystem / Execution.
-
----
-
-## 2. Invariants & Non-Negotiable Rules
-
-1. **Strict Vertical Slice:** The feature is only considered `Done` when the user journey functions end-to-end.
-2. **Filesystem SSOT:** All state is reflected on disk; zero hidden persistence.
-3. **Adherence to UI/UX Pillars:** Components and visual feedback follow `UI_UX_GUIDELINES.md`.
-
----
-
-## 3. Epic Architecture
-
-| Epic | Name | Description | Status |
-| :--- | :--- | :--- | :---: |
-| **`EPIC-01`** | **Runtime Shell & Astryx Layout** | Rust server (Axum) serving embedded static SPA with 3-column Astryx layout. | `Draft` 📝 |
-| **`EPIC-02`** | **Workspace FS Scanner & Markdown Viewer** | Rust scanner reading workspace directory tree and `/api/workspace/tree` endpoint consumed by the UI. | `Draft` 📝 |
-| **`EPIC-03`** | **Methodology Config Resolver & Adapter** | Configuration screen (no terminal needed) to point workspace SDD methodology to an external text source, resolved into a Methodology Profile used for scaffolding and validation. | `Draft` 📝 |
+- [epic_01_runtime_shell](epics/epic_01_runtime_shell/index.md) — Draft
+- [epic_02_workspace_fs_scanner](epics/epic_02_workspace_fs_scanner/index.md) — Draft
+- [epic_03_project_scaffold_generator](epics/epic_03_project_scaffold_generator/index.md) — Draft
+- [epic_04_conversational_copilot_panel](epics/epic_04_conversational_copilot_panel/index.md) — Draft
+- [epic_05_product_vision_refiner](epics/epic_05_product_vision_refiner/index.md) — Draft
+- [epic_06_design_guidelines_builder](epics/epic_06_design_guidelines_builder/index.md) — Draft
+- [epic_07_architecture_and_adr_engine](epics/epic_07_architecture_and_adr_engine/index.md) — Draft
+- [epic_08_interactive_roadmap_adjuster](epics/epic_08_interactive_roadmap_adjuster/index.md) — Draft
+- [epic_09_feature_planning_handoff](epics/epic_09_feature_planning_handoff/index.md) — Draft

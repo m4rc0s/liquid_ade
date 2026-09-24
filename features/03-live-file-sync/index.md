@@ -1,5 +1,11 @@
 # 📄 Global PRD — FEAT-03: Live External File Synchronization
 
+- **goal:** Provide sub-50ms bidirectional file synchronization between filesystem and UI with echo suppression
+- **users:** Product Engineers, Developers, and System Watchers
+- **bounded_context:** Live File Sync
+- **business_value:** Enables instant reactivity to IDE and Git changes without manual browser refreshes
+
+
 **Feature ID:** `FEAT-03`  
 **Name:** Live External File Synchronization  
 **Project:** Liquid ADE  
@@ -32,3 +38,8 @@ This feature represents a complete **Vertical Slice**. It delivers direct value 
 | :--- | :--- | :--- | :---: |
 | **`EPIC-01`** | **Async File Watcher Engine** | Rust module with `notify` monitoring filesystem modifications in the `features/` directory. | `Draft` 📝 |
 | **`EPIC-02`** | **WebSocket Delta Streamer** | WebSocket channel streaming updated content to the Zustand store in the UI. | `Draft` 📝 |
+
+## Epics
+
+- [epic_01_rust_file_watcher](epics/epic_01_rust_file_watcher/index.md) — Draft
+- [epic_02_websocket_live_reload](epics/epic_02_websocket_live_reload/index.md) — Draft

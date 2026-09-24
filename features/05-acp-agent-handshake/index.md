@@ -1,5 +1,11 @@
 # 📄 Global PRD — FEAT-05: ACP Protocol & LiteLLM Model Gateway
 
+- **goal:** Provide standardized JSON-RPC 2.0 ACP server and model-agnostic routing via LiteLLM
+- **users:** Autonomous AI Agents and External IDEs
+- **bounded_context:** Agent ACP Handshake
+- **business_value:** Decouples ADE from specific LLM providers and enables streaming agent task distribution
+
+
 **Feature ID:** `FEAT-05`  
 **Name:** ACP Protocol & LiteLLM Model Gateway  
 **Project:** Liquid ADE  
@@ -32,3 +38,8 @@ This feature represents a complete **Vertical Slice**. It delivers direct value 
 | :--- | :--- | :--- | :---: |
 | **`EPIC-01`** | **ACP JSON-RPC Server** | Implementation of ACP protocol based on JSON-RPC 2.0 over WebSocket and stdio. | `Draft` 📝 |
 | **`EPIC-02`** | **LiteLLM Flexible Router** | Universal model gateway connecting the ACP server to Ollama or cloud APIs. | `Draft` 📝 |
+
+## Epics
+
+- [epic_01_acp_jsonrpc_server](epics/epic_01_acp_jsonrpc_server/index.md) — Draft
+- [epic_02_litellm_model_router](epics/epic_02_litellm_model_router/index.md) — Draft

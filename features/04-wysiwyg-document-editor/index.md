@@ -1,5 +1,11 @@
 # 📄 Global PRD — FEAT-04: WYSIWYG Document Editor (Document-as-UI)
 
+- **goal:** Provide Document-as-UI editing with semantic AST blocks and surgical line patchers
+- **users:** Product Designers, Technical Writers, and Engineers
+- **bounded_context:** WYSIWYG Document Editor
+- **business_value:** Transforms static markdown files into rich interactive UI components with surgical disk writes
+
+
 **Feature ID:** `FEAT-04`  
 **Name:** WYSIWYG Document Editor (Linear / Notion Style)  
 **Project:** Liquid ADE  
@@ -36,3 +42,8 @@ This feature transforms Markdown files into clean, elegant interactive blocks:
 | :--- | :--- | :--- | :---: |
 | **`EPIC-01`** | **Notion-Style Semantic Blocks** | Semantic parser and visual block components (chips, checklists, callouts) built with Astryx. | `Draft` 📝 |
 | **`EPIC-02`** | **Surgical Line Patcher & Echo Suppression** | Surgical disk-writing engine with update loop protection and keyboard shortcuts. | `Draft` 📝 |
+
+## Epics
+
+- [epic_01_semantic_ast_blocks](epics/epic_01_semantic_ast_blocks/index.md) — Draft
+- [epic_02_surgical_line_patcher](epics/epic_02_surgical_line_patcher/index.md) — Draft

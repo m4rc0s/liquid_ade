@@ -1,5 +1,11 @@
 # 📄 Global PRD — FEAT-06: Podman Sandbox & Autonomous TDD Runner
 
+- **goal:** Execute agent-generated code and TDD pipelines inside isolated rootless Podman containers
+- **users:** Tech Leads and Downstream Autonomous Agents
+- **bounded_context:** Container Sandboxing
+- **business_value:** Guarantees safe and isolated execution of untrusted agent code without host corruption
+
+
 **Feature ID:** `FEAT-06`  
 **Name:** Podman Sandbox & Autonomous TDD Runner  
 **Project:** Liquid ADE  
@@ -32,3 +38,8 @@ This feature represents a complete **Vertical Slice**. It delivers direct value 
 | :--- | :--- | :--- | :---: |
 | **`EPIC-01`** | **Podman Rootless Container Runner** | Ephemeral and isolated container orchestrator managed via Podman. | `Draft` 📝 |
 | **`EPIC-02`** | **Downstream TDD Execution Pipeline** | Autonomous pipeline executing the `tasks.md` checklist sequentially until Reviewer validation. | `Draft` 📝 |
+
+## Epics
+
+- [epic_01_podman_container_runner](epics/epic_01_podman_container_runner/index.md) — Draft
+- [epic_02_autonomous_tdd_pipeline](epics/epic_02_autonomous_tdd_pipeline/index.md) — Draft

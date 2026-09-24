@@ -1,15 +1,5 @@
-# 🗺️ Feature Roadmap: Workspace Inspector & Spec Viewer
+# Roadmap: Workspace Inspector & Inception Studio
 
-**Feature ID:** `FEAT-01`  
-**Current Status:** `Draft` 📝  
-**Progress:** `[░░░░░░░░░░] 0% Completed` (0/3 epics)  
-
----
-
-## 🚦 Epic Sequence
-
-| Order | Epic | Status | Directory |
-| :---: | :--- | :---: | :--- |
-| **1** | **Runtime Shell & Astryx Layout** | `Draft` 📝 | [`epic_01_runtime_shell/`](./epic_01_runtime_shell/) |
-| **2** | **Workspace FS Scanner & Markdown Viewer** | `Draft` 📝 | [`epic_02_workspace_fs_reader/`](./epic_02_workspace_fs_reader/) |
-| **3** | **Methodology Config Resolver & Adapter** | `Draft` 📝 | [`epic_03_methodology_resolver/`](./epic_03_methodology_resolver/) |
+- **Now:** epic_01_runtime_shell, epic_02_workspace_fs_scanner, epic_03_project_scaffold_generator
+- **Next:** epic_04_conversational_copilot_panel, epic_05_product_vision_refiner, epic_06_design_guidelines_builder, epic_07_architecture_and_adr_engine
+- **Later:** epic_08_interactive_roadmap_adjuster, epic_09_feature_planning_handoff

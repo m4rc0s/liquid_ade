@@ -1,5 +1,11 @@
 # 📄 Global PRD — FEAT-02: Spec Status, Drift & Liquid Board (Kanban)
 
+- **goal:** Provide real-time visualization of SCPE lifecycle states and detect specification drift between markdown and code
+- **users:** Product Owners, Tech Leads, and Autonomous Agents
+- **bounded_context:** Spec Status & Drift Engine
+- **business_value:** Ensures specifications remain canonical and flags any divergence between intent and implementation
+
+
 **Feature ID:** `FEAT-02`  
 **Name:** Spec Status, Drift & Liquid Board (Kanban View)  
 **Project:** Liquid ADE  
@@ -35,3 +41,8 @@ This feature delivers a holistic project overview through:
 | :--- | :--- | :--- | :---: |
 | **`EPIC-01`** | **Status Matrix & Liquid Board (Kanban)** | State reading and visual dashboard in Kanban columns with interactive Astryx Cards. | `Draft` 📝 |
 | **`EPIC-02`** | **Spec Drift Validator & State Transitions** | State transition engine on disk and post-completion inconsistency detection (`Stale`). | `Draft` 📝 |
+
+## Epics
+
+- [epic_01_status_badge_matrix](epics/epic_01_status_badge_matrix/index.md) — Draft
+- [epic_02_drift_detector](epics/epic_02_drift_detector/index.md) — Draft
