@@ -26,3 +26,5 @@
 
 - [epic_01_project_scaffold_generator](epics/epic_01_project_scaffold_generator/index.md) — Done
 - [epic_02_conversational_copilot_panel](epics/epic_02_conversational_copilot_panel/index.md) — Done
+- [epic_03_technical_deal_compliance](epics/epic_03_technical_deal_compliance/index.md) — Draft
+- [epic_04_living_spec_canvas_shell](epics/epic_04_living_spec_canvas_shell/index.md) — Draft
