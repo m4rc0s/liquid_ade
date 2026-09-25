@@ -44,7 +44,7 @@ The interface is governed by the principles defined in [UI/UX Guidelines](UI_UX_
 | **Framework** | [React 19](https://react.dev/) | High-performance reactive and concurrent rendering |
 | **Language** | [TypeScript 5+](https://www.typescriptlang.org/) | Strict end-to-end type safety |
 | **Bundler / HMR** | [Vite 6+](https://vite.dev/) | Ultra-fast builds with Hot Module Replacement |
-| **Design System** | [Astryx Design System](https://github.com/m4rc0s/astryx) / Tailwind CSS | High-density component library and utility styling |
+| **Design System** | [Astryx Design System](https://github.com/facebook/astryx) / Tailwind CSS | High-density component library and utility styling |
 | **Global State** | [Zustand](https://zustand-demo.pmnd.rs/) | Lightweight, decoupled global state management |
 | **Protocol** | ACP (Agent Client Protocol) / JSON-RPC 2.0 | Real-time WebSocket communication with `ade_core` |
 | **Linter** | [Oxlint](https://oxc.rs/) | Blazing-fast Rust-based static linter |

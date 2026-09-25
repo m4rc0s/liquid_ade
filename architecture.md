@@ -90,6 +90,7 @@ Liquid ADE is a local-first, spec-compiled product engineering environment. It b
   - Decision: Implement JSON-RPC 2.0 ACP over stdio/WebSocket.
   - Rejected: Vendor-specific SDK bindings.
 - **2026-09-23 — ADR-003: Inception Studio with Kimi-Inspired Dual-Pane Architecture**:
+  - Status: Superseded by ADR-009
   - Context: Product idea validation requires conversational refinement with immediate visual synchronization to living SCPE specifications (`product_vision.md`, `UI_UX_GUIDELINES.md`, `architecture.md`, `roadmap.md`).
   - Decision: Introduce a dual-pane Inception Studio layout (left: conversational co-pilot streaming suggestions; right: interactive document canvas with AST blocks).
   - Rejected: Unstructured chat modal without persistent document canvas projection.
@@ -99,7 +100,7 @@ Liquid ADE is a local-first, spec-compiled product engineering environment. It b
   - Rejected: Tolerant parsing for malformed input.
 - **2026-09-23 — ADR-005: Pluggable Multi-LLM Gateway with Google Gemini Initial Provider**:
   - Context: Product builders require immediate, conversational AI co-pilots to define products and generate SCPE features, with user-configured API keys and models.
-  - Decision: Implement a pluggable Multi-LLM Gateway starting with native Google Gemini REST streaming API (`streamGenerateContent`), extensible to OpenAI GPT and Copilot.
+  - Decision: Implement a pluggable Multi-LLM Gateway starting with native Google Gemini REST streaming API (`streamGenerateContent`), extensible to OpenAI GPT and GitHub Copilot.
   - Rejected: Hardcoding a single proprietary model or requiring local Ollama setup for initial testing.
 - **2026-09-23 — ADR-006: One-Click Interactive Task Runner and Jira-Style Board**:
   - Context: Non-technical and product stakeholders need visual lifecycle tracking and immediate execution of individual tasks without using a terminal.
@@ -114,6 +115,16 @@ Liquid ADE is a local-first, spec-compiled product engineering environment. It b
   - Context: Long-running task executions produce unbounded transcripts with noisy tool calls and diffs. Relying on transcript replay causes context window compaction loss and hallucinated progress. Additionally, an agent claiming a task is "done" must never be accepted blindly without automated verification of acceptance conditions.
   - Decision: Decouple ephemeral streaming transcripts (rendered in the right drawer session UI) from a schema-bounded durable state ledger in embedded SQLite (recording goal, active phase, next intent, tried approaches, and execution checkpoints). Enforce an automated Acceptance Verification Gate before updating `tasks.md` to `- [x]`, evaluating that generated files exist, diagnostics pass, and test scenarios (`<epic>#S#`) succeed. Inject canonical Steering Documents (`product_vision.md`, `architecture.md`, `technical_deal.md`, and the active `plan.md`) into every task execution turn.
   - Rejected: Relying solely on raw conversation history for resumption; allowing unverified worker claims to mark tasks completed.
+- **2026-09-25 — ADR-009: Mode Rail Shell with Spec-First Three-Column Layout**:
+  - Status: Accepted (supersedes ADR-003)
+  - Context: The application UX previously regressed to a generic developer-focused file tree and markdown viewer. SCPE governance requires a product-focused, spec-first interface where specifications are primary and the filesystem tree is an explicit secondary mode. Additionally, human product builders need simultaneous or tabbed access to specification inspection (Rules, Scenarios, Invariants) and conversational AI steering without sacrificing screen real estate.
+  - Decision: Establish the canonical workspace layout composed of:
+    1. Far-left 48px Mode Rail toggling primary functional views (`Specs`, `Files`, and future `Board` / `Search`). The `Specs` view is the default entry point.
+    2. Collapsible Navigator column projecting structured SCPE hierarchies (Features → Epics → Spec documents with lifecycle state chips and task progress) in `Specs` mode, or the repository filesystem tree only when explicitly switched to `Files` mode.
+    3. Central Living Spec Canvas projecting parsed Astryx specification cards (Intent, Domain Model, Rules, Scenarios, Slices, Tasks) with `S#`/`R#` badges and Action Pills, falling back to raw GFM Markdown only for arbitrary non-spec files in `Files` mode.
+    4. Right-side Context Column featuring tabbed switching between Spec Inspector (Rules & Acceptance Scenarios) and Conversational Co-Pilot panel (preserving in-flight token streams across tab switches, with future execution drawer integration).
+  - Rejected: Permanent always-visible file tree as default entry point, four simultaneous visible columns (excessive cognitive load and cramped viewports), chat-on-left layout (ADR-003), and passive static markdown rendering for living specifications.
+
 
 
 

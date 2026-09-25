@@ -46,13 +46,15 @@ Now (Active Implementation)                Next (Unlocks from Phase 1)          
 * **Feature Target:** `02-inception-studio` (Specification blueprint in `docs/specs/02-inception-studio/`)
 * **Epics:**
   1. `epic_01_project_scaffold_generator` — `Done` ✅: Modal UI & `/api/workspace/new` to scaffold canonical SCPE workspaces on disk.
-  2. `epic_02_conversational_copilot_panel` — `Done` ✅: Multi-LLM streaming chat (Google Gemini REST API as primary provider, pluggable for GPT/Copilot) with live document canvas binding over Server-Sent Events.
-  3. `epic_03_product_vision_refiner`: Structured elicitation prompts and live disk patching for `product_vision.md`.
-  4. `epic_04_design_guidelines_builder`: Guided formulator of `UI_UX_GUIDELINES.md` using Astryx design tokens.
-  5. `epic_05_architecture_and_adr_engine`: Architectural interview and ADR generator updating `architecture.md` and `technical_deal.md`.
-  6. `epic_06_interactive_roadmap_adjuster`: Now/Next/Later visual Kanban grid and conversational reordering for `roadmap.md`.
-  7. `epic_07_feature_planning_handoff`: Inception completeness validator unlocking downstream Feature Studio mode.
-  8. `epic_08_liquid_board_and_task_runner`: Jira-style visual Kanban board (`Draft` → `Ready` → `WIP` → `Done`) and One-Click Interactive Task Runner (`[▶ Executar]`).
+  2. `epic_02_conversational_copilot_panel` — `Done` ✅: Multi-LLM streaming chat (Google Gemini REST API as primary provider, pluggable for GPT/GitHub Copilot) with live document canvas binding over Server-Sent Events.
+  3. `epic_03_technical_deal_compliance`: Full alignment of Axum, Astryx design system components, Zustand, and TypeScript strict mode with technical_deal.md.
+  4. `epic_04_living_spec_canvas_shell`: 48px Mode Rail, Spec Navigator sidebar, Living Spec Canvas with Phase Pills and Action Pills, and right-column Inspector / Co-Pilot tabs.
+  5. `epic_05_product_vision_refiner`: Structured elicitation prompts and live disk patching for `product_vision.md`.
+  6. `epic_06_design_guidelines_builder`: Guided formulator of `UI_UX_GUIDELINES.md` using Astryx design tokens.
+  7. `epic_07_architecture_and_adr_engine`: Architectural interview and ADR generator updating `architecture.md` and `technical_deal.md`.
+  8. `epic_08_interactive_roadmap_adjuster`: Now/Next/Later visual Kanban grid and conversational reordering for `roadmap.md`.
+  9. `epic_09_feature_planning_handoff`: Inception completeness validator unlocking downstream Feature Studio mode.
+  10. `epic_10_liquid_board_and_task_runner`: Jira-style visual Kanban board (`Draft` → `Ready` → `WIP` → `Done`) and One-Click Interactive Task Runner (`▶ Start task`).
 
 
 ---
@@ -68,24 +70,23 @@ Now (Active Implementation)                Next (Unlocks from Phase 1)          
 
 ---
 
-### 🔹 Phase 4: v0.4.0 — The Auditor (Spec Status, Drift & Liquid Board)
+### 🔹 Phase 4: v0.4.0 — The Auditor (Spec Status & Drift Engine)
 * **Horizon:** `Later`
 * **Goal:** Visual traceability and automated drift detection across the SCPE state machine.
 * **Feature Target:** `04-spec-status-and-drift`
 * **Deliverables:**
   - Workspace status matrix reading all `quick_status.md` files.
-  - Tactile Astryx state badges and interactive Kanban board.
-  - Spec drift inspector flagging `Stale` epics when `plan.md` changes post-delivery.
+  - Tactile Astryx state badges and spec drift inspector flagging `Stale` epics when `plan.md` changes post-delivery.
 
 ---
 
-### 🔹 Phase 5: v0.5.0 — The Studio (WYSIWYG Document Editor)
+### 🔹 Phase 5: v0.5.0 — The Studio (Two-Way AST Document Editor)
 * **Horizon:** `Later`
-* **Goal:** Transform Markdown specifications into rich interactive Document-as-UI components.
+* **Goal:** Transform Markdown specifications into rich interactive Document-as-UI components with two-way editing.
 * **Feature Target:** `05-wysiwyg-document-editor`
 * **Deliverables:**
   - Semantic AST block model (`HeaderNode`, `RequirementTableNode`, `BddScenarioNode`).
-  - Surgical line patcher updating disk lines without reformatting adjacent markdown.
+  - Two-way AST synchronization and surgical line patcher updating disk lines without reformatting adjacent markdown.
 
 ---
 
@@ -114,9 +115,10 @@ Now (Active Implementation)                Next (Unlocks from Phase 1)          
 | Horizon | Phase | Feature Slug | Title | State |
 | :---: | :---: | :--- | :--- | :---: |
 | **Done** | **Phase 1** | `01-workspace-inspector` | Workspace Inspector & Runtime Shell | `Done` ✅ |
-| **Now** | **Phase 2** | `02-inception-studio` | Inception Studio & Idea Validation | *In Progress* 🚧 (2/8 epics) |
+| **Now** | **Phase 2** | `02-inception-studio` | Inception Studio & Idea Validation | *In Progress* 🚧 (2/10 epics) |
 | **Later** | **Phase 3** | `03-live-file-sync` | Live File Sync & Echo Suppression | *Backlog* ⏳ |
-| **Later** | **Phase 4** | `04-spec-status-and-drift` | Spec Status, Drift & Liquid Board | *Backlog* ⏳ |
-| **Later** | **Phase 5** | `05-wysiwyg-document-editor`| WYSIWYG Document-as-UI Editor | *Backlog* ⏳ |
+| **Later** | **Phase 4** | `04-spec-status-and-drift` | Spec Status & Drift Engine | *Backlog* ⏳ |
+| **Later** | **Phase 5** | `05-wysiwyg-document-editor`| Two-Way AST Document Editor | *Backlog* ⏳ |
 | **Later** | **Phase 6** | `06-acp-agent-handshake` | ACP Protocol Server & LiteLLM Gateway | *Backlog* ⏳ |
 | **Later** | **Phase 7** | `07-podman-sandbox-execution` | Podman Rootless Sandbox Runner | *Backlog* ⏳ |
+

@@ -1,8 +1,8 @@
-# Epic: Product Vision Refiner & Guided Inception Flow
+# Epic: Inception-to-Feature Handoff & Scaffolding
 
 - **feature:** 02-inception-studio
-- **slug:** epic_03_product_vision_refiner
-- **title:** Product Vision Refiner & Guided Inception Flow
+- **slug:** epic_09_feature_planning_handoff
+- **title:** Inception-to-Feature Handoff & Scaffolding
 - **bounded_context:** Workspace Navigation & Inception
 
 ## Documents

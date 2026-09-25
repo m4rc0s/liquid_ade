@@ -19,10 +19,11 @@ against this file.
   - Build Tool: Vite
   - Design System: Astryx Design System (`@astryxdesign/core`) + Tailwind CSS
   - State Management: Zustand
+  - Icons: `lucide-react` (minimalist 1.5px stroke width per UI/UX guidelines)
   - Markdown / AST: Unified, Remark, Rehype
 - **Inference & Execution:**
   - Protocol: JSON-RPC 2.0 ACP (Agent Client Protocol)
-  - Model Gateway: Configurable Multi-LLM Gateway with Google Gemini REST API (`gemini-2.5-flash`, `gemini-2.5-pro`) as primary initial provider, pluggable for OpenAI GPT and Copilot.
+  - Model Gateway: Configurable Multi-LLM Gateway with Google Gemini REST API (`gemini-2.5-flash`, `gemini-2.5-pro`) as primary initial provider, pluggable for OpenAI GPT and GitHub Copilot.
   - HTTP Streaming Client: `reqwest` with Server-Sent Events / chunk streaming.
   - Sandboxing: Podman (rootless, daemonless)
   - Task Runner: `just` (`Justfile`)
@@ -47,6 +48,7 @@ against this file.
 - **TypeScript / React (Frontend):**
   - **Linter:** `oxlint` (configured via `.oxlintrc.json`, high-performance Rust-based linter).
   - **Type-Checker:** `tsc --noEmit` (strict mode enabled in `tsconfig.json`).
+  - **Test Runner:** `vitest` + `@testing-library/react` (declared test harness for frontend UI components and user interaction flows; adoption sequenced in dedicated testing epic).
   - **Rules:** Hook dependencies must be valid, zero undeclared anys, explicit return types on API contracts.
 - **SCPE Specifications:**
   - **Validator:** `python3 .agents/skills/scpe/scripts/scpe.py validate --strict` (must pass with 0 errors and 0 warnings before any epic handoff).

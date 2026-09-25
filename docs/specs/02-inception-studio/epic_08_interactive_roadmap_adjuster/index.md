@@ -1,8 +1,8 @@
-# Epic: Design Guidelines Builder & UI/UX Standards Formulator
+# Epic: Interactive Roadmap Visualizer & Conversational Adjuster
 
 - **feature:** 02-inception-studio
-- **slug:** epic_04_design_guidelines_builder
-- **title:** Design Guidelines Builder & UI/UX Standards Formulator
+- **slug:** epic_08_interactive_roadmap_adjuster
+- **title:** Interactive Roadmap Visualizer & Conversational Adjuster
 - **bounded_context:** Workspace Navigation & Inception
 
 ## Documents
