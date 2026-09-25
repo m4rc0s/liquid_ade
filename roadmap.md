@@ -1,102 +1,122 @@
-# 🗺️ Liquid: Macro Roadmap & Release Strategy
+# 🗺️ Liquid ADE: Macro Roadmap & Incremental Evolution
 
 **Methodology:** SCPE v0.3.0 (Spec-Compiled Product Engineering)  
-**Global Status:** Active / Canonical Source of Temporal Evolution  
-**Last Updated:** 2026-08-31  
-**Maintained by:** Product Architecture & Engineering Council  
+**Status:** Canonical Temporal Evolution SSOT  
+**Last Updated:** 2026-09-23  
+**Governance:** Architecture Council & Product Engineering  
 
 ---
 
-## 1. Timeline Vision & Release Strategy across 6 Granular Phases
+## 1. Incremental Feature Discovery & Implementation Strategy
 
-Development of **Liquid** is structured into **6 Progressive and Incremental Phases**. Each phase delivers a functional, testable product milestone with a concise, hyper-focused scope:
+Liquid ADE adheres strictly to the SCPE core principle:
+> **"Incremental Feature Discovery: open only the most critical feature now; do not map the whole system upfront in filesystem folders."**
+
+Features are not pre-created as empty directory skeletons in Git. Instead, the workspace maintains laser focus on the single active feature under implementation. The next feature is opened via `scpe.py feature` only when the preceding milestone is completely implemented, verified, and approved.
 
 ```
-2026 Q3                                  2026 Q4                                  2027 Q1
-  │                                        │                                        │
-  ├─ Phase 1: v0.1.0 (The Reader) ─────────┼─ Phase 3: v0.3.0 (The Synchronizer) ───┼─ Phase 5: v0.5.0 (The Protocol) ────▶
-  │  FEAT-01: Workspace Inspector          │  FEAT-03: Live File Sync               │  FEAT-05: ACP & LiteLLM Gateway
-  │                                        │                                        │
-  ├─ Phase 2: v0.2.0 (The Auditor) ────────┼─ Phase 4: v0.4.0 (The Studio) ─────────┼─ Phase 6: v0.6.0 (The Engine) ──────▶
-  │  FEAT-02: Spec Status & Drift          │  FEAT-04: WYSIWYG Document Editor      │  FEAT-06: Podman Sandbox Runner
+Now (Active Implementation)                Next (Unlocks from Phase 1)              Later (Temporal Evolution)
+┌─────────────────────────────────┐        ┌────────────────────────────────┐        ┌─────────────────────────┐
+│ Phase 1: v0.1.0 The Inspector   │───────▶│ Phase 2: v0.2.0 Inception      │───────▶│ Phase 3: Live File Sync │
+│ • FEAT-01: Workspace Inspector  │        │ • FEAT-02: Inception Studio    │        │ Phase 4: Status & Drift │
+│   - epic_01_runtime_shell       │        │   - 7 small epics (Kimi UI,    │        │ Phase 5: WYSIWYG Editor │
+│   - epic_02_workspace_fs_scanner│        │     Vision, Guidelines, ADRs)  │        │ Phase 6: ACP Gateway    │
+└─────────────────────────────────┘        └────────────────────────────────┘        │ Phase 7: Podman Sandbox │
+                                                                                     └─────────────────────────┘
 ```
 
 ---
 
-## 2. Detailed Breakdown of the 6 Evolution Phases
+## 2. Phase Horizons
 
-### 🔹 Phase 1: v0.1.0 — The Reader (Governance & Spec Viewer)
-* **Goal:** A functional Day-1 tool that scans and displays any SCPE workspace with elegance.
-* **Feature:** **`FEAT-01: Workspace Inspector`**
-* **User Journey:** The user opens the app in the browser (`localhost:3000`), views the governance tree in the sidebar, and reads Markdown specs rendered on the canvas with Astryx typography.
-* **Deliverables:**
-  - Axum web server in Rust serving the embedded static SPA.
-  - Filesystem scanner reading `product_vision.md`, `roadmap.md`, and `features/` directories.
-
----
-
-### 🔹 Phase 2: v0.2.0 — The Auditor (State Management & Spec Drift)
-* **Goal:** Add visual traceability and product lifecycle auditing.
-* **Feature:** **`FEAT-02: Spec Status & Drift`**
-* **User Journey:** The user views tactile badges (`Draft`, `Ready`, `WIP`, `Done`) next to each epic and receives automatic visual *Spec Drift* alerts if `plan.md` is modified post-completion.
-* **Deliverables:**
-  - `quick_status.md` reader across the entire project tree.
-  - Semantic status badge components with Astryx (Green, Amber, Red, Neutral).
-  - Drift validation algorithm and inconsistency banner.
+### 🔹 Phase 1: v0.1.0 — The Inspector (Workspace Inspector & Runtime Shell)
+* **Horizon:** `Now` (Active implementation in `features/01-workspace-inspector/`)
+* **Goal:** A standalone Day-1 ADE binary that boots locally, embeds the static React 19 SPA, and safely inspects any SCPE workspace on disk.
+* **Feature:** `01-workspace-inspector`
+* **Epics:**
+  1. `epic_01_runtime_shell`: Axum web server embedding static SPA via `rust-embed`, serving Astryx 3-column shell, and `/api/health`.
+  2. `epic_02_workspace_fs_scanner`: Path traversal guard, recursive directory tree API (`/api/workspace/tree`), and safe file reader (`/api/workspace/file`).
+* **Handoff Gate:** When `epic_01` and `epic_02` pass all tests and `features/01-workspace-inspector` is marked `Done`, Phase 2 is unlocked.
 
 ---
 
-### 🔹 Phase 3: v0.3.0 — The Synchronizer (Real-Time File Sync)
-* **Goal:** Connect the Liquid UI seamlessly to traditional VS Code/Neovim workflows.
-* **Feature:** **`FEAT-03: Live File Sync`**
-* **User Journey:** The user edits a Markdown file in their favorite editor and Liquid ADE updates instantly (<50ms) without reloading or losing scroll position.
-* **Deliverables:**
-  - Async File Watcher in Rust (`notify`) monitoring `.md` files.
-  - WebSocket channel (`/ws/workspace`) streaming deltas to the Zustand store.
-  - Real-time synchronization micro-indicator.
+### 🔹 Phase 2: v0.2.0 — The Inception Studio (Product Inception & Idea Validation)
+* **Horizon:** `Next` (Starts immediately from the completed Phase 1 foundation)
+* **Goal:** Enable product creators, senior architects, and autonomous co-pilots to brainstorm, validate product ideas, formulate design/architectural guidelines, adjust roadmaps, manage features visually in a Jira-style board, and execute tasks in 1 click using configured LLMs (starting with Google Gemini).
+* **Feature Target:** `02-inception-studio` (Specification blueprint in `docs/specs/02-inception-studio/`)
+* **Epics (Pre-specified & Ready for Handoff):**
+  1. `epic_01_project_scaffold_generator`: Modal UI & `/api/workspace/new` to scaffold canonical SCPE workspaces on disk.
+  2. `epic_02_conversational_copilot_panel`: Multi-LLM streaming chat (Google Gemini REST API as primary provider, pluggable for GPT/Copilot) with document canvas binding.
+  3. `epic_03_product_vision_refiner`: Structured elicitation prompts and live disk patching for `product_vision.md`.
+  4. `epic_04_design_guidelines_builder`: Guided formulator of `UI_UX_GUIDELINES.md` using Astryx design tokens.
+  5. `epic_05_architecture_and_adr_engine`: Architectural interview and ADR generator updating `architecture.md` and `technical_deal.md`.
+  6. `epic_06_interactive_roadmap_adjuster`: Now/Next/Later visual Kanban grid and conversational reordering for `roadmap.md`.
+  7. `epic_07_feature_planning_handoff`: Inception completeness validator unlocking downstream Feature Studio mode.
+  8. `epic_08_liquid_board_and_task_runner`: Jira-style visual Kanban board (`Draft` → `Ready` → `WIP` → `Done`) and One-Click Interactive Task Runner (`[▶ Executar]`).
+
 
 ---
 
-### 🔹 Phase 4: v0.4.0 — The Studio (WYSIWYG Document-as-UI Editor)
-* **Goal:** Transform Markdown into a rich, editable visual interface with surgical disk patching.
-* **Feature:** **`FEAT-04: WYSIWYG Document Editor`**
-* **User Journey:** The user clicks acceptance criteria checklists, metadata chips, or domain tables on screen, edits visually, and Liquid writes only modified lines back to disk (with echo suppression).
+### 🔹 Phase 3: v0.3.0 — The Synchronizer (Live File Sync)
+* **Horizon:** `Later`
+* **Goal:** Seamless real-time reactivity with external editors (VS Code, Neovim) and Git.
+* **Feature Target:** `03-live-file-sync`
 * **Deliverables:**
-  - Semantic AST parser decomposing Markdown into rich UI blocks.
-  - Surgical line-by-line disk patching engine (Surgical Line Patcher).
-  - Echo suppression algorithm and keyboard shortcuts (`Cmd+Z`, `/`).
+  - Async file watcher in Rust (`notify`) monitoring workspace files.
+  - WebSocket event stream (`/ws/workspace`) updating client state in <50ms.
+  - Echo suppression preventing UI edit bounce-backs.
 
 ---
 
-### 🔹 Phase 5: v0.5.0 — The Protocol (Agent Handshake & Model Gateway)
-* **Goal:** Enable standardized communication with AI agents and multiple language models.
-* **Feature:** **`FEAT-05: ACP & LiteLLM Gateway`**
-* **User Journey:** The user configures their AI provider (local Ollama or cloud Claude/OpenAI) and verifies agent connectivity via Agent Client Protocol (ACP).
+### 🔹 Phase 4: v0.4.0 — The Auditor (Spec Status, Drift & Liquid Board)
+* **Horizon:** `Later`
+* **Goal:** Visual traceability and automated drift detection across the SCPE state machine.
+* **Feature Target:** `04-spec-status-and-drift`
 * **Deliverables:**
-  - JSON-RPC 2.0 ACP server over WebSocket and stdio.
-  - Universal model gateway via LiteLLM with ping and latency diagnostics.
-  - AI settings modal built with Astryx.
+  - Workspace status matrix reading all `quick_status.md` files.
+  - Tactile Astryx state badges and interactive Kanban board.
+  - Spec drift inspector flagging `Stale` epics when `plan.md` changes post-delivery.
 
 ---
 
-### 🔹 Phase 6: v0.6.0 — The Engine (Autonomous Podman Sandbox Factory)
-* **Goal:** Close the SCPE loop by compiling approved specifications into automatically tested code.
-* **Feature:** **`FEAT-06: Podman Sandbox Runner`**
-* **User Journey:** Upon promoting a feature to `Ready`, Liquid triggers an autonomous agent that spins up an isolated Podman container, executes tasks in `tasks.md` via TDD, generates code in `apps/`, and advances the state to `Done`.
+### 🔹 Phase 5: v0.5.0 — The Studio (WYSIWYG Document Editor)
+* **Horizon:** `Later`
+* **Goal:** Transform Markdown specifications into rich interactive Document-as-UI components.
+* **Feature Target:** `05-wysiwyg-document-editor`
 * **Deliverables:**
-  - Ephemeral, rootless Podman container runner (without docker-compose).
-  - TDD execution pipeline with automated Quality Reviewer agent.
-  - Live log and terminal streaming to the UI.
+  - Semantic AST block model (`HeaderNode`, `RequirementTableNode`, `BddScenarioNode`).
+  - Surgical line patcher updating disk lines without reformatting adjacent markdown.
 
 ---
 
-## 3. Traceability Matrix
+### 🔹 Phase 6: v0.6.0 — The Protocol (ACP Agent Handshake & Model Gateway)
+* **Horizon:** `Later`
+* **Goal:** Standardized agent communication and universal model routing.
+* **Feature Target:** `06-acp-agent-handshake`
+* **Deliverables:**
+  - JSON-RPC 2.0 ACP server over stdio and WebSocket.
+  - LiteLLM gateway switching transparently between local inference (Ollama) and cloud APIs.
 
-| Version | Phase | Name | Target Feature | Status |
+---
+
+### 🔹 Phase 7: v0.7.0 — The Engine (Autonomous Podman Sandbox Factory)
+* **Horizon:** `Later`
+* **Goal:** Autonomous downstream execution of tasks inside ephemeral rootless containers.
+* **Feature Target:** `07-podman-sandbox-execution`
+* **Deliverables:**
+  - Ephemeral rootless Podman container runner (zero daemon, no docker-compose).
+  - TDD execution pipeline compiling code in `apps/` and verifying tests against BDD scenarios (`<epic>#S#`).
+
+---
+
+## 3. Horizon Summary Matrix
+
+| Horizon | Phase | Feature Slug | Title | State |
 | :---: | :---: | :--- | :--- | :---: |
-| **`v0.1.0`** | **Phase 1** | **The Reader** | `01-workspace-inspector` | `Draft` 📝 |
-| **`v0.2.0`** | **Phase 2** | **The Auditor** | `02-spec-status-and-drift` | `Draft` 📝 |
-| **`v0.3.0`** | **Phase 3** | **The Synchronizer** | `03-live-file-sync` | `Draft` 📝 |
-| **`v0.4.0`** | **Phase 4** | **The Studio** | `04-wysiwyg-document-editor` | `Draft` 📝 |
-| **`v0.5.0`** | **Phase 5** | **The Protocol** | `05-acp-agent-handshake` | `Draft` 📝 |
-| **`v0.6.0`** | **Phase 6** | **The Engine** | `06-podman-sandbox-execution` | `Draft` 📝 |
+| **Done** | **Phase 1** | `01-workspace-inspector` | Workspace Inspector & Runtime Shell | `Done` ✅ |
+| **Now** | **Phase 2** | `02-inception-studio` | Inception Studio & Idea Validation | *Opening* 📋 |
+| **Later** | **Phase 3** | `03-live-file-sync` | Live File Sync & Echo Suppression | *Backlog* ⏳ |
+| **Later** | **Phase 4** | `04-spec-status-and-drift` | Spec Status, Drift & Liquid Board | *Backlog* ⏳ |
+| **Later** | **Phase 5** | `05-wysiwyg-document-editor`| WYSIWYG Document-as-UI Editor | *Backlog* ⏳ |
+| **Later** | **Phase 6** | `06-acp-agent-handshake` | ACP Protocol Server & LiteLLM Gateway | *Backlog* ⏳ |
+| **Later** | **Phase 7** | `07-podman-sandbox-execution` | Podman Rootless Sandbox Runner | *Backlog* ⏳ |

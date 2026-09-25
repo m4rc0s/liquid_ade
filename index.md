@@ -47,3 +47,7 @@ Each folder inside `features/` is a **self-contained Bounded Context** structure
 - `feat_roadmap.md` (Tracking internal epics).
 - `quick_status.md` (Formal state: `Draft`, `Ready`, `WIP`, `Done`, `Blocked`, `Stale`).
 - Subfolders `epic_01_*/` and `epic_02_*/` containing their respective `index.md`, `plan.md`, `tasks.md`, and `quick_status.md`.
+
+## Features
+
+- [Inception Studio & Idea Validation](features/02-inception-studio/index.md)

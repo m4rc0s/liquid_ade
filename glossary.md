@@ -2,103 +2,166 @@
 
 **Methodology:** SCPE v0.3.0 (Spec-Compiled Product Engineering)  
 **Status:** Canonical & Mandatory / Single Source of Truth (SSOT)  
-**Last Updated:** 2026-08-31  
+**Last Updated:** 2026-09-23  
 
-This glossary establishes the **Ubiquitous Language** for the **Liquid** ecosystem. All specification documents, manifests, data models, and autonomous agents must strictly use the terms defined here to eliminate conceptual ambiguity and context hallucinations.
-
----
-
-## 1. Core Concepts of SCPE v0.3.0
-
-### SCPE (Spec-Compiled Product Engineering)
-A software engineering methodology where natural language specifications and structured conceptual models serve as the primary compilable source code. In SCPE, executable code is a deterministic byproduct generated, validated, and maintained by AI agents from living documents.
-
-### SDD (Spec-Driven Development)
-A development process centered on writing and refining rigorous specifications before generating any code. It rejects unstructured *vibe coding* and focuses on pure business intent and domain boundaries.
-
-### Pluggable Methodology (Configurable SDD)
-The ability of Liquid to operate under a Spec-Driven Development pattern other than native SCPE v0.3.0. The workspace points to an external plain-text **methodology source** (a repository, folder, or single document) — which can be as structured as SCPE itself or as simple as an informal set of guidelines written by one person. Configuration is performed via a dedicated UI screen without requiring manual file edits, accommodating non-technical stakeholders (PO/PM/Designer). In the absence of custom configuration, SCPE v0.3.0 is used as the default fallback.
-
-### Methodology Profile
-The interpreted representation derived by Liquid from a configured methodology source: expected folder/file structure, naming conventions, and state machines (when present). Consumed by agents to validate structure (Spec Drift) and scaffold new spec files following that workspace's standards instead of Liquid's native format.
-
-### Code as Consequence
-An architectural principle stating that physical source code (located under `apps/`) is never written directly in a top-down waterfall manner, but compiled and materialized as the direct consequence of an approved formal specification.
-
-### SSOT (Single Source of Truth)
-The architectural guarantee that the true state of the project resides strictly in text files on disk versioned in Git (`.md`, `.yaml`, `.rs`, etc.). The User Interface (UI) maintains no hidden proprietary database; it is a real-time reactive projection of the filesystem.
-
-### Upstream (The Rising Wave)
-The phase of the development lifecycle focused on elicitation, business rule validation, conceptual architecture, and specification authoring. Led by human stakeholders (Business Engineers, Product Managers, Tech Leads) assisted by analysis agents.
-
-### Downstream (The Breaking Wave)
-The phase of the development lifecycle triggered after a feature reaches the **Ready** state. Encompasses automated task distribution to AI agents that implement code in isolated Podman sandboxes, write unit tests (TDD), and update task states in the repository.
+This glossary establishes the **Ubiquitous Language** for the **Liquid** ecosystem. All specification documents, manifests, data models, and autonomous agents must strictly use the terms defined here to eliminate conceptual ambiguity and context hallucinations. Each term is declared as an H2 (`##`) heading for deterministic automated verification by SCPE tooling.
 
 ---
 
-## 2. Protocols, Runtime & Tooling
+## SCPE
+- **bounded_context:** Core Methodology
+- **definition:** Spec-Compiled Product Engineering. A software engineering methodology where natural language specifications and structured conceptual models serve as the primary compilable source code. In SCPE, executable code is a deterministic byproduct generated, validated, and maintained by AI agents from living documents.
+- **not_to_be_confused_with:** Traditional vibe-coding or prompt engineering without formal specs.
 
-### ACP (Agent Client Protocol)
-A standardized client-server protocol based on JSON-RPC 2.0 (transmitted via `stdio` or `WebSocket`). Defines strict contracts for Liquid ADE to discover, transmit context, order executions, receive streaming responses, and monitor the lifecycle of local or remote AI agents in a decoupled manner.
+## SDD
+- **bounded_context:** Core Methodology
+- **definition:** Spec-Driven Development. A development process centered on writing and refining rigorous specifications before generating any code. It rejects unstructured vibe coding and focuses on pure business intent and domain boundaries.
+- **not_to_be_confused_with:** TDD (Test-Driven Development), which is downstream of SDD.
 
-### Pure Static SPA (Zero SSR)
-The architectural decision for Liquid ADE's frontend: a React 19 + TypeScript application bundled with Vite producing only static assets (HTML/CSS/JS). Rejects SSR to eliminate Node.js runtime dependencies in production and ensure identical execution in browsers (Web/SaaS) and native desktop windows (Tauri).
+## Pluggable Methodology
+- **bounded_context:** Core Methodology
+- **definition:** The ability of Liquid to operate under a Spec-Driven Development pattern other than native SCPE v0.3.0. The workspace points to an external plain-text methodology source (a repository, folder, or single document). Configuration is performed via a dedicated UI screen without manual file edits.
+- **not_to_be_confused_with:** Hardcoded framework workflows.
 
-### Podman Sandboxing (Rootless Isolated Execution)
-A security mechanism where code tasks generated by agents (package installation, compilation, test and script execution) run in ephemeral containers managed via **Podman** without root daemons. Ensures complete isolation of the host environment without `docker-compose` complexity.
+## Methodology Profile
+- **bounded_context:** Core Methodology
+- **definition:** The interpreted representation derived by Liquid from a configured methodology source: expected folder/file structure, naming conventions, and state machines. Consumed by agents to validate structure (Spec Drift) and scaffold new spec files.
+- **not_to_be_confused_with:** User persona or permission profile.
 
-### Just (Task Runner)
-Command automation and task orchestration tool (`Justfile`), providing unified and deterministic commands (`just dev`, `just build`, `just test`) for both humans and agents.
+## Code as Consequence
+- **bounded_context:** Core Architecture
+- **definition:** An architectural principle stating that physical source code (located under `apps/`) is never written directly in a top-down waterfall manner, but compiled and materialized as the direct consequence of an approved formal specification.
+- **not_to_be_confused_with:** Manual coding before spec approval.
 
-### Model-Agnostic Routing (LiteLLM)
-An abstraction and dispatch layer allowing Liquid to switch transparently between 100% local/private inference (Ollama, Llama.cpp, vLLM) and cloud providers (Anthropic Claude, OpenAI, Google Gemini) without changing platform business logic.
+## SSOT
+- **bounded_context:** Core Architecture
+- **definition:** Single Source of Truth. The architectural guarantee that the true state of the project resides strictly in text files on disk versioned in Git (`.md`, `.yaml`, `.rs`, etc.). The User Interface (UI) maintains no hidden proprietary database; it is a real-time reactive projection of the filesystem.
+- **not_to_be_confused_with:** In-memory client cache or external database storage.
 
----
+## Upstream
+- **bounded_context:** Lifecycle & Governance
+- **definition:** The phase of the development lifecycle focused on elicitation, business rule validation, conceptual architecture, and specification authoring. Led by human stakeholders (Architects, Product Engineers, Tech Leads) assisted by co-pilot agents.
+- **not_to_be_confused_with:** Downstream code execution.
 
-## 3. State Machine & Lifecycle (SCPE v0.3.0)
+## Downstream
+- **bounded_context:** Lifecycle & Governance
+- **definition:** The phase of the development lifecycle triggered after a feature reaches the `Ready` state. Encompasses automated task distribution to AI agents that implement code in isolated Podman sandboxes, write unit tests (TDD), and update task states in the repository.
+- **not_to_be_confused_with:** Upstream ideation and spec drafting.
 
-Every feature, phase, and task in the Liquid ecosystem follows a strict finite state machine:
+## ACP
+- **bounded_context:** Runtime Protocols
+- **definition:** Agent Client Protocol. A standardized client-server protocol based on JSON-RPC 2.0 (transmitted via `stdio` or `WebSocket`). Defines strict contracts for Liquid ADE to discover, transmit context, order executions, receive streaming responses, and monitor the lifecycle of local or remote AI agents.
+- **not_to_be_confused_with:** MCP (Model Context Protocol) or generic REST APIs.
 
-```
-┌─────────┐       Validation       ┌─────────┐     ACP Trigger      ┌─────────┐
-│  DRAFT  │ ─────────────────────▶ │  READY  │ ───────────────────▶ │   WIP   │
-└─────────┘     (Tech Lead / PM)   └─────────┘    (Agent Starts)    └─────────┘
-     ▲                                  │                                │
-     │                                  │ Resolution                     │ Completion + Tests
-     │                                  ▼                                ▼
-     │                             ┌─────────┐                      ┌─────────┐
-     └──────────────────────────── │ BLOCKED │                      │  DONE   │
-           Return to Upstream      └─────────┘                      └─────────┘
-                                                                         │
-                                    Post-delivery plan.md edit           │
-                                   ──────────────────────────────────────┘
-                                   ▼
-                              ┌─────────┐
-                              │  STALE  │  (Forces revalidation at Readiness Gate)
-                              └─────────┘
-```
+## Pure Static SPA
+- **bounded_context:** Frontend Architecture
+- **definition:** The architectural decision for Liquid ADE's frontend: a React 19 + TypeScript application bundled with Vite producing only static assets (HTML/CSS/JS). Rejects SSR to eliminate Node.js runtime dependencies in production and ensure identical execution in browsers (Web/SaaS) and native desktop windows (Tauri).
+- **not_to_be_confused_with:** Next.js / Remix SSR applications.
 
-| State | Semantic Meaning | Transition Trigger |
-| :--- | :--- | :--- |
-| **`DRAFT`** | Specification under ideation/construction in Upstream. | Creation of a new feature or epic. |
-| **`READY`** | Specification approved at the *Readiness Gate*; ready for downstream execution. | Conceptual model and criteria validation by Tech Lead / PM. |
-| **`WIP`** (*Work In Progress*) | Under active execution by an autonomous agent. | Agent begins first sequential task from `tasks.md` via ACP. |
-| **`DONE`** | Implementation complete with 100% unit tests and criteria passing. | Quality Reviewer agent executes test suite in sandbox and approves. |
-| **`BLOCKED`** | Execution halted by technical error, missing dependency, or ambiguity. | Agent or developer detects an impassable blocker. |
-| **`STALE`** | Specification modified post-delivery, requiring technical drift revalidation. | Any commit to `plan.md` of a previously `Done` epic. |
+## Podman Sandboxing
+- **bounded_context:** Execution & Sandboxing
+- **definition:** A security mechanism where code tasks generated by agents (package installation, compilation, test and script execution) run in ephemeral containers managed via Podman without root daemons. Ensures complete isolation of the host environment.
+- **not_to_be_confused_with:** Running agent code directly on host or using rootful docker daemon.
 
----
+## Just
+- **bounded_context:** Automation & Tooling
+- **definition:** Command automation and task orchestration tool (`Justfile`), providing unified and deterministic commands (`just dev`, `just build`, `just test`) for both humans and agents.
+- **not_to_be_confused_with:** Shell scripts without unified syntax or Makefiles.
 
-## 4. Document-as-UI & WYSIWYG Editor
+## Model-Agnostic Routing
+- **bounded_context:** AI Infrastructure
+- **definition:** An abstraction and dispatch layer allowing Liquid to switch transparently between 100% local/private inference (Ollama, Llama.cpp, vLLM) and cloud providers (Anthropic Claude, OpenAI, Google Gemini) without changing platform business logic.
+- **not_to_be_confused_with:** Direct hardcoded SDK calls to a single proprietary provider.
 
-### Document-as-UI
-A paradigm where structured Markdown files are not merely rendered typographically, but interpreted as a tree of rich interface components (metadata chips, interactive badges, domain tables, clickable checklists, and BDD blocks).
+## Document-as-UI
+- **bounded_context:** User Interface
+- **definition:** A paradigm where structured Markdown files are not merely rendered typographically, but interpreted as a tree of rich interface components (metadata chips, interactive badges, domain tables, clickable checklists, and BDD blocks).
+- **not_to_be_confused_with:** Static read-only markdown rendering.
 
-### AST Block Model (Abstract Syntax Tree Block Model)
-A syntax tree data model dividing a specification into typed semantic blocks (`HeaderNode`, `MetaChipsNode`, `RequirementTableNode`, `BddScenarioNode`, `CriteriaListNode`, `TaskItemNode`). Each node provides specific visual rendering via the **Astryx Design System** and direct two-way on-screen editing.
+## AST Block Model
+- **bounded_context:** User Interface
+- **definition:** A syntax tree data model dividing a specification into typed semantic blocks (`HeaderNode`, `MetaChipsNode`, `RequirementTableNode`, `BddScenarioNode`, `CriteriaListNode`, `TaskItemNode`). Each node provides specific visual rendering via the Astryx Design System and direct two-way on-screen editing.
+- **not_to_be_confused_with:** Unstructured raw textarea editors.
 
-### Two-Way Sync (Bidirectional Sync with Echo Suppression)
-The synchronization engine bridging changes between the graphical interface and the local filesystem:
-1. **UI Edit:** Surgically modifies corresponding lines on disk without disturbing adjacent formatting or comments.
-2. **Disk Edit (VS Code / Neovim / Git):** The File Watcher detects changes and updates the UI reactively in <50ms.
-3. **Echo Suppression:** Mechanism ignoring filesystem events generated by the UI itself, preventing infinite re-render loops and race conditions.
+## Two-Way Sync
+- **bounded_context:** Storage & Synchronization
+- **definition:** The synchronization engine bridging changes between the graphical interface and the local filesystem: UI edits surgically modify disk lines, external disk edits reload the UI reactively (<50ms), and Echo Suppression prevents re-render loops.
+- **not_to_be_confused_with:** Periodic manual polling or full file overwrite.
+
+## Workspace Inspector
+- **bounded_context:** Workspace Navigation
+- **definition:** The core discovery subsystem of Liquid ADE that scans, monitors, and validates the workspace directory structure, ensuring conformance with canonical SCPE directories (`apps/`, `features/`, `assets/`) and root specification files.
+- **not_to_be_confused_with:** A generic, unconstrained OS file manager.
+
+## Inception Studio
+- **bounded_context:** Inception & Product Definition
+- **definition:** The dedicated interactive mode in Liquid ADE where a user starts a new product idea, initializes canonical SCPE scaffolding, matures the core value proposition, establishes design/architectural boundaries, and prepares the product for feature planning.
+- **not_to_be_confused_with:** Downstream coding studio or code editor.
+
+## Conversational Co-Pilot
+- **bounded_context:** Human-Agent Collaboration
+- **definition:** A specialized AI assistant panel (clean dual-pane layout inspired by Kimi) that engages the human product builder in structured dialogues to elicit problem statements, target personas, technical boundaries, and UX constraints, directly projecting changes onto spec canvas documents.
+- **not_to_be_confused_with:** Unbounded generic chat or hallucinating vibe assistant.
+
+## Product Vision
+- **bounded_context:** Inception & Product Definition
+- **definition:** The foundational canonical document (`product_vision.md`) defining the user problem, target audience, core value proposition, key differentiators, and riskiest assumptions of the product before feature decomposition begins.
+- **not_to_be_confused_with:** Marketing pitch deck or unstructured design document.
+
+## Design Guidelines
+- **bounded_context:** Design System & UI/UX
+- **definition:** The living specification document (`UI_UX_GUIDELINES.md`) defining typography, surface colors, density, accessibility standards, component heuristics, and dark mode rules based on the Astryx Design System for the target application.
+- **not_to_be_confused_with:** Ad-hoc CSS stylesheets or random theme tweaks.
+
+## Architectural Decision Record
+- **bounded_context:** Architecture & Governance
+- **definition:** An Architectural Decision Record (ADR) capturing a significant architectural or tooling choice, structured with Status, Context, Decision, Consequences & Tradeoffs, and Rejected Alternatives (recorded in `architecture.md` or `docs/adr/`).
+- **not_to_be_confused_with:** Undocumented commit message or ephemeral slack thread.
+
+## Interactive Roadmap
+- **bounded_context:** Product Planning & Roadmapping
+- **definition:** The visual and conversational management surface projecting `roadmap.md` into Now / Next / Later horizons, allowing human specialists and co-pilots to adjust priorities, feature order, and delivery phases collaboratively.
+- **not_to_be_confused_with:** Static Gantt chart or disconnected Jira board.
+
+## Feature Handoff
+- **bounded_context:** Lifecycle & Governance
+- **definition:** The formal transition milestone where product inception artifacts (`product_vision.md`, `UI_UX_GUIDELINES.md`, `architecture.md`, `roadmap.md`) are validated for completeness, unlocking downstream Feature Studio mode to plan individual features with domain specialist agents.
+- **not_to_be_confused_with:** Prematurely starting coding without validated foundational specifications.
+
+## Liquid Board
+- **bounded_context:** Visual Project Management
+- **definition:** A Jira-style visual management surface projecting the SCPE lifecycle into interactive Kanban columns (`Draft`, `Ready`, `WIP`, `Done`), displaying epic cards with completion progress, task checklists, and live reactive updates from the filesystem without manual page reloads.
+- **not_to_be_confused_with:** Proprietary cloud-hosted task tracking tools disconnected from Git text files.
+
+## One-Click Task Runner
+- **bounded_context:** Interactive Agent Execution
+- **definition:** An action trigger allowing a user to click a single button (`[▶ Executar]`) directly on any task in `tasks.md`, dispatching the task and its acceptance criteria (`S#`, `R#`) to the active LLM agent, streaming live execution progress, and automatically updating the task checkbox to `- [x]` on disk upon completion.
+- **not_to_be_confused_with:** Unmonitored background batch jobs or manual terminal copy-pasting.
+
+## Multi-LLM Gateway
+- **bounded_context:** AI Infrastructure & Configuration
+- **definition:** A configurable multi-provider adapter layer enabling Liquid ADE to connect with different model providers (starting with Google Gemini REST API, extensible to OpenAI, Copilot, and local models) through simple API key and model selection settings in the interface.
+- **not_to_be_confused_with:** A hardcoded single-model integration.
+
+## Project Registry
+- **bounded_context:** Workspace Management & Storage
+- **definition:** The persistent catalog maintained in embedded SQLite (`liquid.db`) tracking all known product workspaces on the host machine, including project ID, name, absolute filesystem path, creation timestamp, and last-opened timestamp.
+- **not_to_be_confused_with:** A remote Git repository hosting service.
+
+## Execution Checkpoint
+- **bounded_context:** Agent Execution & Resilience
+- **definition:** A durable snapshot recorded in embedded SQLite capturing the state of an agent's task execution, including `last_task_id`, execution status (`running`, `completed`, `failed`, `paused`), context JSON, and error telemetry, enabling the agent to resume work accurately without context loss or hallucination.
+- **not_to_be_confused_with:** A Git commit or version control tag.
+
+## Dual-Ledger Session
+- **bounded_context:** Agent Execution & Resilience
+- **definition:** An architectural pattern separating the ephemeral conversation transcript (volatile UI streaming cards) from the durable schema-bounded state ledger (folded records of goal, active phase, next intent, tried approaches, and verification checkpoints stored in embedded SQLite). Ensures that long-running tasks survive context window compaction and restarts without hallucinating progress.
+- **not_to_be_confused_with:** Full transcript replay or simple chat history.
+
+## Steering Documents
+- **bounded_context:** Agent Orchestration & Context Injection
+- **definition:** The set of canonical upstream specifications (`product_vision.md`, `architecture.md`, `technical_deal.md`, and the active epic's `plan.md`) that are deterministically injected as context into the prompt of any agent task execution to guarantee architectural compliance and domain invariant adherence.
+- **not_to_be_confused_with:** Random codebase search or uncurated prompt context.
+
+
+

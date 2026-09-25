@@ -21,7 +21,7 @@
     "**Code as Consequence**: the code structure mirrors the specification; divergence is a spec bug, not a code bug.",
     "**Disk is the SSOT**: the UI never holds its own business state — everything derives from parsing `.liquid/` files; all writes go to `.md` and return via the watcher.",
     "**Package-by-Feature**: each vertical slice (`scanner`, `parser`, `board`, `spec-reader`, `watcher`) is self-sufficient; only genuinely transversal logic belongs in `core/`.",
-    "**Tolerant parsing**: malformed files degrade gracefully with a UI warning and never crash the entire project parse.",
+    "**Strict contract & input integrity**: be criterious, rigorous, and defensive with inputs and contracts; reject malformed data fail-fast at boundaries.",
     "**Commits separated by nature**: `docs:` for specifications, `feat:`/`fix:`/`test:` for code."
   ],
   "phases": [
