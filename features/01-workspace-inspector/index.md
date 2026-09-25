@@ -8,7 +8,7 @@
 ## Scope
 - Embedding the React 19 static SPA into the Axum binary via `rust-embed`.
 - Serving static assets with client-side SPA routing fallback and health diagnostics (`/api/health`).
-- Implementing the 3-column Astryx layout (Left: Navigation & File Tree, Center: Document Canvas, Right: Inspector Panel).
+- Implementing the 3-column Astryx layout (Left: Navigation & File Tree / Mode Rail per ADR-009, Center: Document Canvas, Right: Inspector Panel).
 - Path traversal guard confining filesystem access strictly to the canonical workspace root.
 - Scanning workspace directory trees (`/api/workspace/tree`) and reading file contents (`/api/workspace/file`).
 

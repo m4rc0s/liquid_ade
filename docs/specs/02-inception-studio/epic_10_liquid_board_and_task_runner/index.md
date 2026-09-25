@@ -1,7 +1,7 @@
 # Epic: Liquid Board & One-Click Task Runner
 
 - **feature:** 02-inception-studio
-- **slug:** epic_08_liquid_board_and_task_runner
+- **slug:** epic_10_liquid_board_and_task_runner
 - **title:** Liquid Board & One-Click Task Runner
 - **bounded_context:** Visual Project Management & Interactive Execution
 

@@ -100,7 +100,7 @@ This glossary establishes the **Ubiquitous Language** for the **Liquid** ecosyst
 
 ## Conversational Co-Pilot
 - **bounded_context:** Human-Agent Collaboration
-- **definition:** A specialized AI assistant panel (clean dual-pane layout inspired by Kimi) that engages the human product builder in structured dialogues to elicit problem statements, target personas, technical boundaries, and UX constraints, directly projecting changes onto spec canvas documents.
+- **definition:** A specialized AI assistant panel hosted in the right-side context column (tabbed alongside the Spec Inspector per ADR-009) that engages the human product builder in structured dialogues to elicit problem statements, target personas, technical boundaries, and UX constraints, directly projecting changes onto spec canvas documents.
 - **not_to_be_confused_with:** Unbounded generic chat or hallucinating vibe assistant.
 
 ## Product Vision
@@ -135,12 +135,12 @@ This glossary establishes the **Ubiquitous Language** for the **Liquid** ecosyst
 
 ## One-Click Task Runner
 - **bounded_context:** Interactive Agent Execution
-- **definition:** An action trigger allowing a user to click a single button (`[▶ Executar]`) directly on any task in `tasks.md`, dispatching the task and its acceptance criteria (`S#`, `R#`) to the active LLM agent, streaming live execution progress, and automatically updating the task checkbox to `- [x]` on disk upon completion.
+- **definition:** An action trigger allowing a user to click an Action Pill (`▶ Start task`) directly on any task in `tasks.md`, dispatching the task and its acceptance criteria (`S#`, `R#`) to the active LLM agent, streaming live execution progress, and automatically updating the task checkbox to `- [x]` on disk upon completion.
 - **not_to_be_confused_with:** Unmonitored background batch jobs or manual terminal copy-pasting.
 
 ## Multi-LLM Gateway
 - **bounded_context:** AI Infrastructure & Configuration
-- **definition:** A configurable multi-provider adapter layer enabling Liquid ADE to connect with different model providers (starting with Google Gemini REST API, extensible to OpenAI, Copilot, and local models) through simple API key and model selection settings in the interface.
+- **definition:** A configurable multi-provider adapter layer enabling Liquid ADE to connect with different model providers (starting with Google Gemini REST API, extensible to OpenAI, GitHub Copilot, and local models) through simple API key and model selection settings in the interface.
 - **not_to_be_confused_with:** A hardcoded single-model integration.
 
 ## Project Registry
@@ -162,6 +162,32 @@ This glossary establishes the **Ubiquitous Language** for the **Liquid** ecosyst
 - **bounded_context:** Agent Orchestration & Context Injection
 - **definition:** The set of canonical upstream specifications (`product_vision.md`, `architecture.md`, `technical_deal.md`, and the active epic's `plan.md`) that are deterministically injected as context into the prompt of any agent task execution to guarantee architectural compliance and domain invariant adherence.
 - **not_to_be_confused_with:** Random codebase search or uncurated prompt context.
+
+## Mode Rail
+- **bounded_context:** User Interface / Navigation
+- **definition:** A far-left 48px vertical activity rail that toggles the primary functional mode of the workspace (`Specs`, `Files`, and future `Board` / `Search`), ensuring the spec-first workflow remains the default entry point while keeping secondary tools easily accessible.
+- **not_to_be_confused_with:** An IDE activity bar exposing source control, a debugger, and extension panels.
+
+## Spec Navigator
+- **bounded_context:** Workspace Navigation & Governance
+- **definition:** The primary collapsible sidebar navigation projecting the canonical SCPE product structure (Features → Epics → Spec documents: `plan.md`, `tasks.md`, `quick_status.md`, `PRD.md`, `index.md`) alongside live lifecycle state chips and task completion counters read directly from disk.
+- **not_to_be_confused_with:** A recursive filesystem tree over the whole repository — that is the `Files` mode.
+
+## Living Spec Canvas
+- **bounded_context:** User Interface / Document-as-UI
+- **definition:** The central interactive workspace projection that parses and renders an epic's living specification as structured Astryx cards (Intent, Domain Model, Rules, Scenarios, Slices, Tasks) with interactive `S#`/`R#` badges, allowing immediate task execution and inspection.
+- **not_to_be_confused_with:** Static read-only markdown rendering or generic typography viewers.
+
+## Phase Pill
+- **bounded_context:** User Interface / Slicing
+- **definition:** A horizontal filter chip control rendered on the Living Spec Canvas header allowing product builders and engineers to scope the canvas view to a specific vertical slice (or all slices), dynamically filtering visible rules, acceptance scenarios, and implementation tasks.
+- **not_to_be_confused_with:** Ephemeral client-only tags or arbitrary text labels.
+
+## Action Pill
+- **bounded_context:** Interactive Agent Execution
+- **definition:** An interactive UI trigger (`▶ Start task`) attached to each task card on the Living Spec Canvas that packages the task definition, cited acceptance scenarios (`S#`), and rules (`R#`) and dispatches it directly to the Conversational Co-Pilot for execution without writing directly to `tasks.md`.
+- **not_to_be_confused_with:** Passive task checkboxes or unilateral disk state writers.
+
 
 
 

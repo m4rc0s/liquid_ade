@@ -2,7 +2,7 @@
 
 This document establishes the **Core UI Principles and UX Heuristics** for the interfaces of **Liquid ADE**, directly inspired by the design and interaction patterns of **Linear** and **Notion**: minimalist aesthetics, refined typography, document-centric layouts, high information density, keyboard accelerators, and tactile micro-interactions.
 
-> **Base Component Library:** [Astryx Design System](https://github.com/m4rc0s/astryx) (`@astryxdesign/core` - React 19+)
+> **Base Component Library:** [Astryx Design System](https://github.com/facebook/astryx) (`@astryxdesign/core` - React 19+)
 
 ---
 
@@ -31,7 +31,7 @@ This document establishes the **Core UI Principles and UX Heuristics** for the i
 1. **Visibility of System Status:** Real-time ACP connection indicators and disk-save status indicators.
 2. **Match Between System and Real World:** Clear, familiar product terminology ("*Epics*", "*Tasks*", "*Acceptance Criteria*").
 3. **User Control & Freedom:** Complete **Undo/Redo (`Cmd+Z` / `Cmd+Shift+Z`)** support in the specification editor.
-4. **Consistency:** SCPE navigation sidebar on the left, central document canvas, and seamless toggle to the Liquid Board (Kanban).
+4. **Consistency:** Mode Rail and SCPE Spec Navigator sidebar on the left (ADR-009), central Living Spec Canvas, and right Inspector / Co-Pilot tabs.
 5. **Error Prevention:** Gentle input validations and prevention of illegal state transitions.
 6. **Cognitive Load Reduction:** Zen-like interface optimized for reading and writing without visual clutter.
 7. **Minimalist Aesthetic:** Elimination of decorative noise; absolute focus on specification content.

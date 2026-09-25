@@ -1,7 +1,7 @@
 # Epic: Architecture Guidelines & ADR Engine
 
 - **feature:** 02-inception-studio
-- **slug:** epic_05_architecture_and_adr_engine
+- **slug:** epic_07_architecture_and_adr_engine
 - **title:** Architecture Guidelines & ADR Engine
 - **bounded_context:** Workspace Navigation & Inception
 
