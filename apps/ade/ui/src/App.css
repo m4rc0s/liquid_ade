@@ -107,6 +107,24 @@
   border: 1px solid rgba(107, 114, 128, 0.3);
 }
 
+.astryx-chip.done {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: var(--status-done);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.astryx-chip.blocked {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--status-blocked);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.astryx-chip.stale {
+  background-color: rgba(139, 92, 246, 0.15);
+  color: var(--status-stale);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
 .astryx-kbd {
   font-family: var(--font-mono);
   font-size: 11px;

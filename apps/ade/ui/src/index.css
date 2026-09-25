@@ -21,6 +21,7 @@
   --status-wip: #f59e0b;
   --status-blocked: #ef4444;
   --status-draft: #6b7280;
+  --status-stale: #8b5cf6;
 
   --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
