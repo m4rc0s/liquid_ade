@@ -1,94 +1,41 @@
 import { useCallback, useEffect, useState } from 'react';
 import './App.css';
-import {
-  fetchWorkspaceFile,
-  fetchWorkspaceTree,
-  isRenderableDocument,
-  type FileContent,
-  type FileNode,
-} from './features/workspace/api';
 import { WorkspaceTree } from './features/workspace/WorkspaceTree';
 import { DocumentCanvas } from './features/workspace/DocumentCanvas';
 import { CopilotPanel } from './features/copilot/CopilotPanel';
 import { CopilotSettingsDialog } from './features/copilot/CopilotSettingsDialog';
 import { fetchCopilotSettings, type CopilotSettings } from './features/copilot/api';
-
-/** Document opened on the canvas when the workspace tree first loads, when present. */
-const PREFERRED_ENTRY_DOCUMENT = 'product_vision.md';
+import { useWorkspaceStore } from './stores';
+import { Chip } from './components';
 
 function errorMessage(cause: unknown, fallback: string): string {
   return cause instanceof Error ? cause.message : fallback;
 }
 
-/** Depth-first search for the entry document, so a fresh session never opens an empty canvas. */
-function findNode(node: FileNode, predicate: (candidate: FileNode) => boolean): FileNode | null {
-  if (predicate(node)) {
-    return node;
-  }
-  for (const child of node.children ?? []) {
-    const found = findNode(child, predicate);
-    if (found) {
-      return found;
-    }
-  }
-  return null;
-}
-
 function App() {
-  const [tree, setTree] = useState<FileNode | null>(null);
-  const [isTreeLoading, setIsTreeLoading] = useState(true);
-  const [treeError, setTreeError] = useState<string | null>(null);
-
-  const [activePath, setActivePath] = useState<string | null>(null);
-  const [activeDocument, setActiveDocument] = useState<FileContent | null>(null);
-  const [isDocumentLoading, setIsDocumentLoading] = useState(false);
-  const [documentError, setDocumentError] = useState<string | null>(null);
+  const {
+    tree,
+    isTreeLoading,
+    treeError,
+    activePath,
+    activeDocument,
+    isDocumentLoading,
+    documentError,
+    activeProject,
+    loadTree,
+    openDocument,
+    selectNode,
+    setActiveProject,
+  } = useWorkspaceStore();
 
   const [settings, setSettings] = useState<CopilotSettings | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
-  const [activeProject, setActiveProject] = useState('liquid_ade');
   const [newProjectName, setNewProjectName] = useState('');
   const [newProjectPath, setNewProjectPath] = useState('');
   const [modalError, setModalError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const openDocument = useCallback(async (path: string) => {
-    setActivePath(path);
-    setIsDocumentLoading(true);
-    setDocumentError(null);
-
-    try {
-      setActiveDocument(await fetchWorkspaceFile(path));
-    } catch (cause) {
-      setActiveDocument(null);
-      setDocumentError(errorMessage(cause, `Could not read ${path}`));
-    } finally {
-      setIsDocumentLoading(false);
-    }
-  }, []);
-
-  const loadTree = useCallback(async () => {
-    setIsTreeLoading(true);
-    setTreeError(null);
-
-    try {
-      const root = await fetchWorkspaceTree();
-      setTree(root);
-      setActiveProject(root.name || 'workspace');
-
-      const entry = findNode(root, (node) => node.name === PREFERRED_ENTRY_DOCUMENT);
-      if (entry) {
-        void openDocument(entry.path);
-      }
-    } catch (cause) {
-      setTree(null);
-      setTreeError(errorMessage(cause, 'Could not scan the workspace'));
-    } finally {
-      setIsTreeLoading(false);
-    }
-  }, [openDocument]);
 
   const loadSettings = useCallback(async () => {
     try {
@@ -100,24 +47,12 @@ function App() {
     }
   }, []);
 
-  // Mount-time synchronization with the two external systems the shell projects: the workspace
-  // on disk and the gateway's provider configuration. Both loaders flip their own loading flag
-  // before awaiting, which is the documented exception to `react/set-state-in-effect`.
+  // Mount-time synchronization with the workspace on disk and the gateway's provider configuration.
   useEffect(() => {
-    // eslint-disable-next-line react/set-state-in-effect
     void loadTree();
+    // eslint-disable-next-line react/set-state-in-effect
     void loadSettings();
   }, [loadTree, loadSettings]);
-
-  const handleSelect = (node: FileNode) => {
-    if (!isRenderableDocument(node)) {
-      setActivePath(node.path);
-      setActiveDocument(null);
-      setDocumentError(`${node.name} is not a document the canvas can render.`);
-      return;
-    }
-    void openDocument(node.path);
-  };
 
   const isSlugValid = (s: string) => /^[a-z0-9][a-z0-9_-]*$/.test(s);
 
@@ -196,9 +131,9 @@ function App() {
         </div>
 
         <div className="astryx-header-right">
-          <span className={`astryx-chip ${settings?.configured ? 'ready' : 'draft'}`}>
+          <Chip variant={settings?.configured ? 'ready' : 'draft'}>
             {settings?.configured ? 'Co-Pilot Ready' : 'Co-Pilot Off'}
-          </span>
+          </Chip>
           <span className="astryx-kbd">⌘K</span>
         </div>
       </header>
@@ -216,7 +151,7 @@ function App() {
             activePath={activePath}
             isLoading={isTreeLoading}
             error={treeError}
-            onSelect={handleSelect}
+            onSelect={selectNode}
             onRetry={() => void loadTree()}
           />
         </aside>
