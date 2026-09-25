@@ -3,6 +3,10 @@ target/
 dist/
 node_modules/
 
+# Python bytecode cache
+__pycache__/
+*.pyc
+
 # Environment and local configs
 .env
 .env.local
