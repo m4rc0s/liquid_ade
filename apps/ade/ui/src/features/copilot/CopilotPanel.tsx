@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import Markdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import {
   streamCopilotChat,
   type ChatMessage,
   type CopilotError,
   type CopilotSettings,
 } from './api';
+import { SessionCard, type SessionCardData } from './SessionCard';
+import { useWorkspaceStore } from '../../stores';
 
 interface CopilotPanelProps {
   contextPath: string | null;
@@ -22,25 +22,26 @@ const ERROR_HINTS: Record<string, string> = {
   EMPTY_PROMPT: 'Type a prompt before sending.',
 };
 
-/**
- * Right column: the conversational co-pilot pane of the dual-pane layout.
- *
- * Every turn carries the path bound to the document canvas (R1) and consumes the gateway's SSE
- * stream incrementally, so tokens paint as they arrive instead of blocking on a complete response
- * (R2). A failed turn is rolled back: the prompt returns to the composer untouched and an inline
- * banner offers a retry (S2).
- */
 export function CopilotPanel({ contextPath, settings, onOpenSettings }: CopilotPanelProps) {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const { dispatchedTaskPrompt, clearDispatchedTask } = useWorkspaceStore();
+
+  const [cards, setCards] = useState<SessionCardData[]>([]);
   const [input, setInput] = useState('');
-  const [streamingText, setStreamingText] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
-  const [error, setError] = useState<CopilotError | null>(null);
 
   const abortRef = useRef<AbortController | null>(null);
   const transcriptRef = useRef<HTMLDivElement | null>(null);
 
-  // Abort an in-flight turn when the panel unmounts so no stream outlives its consumer.
+  // Consume dispatched task prompt from Action Pill (R6)
+  useEffect(() => {
+    if (dispatchedTaskPrompt) {
+      // eslint-disable-next-line react/set-state-in-effect
+      setInput(dispatchedTaskPrompt);
+      clearDispatchedTask();
+    }
+  }, [dispatchedTaskPrompt, clearDispatchedTask]);
+
+  // Abort in-flight turn when the panel unmounts (R4)
   useEffect(() => () => abortRef.current?.abort(), []);
 
   useEffect(() => {
@@ -48,27 +49,58 @@ export function CopilotPanel({ contextPath, settings, onOpenSettings }: CopilotP
     if (transcript) {
       transcript.scrollTop = transcript.scrollHeight;
     }
-  }, [messages, streamingText]);
+  }, [cards]);
 
-  const runTurn = async (conversation: ChatMessage[], prompt: string) => {
+  const runTurn = async (promptText: string) => {
     const controller = new AbortController();
     abortRef.current = controller;
 
-    setIsStreaming(true);
-    setStreamingText('');
-    setError(null);
+    const promptCardId = `prompt-${Date.now()}`;
+    const answerCardId = `answer-${Date.now() + 1}`;
 
-    let answer = '';
-    let failure: CopilotError | null = null;
+    const promptCard: SessionCardData = {
+      id: promptCardId,
+      kind: 'prompt',
+      text: promptText,
+      contextPath,
+      timestamp: Date.now(),
+    };
+
+    const initialAnswerCard: SessionCardData = {
+      id: answerCardId,
+      kind: 'answer',
+      text: '',
+      isStreaming: true,
+      timestamp: Date.now(),
+    };
+
+    setCards((prev) => [...prev, promptCard, initialAnswerCard]);
+    setIsStreaming(true);
+
+    // Build conversation history from completed cards
+    const history: ChatMessage[] = [];
+    for (const card of cards) {
+      if (card.kind === 'prompt') {
+        history.push({ role: 'user', text: card.text });
+      } else if (card.kind === 'answer' && !card.isStreaming) {
+        history.push({ role: 'model', text: card.text });
+      }
+    }
+    history.push({ role: 'user', text: promptText });
+
+    let currentAnswer = '';
+    const failureHolder: { error: CopilotError | null } = { error: null };
 
     await streamCopilotChat(
-      { messages: conversation, contextPath },
+      { messages: history, contextPath },
       (event) => {
         if (event.type === 'token') {
-          answer += event.text;
-          setStreamingText(answer);
+          currentAnswer += event.text;
+          setCards((prev) =>
+            prev.map((c) => (c.id === answerCardId ? { ...c, text: currentAnswer } : c))
+          );
         } else if (event.type === 'error') {
-          failure = event.error;
+          failureHolder.error = event.error;
         }
       },
       controller.signal
@@ -76,37 +108,45 @@ export function CopilotPanel({ contextPath, settings, onOpenSettings }: CopilotP
 
     abortRef.current = null;
     setIsStreaming(false);
-    setStreamingText('');
 
     if (controller.signal.aborted) {
-      // A cancelled turn keeps whatever the model had already said, marked as partial.
-      setMessages([...conversation, { role: 'model', text: `${answer}\n\n_(stopped)_` }]);
+      setCards((prev) =>
+        prev.map((c) =>
+          c.id === answerCardId
+            ? { ...c, text: `${currentAnswer}\n\n_(stopped)_`, isStreaming: false }
+            : c
+        )
+      );
       return;
     }
 
-    if (failure) {
-      // Roll the turn back so the transcript only holds completed turns, and hand the prompt
-      // back to the composer so the user never retypes it (S2).
-      setMessages(conversation.slice(0, -1));
-      setInput(prompt);
-      setError(failure);
+    if (failureHolder.error) {
+      const failure = failureHolder.error;
+      // Remove empty answer card and append failure card (R7)
+      const failureCard: SessionCardData = {
+        id: `failure-${Date.now()}`,
+        kind: 'failure',
+        code: failure.code,
+        message: ERROR_HINTS[failure.code] ?? failure.message,
+        canRetry: failure.code !== 'PROVIDER_NOT_CONFIGURED',
+        timestamp: Date.now(),
+      };
+
+      setCards((prev) => [...prev.filter((c) => c.id !== answerCardId), failureCard]);
+      setInput(promptText);
       return;
     }
 
-    setMessages([...conversation, { role: 'model', text: answer }]);
+    setCards((prev) => prev.map((c) => (c.id === answerCardId ? { ...c, isStreaming: false } : c)));
   };
 
-  /** Sends whatever the composer holds. Also the retry path, since a failed turn restores it. */
   const submitComposer = () => {
     const prompt = input.trim();
     if (!prompt || isStreaming) {
       return;
     }
-
-    const conversation: ChatMessage[] = [...messages, { role: 'user', text: prompt }];
-    setMessages(conversation);
     setInput('');
-    void runTurn(conversation, prompt);
+    void runTurn(prompt);
   };
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -124,9 +164,9 @@ export function CopilotPanel({ contextPath, settings, onOpenSettings }: CopilotP
   const isConfigured = settings?.configured ?? false;
 
   return (
-    <aside className="astryx-sidebar-right astryx-copilot">
+    <aside className="astryx-sidebar-right astryx-copilot flex flex-col h-full">
       <div className="astryx-panel-header">
-        <span>Co-Pilot</span>
+        <span>Conversational Co-Pilot</span>
         <div className="astryx-panel-header-actions">
           <span className={`astryx-chip ${isConfigured ? 'ready' : 'draft'}`}>
             {settings ? (isConfigured ? settings.model : 'Not configured') : '…'}
@@ -142,7 +182,7 @@ export function CopilotPanel({ contextPath, settings, onOpenSettings }: CopilotP
         </div>
       </div>
 
-      {/* Context header: the binding between the canvas document and every turn (R1). */}
+      {/* Context header: document bound to turn (R1, S6) */}
       <div className="astryx-copilot-context">
         <span className="astryx-copilot-context-label">Context</span>
         {contextPath ? (
@@ -150,76 +190,24 @@ export function CopilotPanel({ contextPath, settings, onOpenSettings }: CopilotP
             {contextPath}
           </code>
         ) : (
-          <span className="astryx-input-hint">
-            No document bound — select a file on the workspace tree.
-          </span>
+          <span className="astryx-input-hint">No document bound — select an epic or file.</span>
         )}
       </div>
 
-      <div className="astryx-copilot-transcript" ref={transcriptRef}>
-        {messages.length === 0 && !isStreaming && (
-          <p className="astryx-input-hint">
-            Ask the co-pilot to clarify, review or rewrite the document on the canvas.
+      <div
+        className="astryx-copilot-transcript flex-1 overflow-y-auto p-4 flex flex-col gap-3"
+        ref={transcriptRef}
+      >
+        {cards.length === 0 && !isStreaming && (
+          <p className="astryx-input-hint text-xs text-[var(--text-muted)]">
+            Ask the co-pilot to clarify, review or generate specifications for the active context.
           </p>
         )}
 
-        {messages.map((message, index) => (
-          <div
-            key={`${message.role}-${index}`}
-            className={`astryx-chat-message ${message.role === 'user' ? 'user' : 'model'}`}
-          >
-            <span className="astryx-chat-role">{message.role === 'user' ? 'You' : 'Co-Pilot'}</span>
-            {message.role === 'user' ? (
-              <p className="astryx-chat-text">{message.text}</p>
-            ) : (
-              <div className="astryx-chat-text astryx-markdown compact">
-                <Markdown remarkPlugins={[remarkGfm]}>{message.text}</Markdown>
-              </div>
-            )}
-          </div>
+        {cards.map((card) => (
+          <SessionCard key={card.id} card={card} onRetry={submitComposer} />
         ))}
-
-        {isStreaming && (
-          <div className="astryx-chat-message model">
-            <span className="astryx-chat-role">Co-Pilot</span>
-            <div className="astryx-chat-text astryx-markdown compact">
-              {streamingText ? (
-                <Markdown remarkPlugins={[remarkGfm]}>{streamingText}</Markdown>
-              ) : (
-                <span className="astryx-input-hint">Streaming…</span>
-              )}
-              <span className="astryx-stream-caret" />
-            </div>
-          </div>
-        )}
       </div>
-
-      {error && (
-        <div className="astryx-error-box astryx-error-box-actionable">
-          <div className="astryx-error-detail">
-            <span className="astryx-error-code">{error.code}</span>
-            <span>{ERROR_HINTS[error.code] ?? error.message}</span>
-          </div>
-          {error.code === 'PROVIDER_NOT_CONFIGURED' ? (
-            <button
-              type="button"
-              className="astryx-btn astryx-btn-secondary"
-              onClick={onOpenSettings}
-            >
-              Configure
-            </button>
-          ) : (
-            <button
-              type="button"
-              className="astryx-btn astryx-btn-secondary"
-              onClick={submitComposer}
-              disabled={input.trim() === ''}
-            >
-              Retry
-            </button>
-          )}
-        </div>
-      )}
 
       <form className="astryx-copilot-composer" onSubmit={handleSubmit}>
         <textarea

@@ -1,1 +1,6 @@
-export { useWorkspaceStore, type WorkspaceState } from './workspaceStore';
+export {
+  useWorkspaceStore,
+  type WorkspaceState,
+  type NavigatorMode,
+  type RightTab,
+} from './workspaceStore';

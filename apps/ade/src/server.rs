@@ -2,6 +2,7 @@ use crate::copilot::{
     self, ChatRequest, CopilotConfig, CredentialSource, SseFrameParser, PROVIDER_GEMINI,
 };
 use crate::db::{self, ProjectRecord};
+use crate::scpe;
 use crate::workspace::{self, FileNode, PathGuardError};
 use axum::{
     body::Body,
@@ -641,6 +642,59 @@ pub async fn static_or_spa_handler(method: Method, uri: Uri) -> impl IntoRespons
         .unwrap()
 }
 
+pub async fn scpe_outline_handler(
+    State(state): State<AppState>,
+) -> Result<Json<scpe::ScpeOutline>, (StatusCode, Json<ErrorResponse>)> {
+    let root = state.workspace_root.read().unwrap().clone();
+    match scpe::build_scpe_outline(&root) {
+        Ok(outline) => Ok(Json(outline)),
+        Err(e) => Err((
+            StatusCode::INTERNAL_SERVER_ERROR,
+            Json(ErrorResponse {
+                error: "OUTLINE_ERROR".to_string(),
+                message: e.to_string(),
+            }),
+        )),
+    }
+}
+
+#[derive(Debug, Deserialize)]
+pub struct ScpeEpicQuery {
+    pub feature: String,
+    pub epic: String,
+}
+
+pub async fn scpe_epic_handler(
+    State(state): State<AppState>,
+    Query(query): Query<ScpeEpicQuery>,
+) -> Result<Json<scpe::EpicDetailResponse>, (StatusCode, Json<ErrorResponse>)> {
+    let root = state.workspace_root.read().unwrap().clone();
+    match scpe::read_epic_detail(&root, &query.feature, &query.epic) {
+        Ok(detail) => Ok(Json(detail)),
+        Err(PathGuardError::TraversalDetected) => Err((
+            StatusCode::FORBIDDEN,
+            Json(ErrorResponse {
+                error: "TRAVERSAL_DETECTED".to_string(),
+                message: "Path traversal attempt detected".to_string(),
+            }),
+        )),
+        Err(PathGuardError::NotFound) => Err((
+            StatusCode::NOT_FOUND,
+            Json(ErrorResponse {
+                error: "NOT_FOUND".to_string(),
+                message: "Epic not found in workspace".to_string(),
+            }),
+        )),
+        Err(PathGuardError::Io(msg)) => Err((
+            StatusCode::INTERNAL_SERVER_ERROR,
+            Json(ErrorResponse {
+                error: "IO_ERROR".to_string(),
+                message: msg,
+            }),
+        )),
+    }
+}
+
 pub fn create_router_with_state(state: AppState) -> Router {
     Router::new()
         .route("/api/health", get(health_handler))
@@ -653,6 +707,8 @@ pub fn create_router_with_state(state: AppState) -> Router {
         .route("/api/projects/open", post(open_project_handler))
         .route("/api/projects/new", post(new_project_handler))
         .route("/api/workspace/new", post(new_project_handler))
+        .route("/api/scpe/outline", get(scpe_outline_handler))
+        .route("/api/scpe/epic", get(scpe_epic_handler))
         .route(
             "/api/settings/copilot",
             get(get_copilot_settings_handler).post(put_copilot_settings_handler),
