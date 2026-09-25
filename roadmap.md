@@ -41,7 +41,7 @@ Now (Active Implementation)                Next (Unlocks from Phase 1)          
 ---
 
 ### 🔹 Phase 2: v0.2.0 — The Inception Studio (Product Inception & Idea Validation)
-* **Horizon:** `Next` (Starts immediately from the completed Phase 1 foundation)
+* **Horizon:** `Now` (Active development; Phase 1 foundation completed)
 * **Goal:** Enable product creators, senior architects, and autonomous co-pilots to brainstorm, validate product ideas, formulate design/architectural guidelines, adjust roadmaps, manage features visually in a Jira-style board, and execute tasks in 1 click using configured LLMs (starting with Google Gemini).
 * **Feature Target:** `02-inception-studio` (Specification blueprint in `docs/specs/02-inception-studio/`)
 * **Epics:**
