@@ -23,4 +23,4 @@
 ## Epics
 
 - [epic_01_project_scaffold_generator](epics/epic_01_project_scaffold_generator/index.md) — Done
-- [epic_02_conversational_copilot_panel](epics/epic_02_conversational_copilot_panel/index.md) — WIP
+- [epic_02_conversational_copilot_panel](epics/epic_02_conversational_copilot_panel/index.md) — Done

@@ -2,7 +2,7 @@
 
 **Methodology:** SCPE v0.3.0 (Spec-Compiled Product Engineering)  
 **Status:** Canonical Temporal Evolution SSOT  
-**Last Updated:** 2026-09-23  
+**Last Updated:** 2026-09-25  
 **Governance:** Architecture Council & Product Engineering  
 
 ---
@@ -44,9 +44,9 @@ Now (Active Implementation)                Next (Unlocks from Phase 1)          
 * **Horizon:** `Next` (Starts immediately from the completed Phase 1 foundation)
 * **Goal:** Enable product creators, senior architects, and autonomous co-pilots to brainstorm, validate product ideas, formulate design/architectural guidelines, adjust roadmaps, manage features visually in a Jira-style board, and execute tasks in 1 click using configured LLMs (starting with Google Gemini).
 * **Feature Target:** `02-inception-studio` (Specification blueprint in `docs/specs/02-inception-studio/`)
-* **Epics (Pre-specified & Ready for Handoff):**
-  1. `epic_01_project_scaffold_generator`: Modal UI & `/api/workspace/new` to scaffold canonical SCPE workspaces on disk.
-  2. `epic_02_conversational_copilot_panel`: Multi-LLM streaming chat (Google Gemini REST API as primary provider, pluggable for GPT/Copilot) with document canvas binding.
+* **Epics:**
+  1. `epic_01_project_scaffold_generator` — `Done` ✅: Modal UI & `/api/workspace/new` to scaffold canonical SCPE workspaces on disk.
+  2. `epic_02_conversational_copilot_panel` — `Done` ✅: Multi-LLM streaming chat (Google Gemini REST API as primary provider, pluggable for GPT/Copilot) with live document canvas binding over Server-Sent Events.
   3. `epic_03_product_vision_refiner`: Structured elicitation prompts and live disk patching for `product_vision.md`.
   4. `epic_04_design_guidelines_builder`: Guided formulator of `UI_UX_GUIDELINES.md` using Astryx design tokens.
   5. `epic_05_architecture_and_adr_engine`: Architectural interview and ADR generator updating `architecture.md` and `technical_deal.md`.
@@ -114,7 +114,7 @@ Now (Active Implementation)                Next (Unlocks from Phase 1)          
 | Horizon | Phase | Feature Slug | Title | State |
 | :---: | :---: | :--- | :--- | :---: |
 | **Done** | **Phase 1** | `01-workspace-inspector` | Workspace Inspector & Runtime Shell | `Done` ✅ |
-| **Now** | **Phase 2** | `02-inception-studio` | Inception Studio & Idea Validation | *Opening* 📋 |
+| **Now** | **Phase 2** | `02-inception-studio` | Inception Studio & Idea Validation | *In Progress* 🚧 (2/8 epics) |
 | **Later** | **Phase 3** | `03-live-file-sync` | Live File Sync & Echo Suppression | *Backlog* ⏳ |
 | **Later** | **Phase 4** | `04-spec-status-and-drift` | Spec Status, Drift & Liquid Board | *Backlog* ⏳ |
 | **Later** | **Phase 5** | `05-wysiwyg-document-editor`| WYSIWYG Document-as-UI Editor | *Backlog* ⏳ |
