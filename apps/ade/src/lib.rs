@@ -1,3 +1,4 @@
+pub mod copilot;
 pub mod db;
 pub mod scaffold;
 pub mod server;

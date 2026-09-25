@@ -1,20 +1,123 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import './App.css';
+import {
+  fetchWorkspaceFile,
+  fetchWorkspaceTree,
+  isRenderableDocument,
+  type FileContent,
+  type FileNode,
+} from './features/workspace/api';
+import { WorkspaceTree } from './features/workspace/WorkspaceTree';
+import { DocumentCanvas } from './features/workspace/DocumentCanvas';
+import { CopilotPanel } from './features/copilot/CopilotPanel';
+import { CopilotSettingsDialog } from './features/copilot/CopilotSettingsDialog';
+import { fetchCopilotSettings, type CopilotSettings } from './features/copilot/api';
 
-interface FeatureEpic {
-  id: string;
-  title: string;
-  state: 'Draft' | 'Ready' | 'WIP' | 'Done';
+/** Document opened on the canvas when the workspace tree first loads, when present. */
+const PREFERRED_ENTRY_DOCUMENT = 'product_vision.md';
+
+function errorMessage(cause: unknown, fallback: string): string {
+  return cause instanceof Error ? cause.message : fallback;
+}
+
+/** Depth-first search for the entry document, so a fresh session never opens an empty canvas. */
+function findNode(node: FileNode, predicate: (candidate: FileNode) => boolean): FileNode | null {
+  if (predicate(node)) {
+    return node;
+  }
+  for (const child of node.children ?? []) {
+    const found = findNode(child, predicate);
+    if (found) {
+      return found;
+    }
+  }
+  return null;
 }
 
 function App() {
+  const [tree, setTree] = useState<FileNode | null>(null);
+  const [isTreeLoading, setIsTreeLoading] = useState(true);
+  const [treeError, setTreeError] = useState<string | null>(null);
+
+  const [activePath, setActivePath] = useState<string | null>(null);
+  const [activeDocument, setActiveDocument] = useState<FileContent | null>(null);
+  const [isDocumentLoading, setIsDocumentLoading] = useState(false);
+  const [documentError, setDocumentError] = useState<string | null>(null);
+
+  const [settings, setSettings] = useState<CopilotSettings | null>(null);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [activeProject, setActiveProject] = useState('liquid_ade');
-  const [activeEpic] = useState<string>('epic_01_runtime_shell');
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [newProjectName, setNewProjectName] = useState('');
   const [newProjectPath, setNewProjectPath] = useState('');
   const [modalError, setModalError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const openDocument = useCallback(async (path: string) => {
+    setActivePath(path);
+    setIsDocumentLoading(true);
+    setDocumentError(null);
+
+    try {
+      setActiveDocument(await fetchWorkspaceFile(path));
+    } catch (cause) {
+      setActiveDocument(null);
+      setDocumentError(errorMessage(cause, `Could not read ${path}`));
+    } finally {
+      setIsDocumentLoading(false);
+    }
+  }, []);
+
+  const loadTree = useCallback(async () => {
+    setIsTreeLoading(true);
+    setTreeError(null);
+
+    try {
+      const root = await fetchWorkspaceTree();
+      setTree(root);
+      setActiveProject(root.name || 'workspace');
+
+      const entry = findNode(root, (node) => node.name === PREFERRED_ENTRY_DOCUMENT);
+      if (entry) {
+        void openDocument(entry.path);
+      }
+    } catch (cause) {
+      setTree(null);
+      setTreeError(errorMessage(cause, 'Could not scan the workspace'));
+    } finally {
+      setIsTreeLoading(false);
+    }
+  }, [openDocument]);
+
+  const loadSettings = useCallback(async () => {
+    try {
+      setSettings(await fetchCopilotSettings());
+    } catch {
+      // A settings read failure must not block the shell; the panel renders as unconfigured and
+      // the co-pilot endpoint still reports PROVIDER_NOT_CONFIGURED on the first turn.
+      setSettings(null);
+    }
+  }, []);
+
+  // Mount-time synchronization with the two external systems the shell projects: the workspace
+  // on disk and the gateway's provider configuration. Both loaders flip their own loading flag
+  // before awaiting, which is the documented exception to `react/set-state-in-effect`.
+  useEffect(() => {
+    // eslint-disable-next-line react/set-state-in-effect
+    void loadTree();
+    void loadSettings();
+  }, [loadTree, loadSettings]);
+
+  const handleSelect = (node: FileNode) => {
+    if (!isRenderableDocument(node)) {
+      setActivePath(node.path);
+      setActiveDocument(null);
+      setDocumentError(`${node.name} is not a document the canvas can render.`);
+      return;
+    }
+    void openDocument(node.path);
+  };
 
   const isSlugValid = (s: string) => /^[a-z0-9][a-z0-9_-]*$/.test(s);
 
@@ -55,21 +158,16 @@ function App() {
         setModalError(data.message || 'Failed to create workspace');
       } else {
         setActiveProject(data.name || name);
-        setIsModalOpen(false);
+        setIsProjectModalOpen(false);
         setNewProjectName('');
         setNewProjectPath('');
       }
     } catch (err: unknown) {
-      setModalError(err instanceof Error ? err.message : 'Network error');
+      setModalError(errorMessage(err, 'Network error'));
     } finally {
       setIsSubmitting(false);
     }
   };
-
-  const epics: FeatureEpic[] = [
-    { id: 'epic_01_runtime_shell', title: 'Runtime Shell & Astryx Layout', state: 'WIP' },
-    { id: 'epic_02_workspace_fs_scanner', title: 'Workspace FS Scanner', state: 'Draft' },
-  ];
 
   return (
     <div className="astryx-shell">
@@ -89,7 +187,7 @@ function App() {
             type="button"
             className="astryx-btn astryx-btn-secondary"
             onClick={() => {
-              setIsModalOpen(true);
+              setIsProjectModalOpen(true);
               setModalError(null);
             }}
           >
@@ -98,176 +196,43 @@ function App() {
         </div>
 
         <div className="astryx-header-right">
-          <span className="astryx-chip wip">WIP</span>
+          <span className={`astryx-chip ${settings?.configured ? 'ready' : 'draft'}`}>
+            {settings?.configured ? 'Co-Pilot Ready' : 'Co-Pilot Off'}
+          </span>
           <span className="astryx-kbd">⌘K</span>
         </div>
       </header>
 
-      {/* 3-Column Layout Container */}
+      {/* 3-Column Layout: workspace tree · document canvas · co-pilot */}
       <main className="astryx-main">
-        {/* Column 1: Left Navigation Sidebar */}
         <aside className="astryx-sidebar-left">
           <div className="astryx-panel-header">
             <span>Workspace</span>
             <span className="astryx-kbd">⌥1</span>
           </div>
 
-          <div className="astryx-nav-tree">
-            <div className="astryx-nav-group-title">
-              <span>01-workspace-inspector</span>
-            </div>
-
-            {epics.map((epic) => (
-              <div
-                key={epic.id}
-                className={`astryx-nav-item ${epic.id === activeEpic ? 'active' : ''}`}
-              >
-                <span>{epic.title}</span>
-                <span className={`astryx-chip ${epic.state.toLowerCase()}`}>{epic.state}</span>
-              </div>
-            ))}
-          </div>
+          <WorkspaceTree
+            root={tree}
+            activePath={activePath}
+            isLoading={isTreeLoading}
+            error={treeError}
+            onSelect={handleSelect}
+            onRetry={() => void loadTree()}
+          />
         </aside>
 
-        {/* Column 2: Document Canvas */}
-        <section className="astryx-canvas">
-          <div className="astryx-doc-header">
-            <div className="astryx-breadcrumbs">
-              <span>features</span>
-              <span>/</span>
-              <span>01-workspace-inspector</span>
-              <span>/</span>
-              <span>epics</span>
-              <span>/</span>
-              <span>epic_01_runtime_shell</span>
-            </div>
+        <DocumentCanvas
+          activeDocument={activeDocument}
+          isLoading={isDocumentLoading}
+          error={documentError}
+          onRetry={() => activePath && void openDocument(activePath)}
+        />
 
-            <div className="astryx-doc-title-row">
-              <h1 className="astryx-doc-title">Runtime Shell & Astryx Layout</h1>
-              <span className="astryx-chip wip">WIP</span>
-            </div>
-          </div>
-
-          <div className="astryx-card">
-            <div className="astryx-card-title">Intent</div>
-            <p className="astryx-prose">
-              Provide an Axum web server embedding a React 19 static SPA that renders the
-              foundational 3-column Astryx layout, initializes an embedded SQLite database for
-              project registry and checkpoints, and exposes health check endpoints without external
-              runtime dependencies.
-            </p>
-          </div>
-
-          <div className="astryx-card">
-            <div className="astryx-card-title">Implementation Tasks</div>
-            <div className="astryx-task-list">
-              <div className="astryx-task-item">
-                <input type="checkbox" className="astryx-task-checkbox" checked readOnly />
-                <span className="astryx-task-text">
-                  TASK-01: Implement Axum server with rust-embed SPA fallback and /api/health
-                </span>
-                <span className="astryx-task-badge">S1, S2, R1, R2</span>
-              </div>
-
-              <div className="astryx-task-item">
-                <input type="checkbox" className="astryx-task-checkbox" checked readOnly />
-                <span className="astryx-task-text">
-                  TASK-02: Implement React 19 Astryx shell layout component
-                </span>
-                <span className="astryx-task-badge">S2, R1</span>
-              </div>
-
-              <div className="astryx-task-item">
-                <input type="checkbox" className="astryx-task-checkbox" checked readOnly />
-                <span className="astryx-task-text">
-                  TASK-03: Implement embedded SQLite database initialization and schema migration in
-                  Rust
-                </span>
-                <span className="astryx-task-badge">S3, R3</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Column 3: Right Inspector Sidebar */}
-        <aside className="astryx-sidebar-right">
-          <div className="astryx-panel-header">
-            <span>Inspector</span>
-            <span className="astryx-kbd">⌥3</span>
-          </div>
-
-          <div className="astryx-inspector-section">
-            <div className="astryx-card-title">Rules & Invariants</div>
-
-            <div className="astryx-inspector-item">
-              <div className="astryx-inspector-item-head">
-                <span className="astryx-rule-tag">R1</span>
-                <span className="astryx-chip ready">Enforced</span>
-              </div>
-              <p className="astryx-inspector-desc">
-                Single binary with zero Node.js runtime dependency, serving embedded static assets
-                via rust-embed.
-              </p>
-            </div>
-
-            <div className="astryx-inspector-item">
-              <div className="astryx-inspector-item-head">
-                <span className="astryx-rule-tag">R2</span>
-                <span className="astryx-chip ready">Enforced</span>
-              </div>
-              <p className="astryx-inspector-desc">
-                All API routes must fail fast and return typed JSON responses with appropriate HTTP
-                status codes.
-              </p>
-            </div>
-
-            <div className="astryx-inspector-item">
-              <div className="astryx-inspector-item-head">
-                <span className="astryx-rule-tag">R3</span>
-                <span className="astryx-chip ready">Enforced</span>
-              </div>
-              <p className="astryx-inspector-desc">
-                Embedded SQLite database initializes at ~/.liquid/liquid.db with projects,
-                checkpoints, and settings tables.
-              </p>
-            </div>
-          </div>
-
-          <div className="astryx-inspector-section">
-            <div className="astryx-card-title">Acceptance Scenarios</div>
-
-            <div className="astryx-inspector-item">
-              <div className="astryx-inspector-item-head">
-                <span className="astryx-scenario-tag">S1</span>
-                <span className="astryx-chip ready">Passed</span>
-              </div>
-              <p className="astryx-inspector-desc">
-                GET /api/health returns 200 {'{'}
-                &quot;status&quot;:&quot;ok&quot;,&quot;app&quot;:&quot;liquid-ade&quot;{'}'}.
-              </p>
-            </div>
-
-            <div className="astryx-inspector-item">
-              <div className="astryx-inspector-item-head">
-                <span className="astryx-scenario-tag">S2</span>
-                <span className="astryx-chip ready">Passed</span>
-              </div>
-              <p className="astryx-inspector-desc">
-                GET /unknown-path returns 200 serving index.html as SPA fallback.
-              </p>
-            </div>
-
-            <div className="astryx-inspector-item">
-              <div className="astryx-inspector-item-head">
-                <span className="astryx-scenario-tag">S3</span>
-                <span className="astryx-chip ready">Passed</span>
-              </div>
-              <p className="astryx-inspector-desc">
-                Embedded SQLite database boots and initializes tables in ~/.liquid/liquid.db.
-              </p>
-            </div>
-          </div>
-        </aside>
+        <CopilotPanel
+          contextPath={activeDocument?.path ?? null}
+          settings={settings}
+          onOpenSettings={() => setIsSettingsOpen(true)}
+        />
       </main>
 
       {/* Bottom Status Bar */}
@@ -281,16 +246,27 @@ function App() {
         </div>
 
         <div className="astryx-footer-right">
-          <span>⌘K Command Palette</span>
+          <span>{activePath ?? 'no document bound'}</span>
           <span>•</span>
-          <span>⌘Z Undo</span>
+          <span>⌘K Command Palette</span>
           <span>•</span>
           <span>/ Slash Menu</span>
         </div>
       </footer>
 
+      {isSettingsOpen && (
+        <CopilotSettingsDialog
+          settings={settings}
+          onClose={() => setIsSettingsOpen(false)}
+          onSaved={(saved) => {
+            setSettings(saved);
+            setIsSettingsOpen(false);
+          }}
+        />
+      )}
+
       {/* New Project Dialog Modal */}
-      {isModalOpen && (
+      {isProjectModalOpen && (
         <div className="astryx-modal-overlay">
           <div className="astryx-modal" role="dialog" aria-modal="true">
             <div className="astryx-modal-header">
@@ -298,7 +274,7 @@ function App() {
               <button
                 type="button"
                 className="astryx-modal-close"
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => setIsProjectModalOpen(false)}
               >
                 ✕
               </button>
@@ -349,7 +325,7 @@ function App() {
                 <button
                   type="button"
                   className="astryx-btn astryx-btn-secondary"
-                  onClick={() => setIsModalOpen(false)}
+                  onClick={() => setIsProjectModalOpen(false)}
                   disabled={isSubmitting}
                 >
                   Cancel

@@ -203,3 +203,31 @@ pub fn open_or_register_project(
         Err(e) => Err(e),
     }
 }
+
+/// Reads a workspace setting by key, returning `None` when it was never written.
+pub fn get_setting(conn: &Connection, key: &str) -> Result<Option<String>, rusqlite::Error> {
+    match conn.query_row("SELECT value FROM settings WHERE key = ?1", [key], |row| {
+        row.get::<_, String>(0)
+    }) {
+        Ok(value) => Ok(Some(value)),
+        Err(rusqlite::Error::QueryReturnedNoRows) => Ok(None),
+        Err(e) => Err(e),
+    }
+}
+
+/// Upserts a workspace setting, refreshing `updated_at`.
+pub fn set_setting(conn: &Connection, key: &str, value: &str) -> Result<(), rusqlite::Error> {
+    conn.execute(
+        "INSERT INTO settings (key, value, updated_at)
+         VALUES (?1, ?2, strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))
+         ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at",
+        [key, value],
+    )?;
+    Ok(())
+}
+
+/// Deletes a workspace setting. Deleting an absent key is a no-op.
+pub fn delete_setting(conn: &Connection, key: &str) -> Result<(), rusqlite::Error> {
+    conn.execute("DELETE FROM settings WHERE key = ?1", [key])?;
+    Ok(())
+}
