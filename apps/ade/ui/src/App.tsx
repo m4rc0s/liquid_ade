@@ -5,6 +5,10 @@ import { DocumentCanvas } from './features/workspace/DocumentCanvas';
 import { CopilotPanel } from './features/copilot/CopilotPanel';
 import { CopilotSettingsDialog } from './features/copilot/CopilotSettingsDialog';
 import { fetchCopilotSettings, type CopilotSettings } from './features/copilot/api';
+import { ModeRail } from './features/scpe/ModeRail';
+import { SpecNavigator } from './features/scpe/SpecNavigator';
+import { SpecCanvas } from './features/scpe/SpecCanvas';
+import { SpecInspector } from './features/scpe/SpecInspector';
 import { useWorkspaceStore } from './stores';
 import { Chip } from './components';
 
@@ -14,6 +18,7 @@ function errorMessage(cause: unknown, fallback: string): string {
 
 function App() {
   const {
+    activeMode,
     tree,
     isTreeLoading,
     treeError,
@@ -21,8 +26,12 @@ function App() {
     activeDocument,
     isDocumentLoading,
     documentError,
+    activeEpicDetail,
+    activeRightTab,
+    setActiveRightTab,
     activeProject,
     loadTree,
+    loadOutline,
     openDocument,
     selectNode,
     setActiveProject,
@@ -41,18 +50,17 @@ function App() {
     try {
       setSettings(await fetchCopilotSettings());
     } catch {
-      // A settings read failure must not block the shell; the panel renders as unconfigured and
-      // the co-pilot endpoint still reports PROVIDER_NOT_CONFIGURED on the first turn.
       setSettings(null);
     }
   }, []);
 
-  // Mount-time synchronization with the workspace on disk and the gateway's provider configuration.
+  // Mount-time synchronization with workspace on disk, SCPE outline, and copilot settings
   useEffect(() => {
     void loadTree();
+    void loadOutline();
     // eslint-disable-next-line react/set-state-in-effect
     void loadSettings();
-  }, [loadTree, loadSettings]);
+  }, [loadTree, loadOutline, loadSettings]);
 
   const isSlugValid = (s: string) => /^[a-z0-9][a-z0-9_-]*$/.test(s);
 
@@ -96,6 +104,8 @@ function App() {
         setIsProjectModalOpen(false);
         setNewProjectName('');
         setNewProjectPath('');
+        void loadTree();
+        void loadOutline();
       }
     } catch (err: unknown) {
       setModalError(errorMessage(err, 'Network error'));
@@ -138,36 +148,80 @@ function App() {
         </div>
       </header>
 
-      {/* 3-Column Layout: workspace tree · document canvas · co-pilot */}
+      {/* Main Body: Mode Rail + Navigator + Canvas + Context Panel */}
       <main className="astryx-main">
+        {/* 48px Mode Rail (R1) */}
+        <ModeRail />
+
+        {/* Left Column: Spec Navigator (default) or Filesystem Tree (R1) */}
         <aside className="astryx-sidebar-left">
           <div className="astryx-panel-header">
-            <span>Workspace</span>
-            <span className="astryx-kbd">⌥1</span>
+            <span>{activeMode === 'specs' ? 'Living Specs' : 'Filesystem'}</span>
+            <span className="astryx-kbd">{activeMode === 'specs' ? '⌥S' : '⌥F'}</span>
           </div>
 
-          <WorkspaceTree
-            root={tree}
-            activePath={activePath}
-            isLoading={isTreeLoading}
-            error={treeError}
-            onSelect={selectNode}
-            onRetry={() => void loadTree()}
-          />
+          {activeMode === 'specs' ? (
+            <SpecNavigator />
+          ) : (
+            <WorkspaceTree
+              root={tree}
+              activePath={activePath}
+              isLoading={isTreeLoading}
+              error={treeError}
+              onSelect={selectNode}
+              onRetry={() => void loadTree()}
+            />
+          )}
         </aside>
 
-        <DocumentCanvas
-          activeDocument={activeDocument}
-          isLoading={isDocumentLoading}
-          error={documentError}
-          onRetry={() => activePath && void openDocument(activePath)}
-        />
+        {/* Center Column: Living Spec Canvas (R3) or Document Canvas */}
+        {activeEpicDetail ? (
+          <SpecCanvas />
+        ) : (
+          <DocumentCanvas
+            activeDocument={activeDocument}
+            isLoading={isDocumentLoading}
+            error={documentError}
+            onRetry={() => activePath && void openDocument(activePath)}
+          />
+        )}
 
-        <CopilotPanel
-          contextPath={activeDocument?.path ?? null}
-          settings={settings}
-          onOpenSettings={() => setIsSettingsOpen(true)}
-        />
+        {/* Right Column: Tabbed Inspector / Conversational Co-Pilot (R4) */}
+        <aside className="astryx-sidebar-right w-[380px] min-w-[320px] p-0 flex flex-col h-full bg-[var(--bg-surface)] border-l border-[var(--border-subtle)]">
+          <div className="astryx-tabs-header">
+            <button
+              type="button"
+              onClick={() => setActiveRightTab('copilot')}
+              className={`astryx-tab-btn ${activeRightTab === 'copilot' ? 'active' : ''}`}
+            >
+              Co-Pilot
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveRightTab('inspector')}
+              className={`astryx-tab-btn ${activeRightTab === 'inspector' ? 'active' : ''}`}
+            >
+              Spec Inspector
+            </button>
+          </div>
+
+          <div className="flex-1 overflow-hidden relative">
+            {/* CopilotPanel stays mounted so in-flight SSE streams are preserved on tab toggle (R4) */}
+            <div className={activeRightTab === 'copilot' ? 'h-full flex flex-col' : 'hidden'}>
+              <CopilotPanel
+                contextPath={activePath}
+                settings={settings}
+                onOpenSettings={() => setIsSettingsOpen(true)}
+              />
+            </div>
+
+            {activeRightTab === 'inspector' && (
+              <div className="h-full overflow-y-auto">
+                <SpecInspector />
+              </div>
+            )}
+          </div>
+        </aside>
       </main>
 
       {/* Bottom Status Bar */}
